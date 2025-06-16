@@ -1,19 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Dashboard</title>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Meal Planner</title>
+      <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-      <h1 id="timeOfDayGreeting"></h1>
-      <h3>Here's your meals for today!</h3>
 
-            <h3>Breakfast</h3>
-            <h2 id="recipeBreakfast"></h2>  
-            <h4>time: (variable)</h4>    
-            <button link="X">See recipe</button>
+<aside class="sidebar">
+      <nav class="navLinks">
+            <a href="#" class="active">Home</a>
+            <a href="#">Recipes</a>
+            <a href="#">Meal Plans</a>
+            <a href="#">Groceries</a>
+            <a href="#">Shopping List</a>
+      </nav>
+      <div class="bottomLinks">
+            <a href="#">Account</a>
+            <a href="#">Settings</a>
+      </div>
+</aside>
 
+
+<main class="index">
+
+      <div class="searchBar">
+            <input type="text" placeholder="What do you feel like having ?" />
+            <button class="filter-btn">hi</button>
+      </div>
+
+      <header class="greeting">
+            <h1>♡ Good morning, User!</h1>
+            <p>Here’s your meals for today!</p>
+      </header>
+
+      <section class="meals">
+            <div class="mealCard breakfast">
+                  <img src="spaghetti.jpg" alt="Meal Image" />
+                  <p class="meal-type">Breakfast</p>
+                  <h3>Potential Title of Recipe 1</h3>
+                  <p>Time: 00M</p>
+                  <button>See recipe</button>
+            </div>
+
+            <div class="meal-card lunch">
+                  <img src="spaghetti.jpg" alt="Meal Image" />
+                  <p class="meal-type">Lunch</p>
+                  <h3>Potential Title of Recipe 1</h3>
+                  <p>Time: 00M</p>
+                  <button>See recipe</button>
+            </div>
+
+            <div class="meal-card empty">
+                  <div class="placeholder-img">Waiting for image...</div>
+                  <p>There is currently no meal set here</p>
+                  <button>Add meal +</button>
+            </div>
+</section>
+
+<section class="macros">
+      <h2>Macros</h2>
+            <div class="macro-labels">
+                  <span>🔴 Carbs 00%</span>
+                  <span>🔵 Protein 00%</span>
+                  <span>🟢 Fats 00%</span>
+            </div>
+            <div class="macro-bar">
+            <div class="bar carbs"></div>
+            <div class="bar protein"></div>
+            <div class="bar fats"></div>
+      </div>
+</section>
+
+</main>
 
 </body>
 </html>
