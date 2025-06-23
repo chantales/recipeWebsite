@@ -77,6 +77,14 @@
     .searchBar .filter-btn:hover {
       background-color: #ddd;
     }
+
+    .searchList li a {
+        display: block
+    }
+
+    .searchList li a:hover:not(.header) {
+      background-color: #a9c9ff;
+    }
     
     /* Greeting */
     .greeting h1 {
