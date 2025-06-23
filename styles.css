@@ -78,19 +78,19 @@
       background-color: #ddd;
     }
 
-    .searchList {
+    .recipeList {
       list-style-type: none;
       padding: 0;
       margin: 0;
     }
 
-    .searchList li a {
+    .recipeList li a {
         display: block;
         background-color: #ffa9a9;
         padding: 12px;
     }
 
-    .searchList li a:hover:not(.header) {
+    .recipeList li a:hover:not(.header) {
       background-color: #a9c9ff;
     }
     
