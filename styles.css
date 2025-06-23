@@ -78,8 +78,15 @@
       background-color: #ddd;
     }
 
+    .searchList {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+    
     .searchList li a {
-        display: block
+        display: block;
+        background-color: #ffa9a9;
     }
 
     .searchList li a:hover:not(.header) {
