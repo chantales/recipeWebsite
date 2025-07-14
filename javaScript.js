@@ -1,7 +1,7 @@
 function searchBarFunction() {
       // Declare variables
       var input, filter, ul, li, a, i, txtValue;
-      input = document.getElementById('sbInput');
+      input = document.getElementById('searchBarInput');
       filter = input.value.toUpperCase();
       ul = document.getElementById("searchList");
       li = ul.getElementsByTagName('li');
