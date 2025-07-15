@@ -3,99 +3,13 @@
 <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Document</title>
-      <style>
-#searchBarInput {
-  width: 70%; /* Full-width */
-  font-size: 16px; /* Increase font-size */
-  padding: 12px 20px 12px 40px; /* Add some padding */
-  border: 1px solid #ddd; /* Add a grey border */
-  margin-bottom: 12px; /* Add some space below the input */
-}
-
-#recipeList {
-  /* Remove default list styling */
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-
-#recipeList li a {
-  border: 1px solid #ddd; /* Add a border to all links */
-  margin-top: -1px; /* Prevent double borders */
-  background-color: #f6f6f6; /* Grey background color */
-  padding: 12px; /* Add some padding */
-  text-decoration: none; /* Remove default text underline */
-  font-size: 18px; /* Increase the font-size */
-  color: black; /* Add a black text color */
-  display: block; /* Make it into a block element to fill the whole list */
-}
-
-#recipeList li a:hover:not(.header) {
-  background-color: #eee; /* Add a hover effect to all links, except for headers */
-}
-      </style>
+      <title>Recipes</title>
 </head>
 <body>
-            <div class="searchArea">
-                  <div class="searchBar">
-                        <input type="text" id="searchBarInput" onclick="openRecipeList()" onkeyup="searchBarFunction()" placeholder="What do you feel like having ?" />
-                        <button class="filter-btn">search icon insert here</button>
-                  </div>
-            
-                  <ul id="recipeList">
-                        <li><a href="#">Spagetti Meatballs</a></li>
-                        <li><a href="#">Mushroom Pizza</a></li>
-                        <li><a href="#">Garlic Chicken</a></li>
-                        <li><a href="#">Pinto Bean Chili</a></li>
-                        <li><a href="#">Meatloaf</a></li>
-                  </ul>
-            </div>
+      <button>add new recipe</button>
+      <input>
+      <input>
 
-</body>
-
-<script>
-
-
-document.getElementById("recipeList").style.display ="none";
-
-function openRecipeList() {
-      document.getElementById("recipeList").style.display = "block";
       
-}
-
-document.addEventListener("click", function(e) {
-      const searchBox = document.getElementById("searchBox");
-      const recipeList = document.getElementById("recipeList");
-
-      if (!searchBox.contains(e.target) && !recipeList.contains(e.target)) {
-      recipeList.style.display = "none";
-      }
-});
-
-
-function searchBarFunction() {
-      var input;
-      var filter;
-      var ul;
-      var li;
-      var a;
-      var txtValue;
-      input = document.getElementById('searchBarInput');
-      filter = input.value.toUpperCase();
-      ul = document.getElementById("recipeList");
-      li = ul.getElementsByTagName('li');
-
-      for (i = 0; i < li.length; i++) {
-      a = li[i].getElementsByTagName("a")[0];
-      txtValue = a.textContent || a.innerText;
-      if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            li[i].style.display = "";
-      } else {
-            li[i].style.display = "none";
-      }
-      }
-}
-
-</script>
+</body>
 </html>
