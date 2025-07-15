@@ -74,14 +74,14 @@ const database = getDatabase();
 
 
 
-console.log("code updated 3");
+console.log("code updated 4");
 
 const form = document.getElementById("recipeForm");
 const instructionsContainer = document.getElementById("instructionsContainer");
 const addStepBtn = document.getElementById("addStepBtn");
 
 let stepCount = 0;
-
+addStep();
 addStepBtn.addEventListener("click", addStep);
 
     function addStep(initialValue = "") {
@@ -134,13 +134,16 @@ addStepBtn.addEventListener("click", addStep);
       e.preventDefault();
 
       const title = document.getElementById("titleOfRecipe").value.trim();
-      const tagsString = document.getElementById("tags").value.trim();
+      //const tagsString = document.getElementById("tags").value.trim();
       const cookingTime = document.getElementById("cookingTimeOfRecipe").value;
       const ingredientsString = document.getElementById("ingredientsOfRecipe").value.trim();
 
+      /*
       const tags = tagsString
         ? tagsString.split(",").map(tag => tag.trim()).filter(tag => tag !== "")
         : [];
+      */
+      
 
       const ingredients = ingredientsString
         ? ingredientsString.split("\n").map(line => line.trim()).filter(line => line !== "")
@@ -154,7 +157,6 @@ addStepBtn.addEventListener("click", addStep);
 
       const recipe = {
         title,
-        tags,
         cookingTime,
         ingredients,
         instructions
