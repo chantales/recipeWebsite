@@ -93,8 +93,59 @@ let stepCount = 0;
       addStep();
     });
 
-    
 
+
+
+
+
+
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const title = document.getElementById("titleOfRecipe").value.trim();
+      const tagsString = document.getElementById("tags").value.trim();
+      const cookingTime = document.getElementById("cookingTimeOfRecipe").value.trim();
+      const ingredientsString = document.getElementById("ingredientsOfRecipe").value.trim();
+
+      const tags = tagsString
+        ? tagsString.split(",").map(tag => tag.trim()).filter(tag => tag !== "")
+        : [];
+
+      const ingredients = ingredientsString
+        ? ingredientsString.split("\n").map(line => line.trim()).filter(line => line !== "")
+        : [];
+
+      // Gather instructions from all inputs
+      const instructionInputs = instructionsContainer.querySelectorAll("input");
+      const instructions = Array.from(instructionInputs)
+        .map(input => input.value.trim())
+        .filter(line => line !== "");
+
+      const recipe = {
+        title,
+        tags,
+        cookingTime,
+        ingredients,
+        instructions
+      };
+
+      const recipesRef = ref(database, "recipes");
+      const newRecipeRef = push(recipesRef);
+
+      set(newRecipeRef, recipe)
+        .then(() => {
+          alert("Recipe saved successfully!");
+          form.reset();
+          instructionsContainer.innerHTML = "";
+          stepCount = 0;
+          addStep(); // start fresh
+        })
+        .catch((error) => {
+          console.error("Error saving recipe:", error);
+          alert("something went wrong :(");
+        });
+    });
 
 
 
