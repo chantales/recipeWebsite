@@ -49,6 +49,7 @@ const instructionsContainer = document.getElementById("instructionsContainer");
 const addStepBtn = document.getElementById("addStepBtn");
 
 let stepCount = 0;
+console.log("code updated 1")
 addStep();
 
     function addStep(initialValue = "") {
