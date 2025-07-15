@@ -43,15 +43,16 @@ function searchBarFunction() {
     };
 
 
+    console.log("code updated 1");
 
+    
 const form = document.getElementById("recipeForm");
 const instructionsContainer = document.getElementById("instructionsContainer");
 const addStepBtn = document.getElementById("addStepBtn");
 
 let stepCount = 0;
-console.log("code updated 1");
 
-addStepBtn.addEventListener("click", addStep());
+addStepBtn.addEventListener("click", addStep);
 
     function addStep(initialValue = "") {
       stepCount++;
