@@ -89,9 +89,6 @@ let stepCount = 0;
 
     addStep();
 
-    addStepBtn.addEventListener("click", () => {
-      addStep();
-    });
 
 
 
