@@ -19,7 +19,7 @@ const app = initializeApp(firebaseConfig);
 import {getDatabase, set, ref, push}
 from "https://www.gstatic.com/firebasejs/11.10.0/firebase-database.js";
 
-const db = getDatabase();
+const database = getDatabase();
 
 
 function searchBarFunction() {
@@ -53,6 +53,7 @@ addStep();
 
     function addStep(initialValue = "") {
       stepCount++;
+      console.log("step function was activated");
 
       const stepDiv = document.createElement("div");
       stepDiv.classList.add("step-container");
@@ -112,7 +113,7 @@ addStep();
         ? ingredientsString.split("\n").map(line => line.trim()).filter(line => line !== "")
         : [];
 
-      // Gather instructions from all inputs
+    
       const instructionInputs = instructionsContainer.querySelectorAll("input");
       const instructions = Array.from(instructionInputs)
         .map(input => input.value.trim())
