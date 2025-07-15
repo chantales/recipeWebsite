@@ -45,7 +45,7 @@ function searchBarFunction() {
 
     console.log("code updated 1");
 
-    
+var testing = working
 const form = document.getElementById("recipeForm");
 const instructionsContainer = document.getElementById("instructionsContainer");
 const addStepBtn = document.getElementById("addStepBtn");
