@@ -240,3 +240,35 @@
       background-color: #b9f5b9;
     }
     
+
+
+
+
+
+
+
+
+    .step-container {
+      display: flex;
+      align-items: center;
+      margin-top: 0.5em;
+    }
+    
+    .step-container input {
+      flex-grow: 1;
+    }
+
+    .step-number {
+      width: 60px;
+      font-weight: bold;
+    }
+
+    .remove-btn {
+      background: #e74c3c;
+      color: #fff;
+      border: none;
+      margin-left: 10px;
+      cursor: pointer;
+      font-size: 14px;
+      padding: 4px 8px;
+    }
