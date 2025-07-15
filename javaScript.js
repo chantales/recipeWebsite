@@ -79,6 +79,22 @@ let stepCount = 0;
       instructionsContainer.appendChild(stepDiv);
     }
 
+    function updateStepNumbers() {
+      stepCount = 0;
+      instructionsContainer.querySelectorAll(".step-container").forEach((div) => {
+        stepCount++;
+        div.querySelector(".step-number").textContent = `Step ${stepCount}:`;
+      });
+    }
+
+    addStep();
+
+    addStepBtn.addEventListener("click", () => {
+      addStep();
+    });
+
+    
+
 
 
 
