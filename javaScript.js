@@ -49,6 +49,7 @@ const instructionsContainer = document.getElementById("instructionsContainer");
 const addStepBtn = document.getElementById("addStepBtn");
 
 let stepCount = 0;
+addStep();
 
     function addStep(initialValue = "") {
       stepCount++;
@@ -86,8 +87,6 @@ let stepCount = 0;
         div.querySelector(".step-number").textContent = `Step ${stepCount}:`;
       });
     }
-
-    addStep();
 
 
 
