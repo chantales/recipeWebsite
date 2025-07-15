@@ -246,14 +246,17 @@
 
 
 
-
+    label {
+      display: block;
+      margin-top: 1em;
+    }
 
     .step-container {
       display: flex;
       align-items: center;
       margin-top: 0.5em;
     }
-    
+
     .step-container input {
       flex-grow: 1;
     }
