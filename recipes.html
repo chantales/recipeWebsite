@@ -41,6 +41,120 @@
       <button type="submitRecipe">save recipe</button>
 </form>
 
-      
+
+
+
+
+
+
+
+<script>
+console.log("code updated 1");
+
+var testing = "working";
+const form = document.getElementById("recipeForm");
+const instructionsContainer = document.getElementById("instructionsContainer");
+const addStepBtn = document.getElementById("addStepBtn");
+
+let stepCount = 0;
+
+addStepBtn.addEventListener("click", addStep);
+
+    function addStep(initialValue = "") {
+      stepCount++;
+      console.log("step function was activated");
+
+      const stepDiv = document.createElement("div");
+      stepDiv.classList.add("step-container");
+
+      const stepLabel = document.createElement("div");
+      stepLabel.classList.add("step-number");
+
+      const stepInput = document.createElement("input");
+      stepInput.type = "text";
+      stepInput.value = initialValue;
+
+      const removeBtn = document.createElement("button");
+      removeBtn.type = "button";
+      removeBtn.textContent = "X";
+      removeBtn.classList.add("remove-btn")
+
+      removeBtn.addEventListener("click", () => {
+        instructionsContainer.removeChild(stepDiv);
+        updateStepNumbers();
+      });
+
+      stepDiv.appendChild(stepLabel);
+      stepDiv.appendChild(stepInput);
+      stepDiv.appendChild(removeBtn);
+      instructionsContainer.appendChild(stepDiv);
+    }
+
+    function updateStepNumbers() {
+      stepCount = 0;
+      instructionsContainer.querySelectorAll(".step-container").forEach((div) => {
+        stepCount++;
+        div.querySelector(".step-number").textContent = `Step ${stepCount}:`;
+      });
+    }
+
+
+
+
+
+
+
+
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const title = document.getElementById("titleOfRecipe").value.trim();
+      const tagsString = document.getElementById("tags").value.trim();
+      const cookingTime = document.getElementById("cookingTimeOfRecipe").value.trim();
+      const ingredientsString = document.getElementById("ingredientsOfRecipe").value.trim();
+
+      const tags = tagsString
+        ? tagsString.split(",").map(tag => tag.trim()).filter(tag => tag !== "")
+        : [];
+
+      const ingredients = ingredientsString
+        ? ingredientsString.split("\n").map(line => line.trim()).filter(line => line !== "")
+        : [];
+
+    
+      const instructionInputs = instructionsContainer.querySelectorAll("input");
+      const instructions = Array.from(instructionInputs)
+        .map(input => input.value.trim())
+        .filter(line => line !== "");
+
+      const recipe = {
+        title,
+        tags,
+        cookingTime,
+        ingredients,
+        instructions
+      };
+
+      const recipesRef = ref(database, "recipes");
+      const newRecipeRef = push(recipesRef);
+
+      set(newRecipeRef, recipe)
+        .then(() => {
+          alert("Recipe saved successfully!");
+          form.reset();
+          instructionsContainer.innerHTML = "";
+          stepCount = 0;
+          addStep(); // start fresh
+        })
+        .catch((error) => {
+          console.error("Error saving recipe:", error);
+          alert("something went wrong :(");
+        });
+    });
+</script>
+
+
+
 </body>
 </html>
