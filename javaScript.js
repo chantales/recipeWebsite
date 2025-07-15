@@ -16,7 +16,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-import {getDatabase, set, get, update, remove, ref, child}
+import {getDatabase, set, ref, push}
 from "https://www.gstatic.com/firebasejs/11.10.0/firebase-database.js";
 
 const db = getDatabase();
@@ -40,4 +40,45 @@ function searchBarFunction() {
           li[i].style.display = "none";
         }
       }
+    };
+
+
+
+const form = document.getElementById("recipeForm");
+const instructionsContainer = document.getElementById("instructionsContainer");
+const addStepBtn = document.getElementById("addStepBtn");
+
+let stepCount = 0;
+
+    function addStep(initialValue = "") {
+      stepCount++;
+
+      const stepDiv = document.createElement("div");
+      stepDiv.classList.add("step-container");
+
+      const stepLabel = document.createElement("div");
+      stepLabel.classList.add("step-number");
+
+      const stepInput = document.createElement("input");
+      stepInput.type = "text";
+      stepInput.value = initialValue;
+
+      const removeBtn = document.createElement("button");
+      removeBtn.type = "button";
+      removeBtn.textContent = "X";
+      removeBtn.classList.add("remove-btn")
+
+      removeBtn.addEventListener("click", () => {
+        instructionsContainer.removeChild(stepDiv);
+        updateStepNumbers();
+      });
+
+      stepDiv.appendChild(stepLabel);
+      stepDiv.appendChild(stepInput);
+      stepDiv.appendChild(removeBtn);
+      instructionsContainer.appendChild(stepDiv);
     }
+
+
+
+

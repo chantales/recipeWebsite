@@ -6,9 +6,39 @@
       <title>Recipes</title>
 </head>
 <body>
-      <button>add new recipe</button>
-      <input>
-      <input>
+<h1>Add a New Recipe</h1>
+
+<form id="recipeForm">
+      <label>
+      Title:
+      <input type="text" id="titleOfRecipe" required />
+      </label>
+
+      <label>
+      Tags
+      <button>halal</button>
+      <button>vegan</button>
+      <button>dessert</button>
+      </label>
+
+      <label>
+      Cooking Time:
+      <input type="number" id="cookingTimeOfRecipe" />
+      </label>
+
+      <label>
+      Ingredients (one per line):
+      <textarea id="ingredientsOfRecipe"></textarea>
+      </label>
+
+      <label>
+      Instructions (one step per line):
+      <div id="instructionsContainer"></div>
+      <button type="button" id="addStepBtn">Add Step</button>
+      </label>
+
+      <button type="submitRecipe">save recipe</button>
+</form>
 
       
 </body>
