@@ -50,7 +50,7 @@ const addStepBtn = document.getElementById("addStepBtn");
 
 let stepCount = 0;
 console.log("code updated 1")
-addStep();
+addStepBtn.addEventListener("click", addStep());
 
     function addStep(initialValue = "") {
       stepCount++;
