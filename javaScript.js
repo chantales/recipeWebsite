@@ -42,7 +42,7 @@ function searchBarFunction() {
       }
     };
 
-
+/*
     console.log("code updated 1");
 
 var testing = working
@@ -147,5 +147,5 @@ addStepBtn.addEventListener("click", addStep);
         });
     });
 
-
+*/
 

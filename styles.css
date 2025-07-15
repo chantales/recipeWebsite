@@ -245,7 +245,10 @@
 
 
 
-
+    #titleOfRecipe {
+      color: #a9c9ff;
+    }
+    
     label {
       display: block;
       margin-top: 1em;
