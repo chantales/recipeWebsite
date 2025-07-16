@@ -17,12 +17,12 @@
 
       <label>
       meal of the day
-      <button>breakfast</button>
-      <button>lunch</button>
-      <button>dinner</button>
-      <button>dessert</button>
-      <button>snack</button>
-      <button>other</button>
+      <button id="breakfastBtn">breakfast</button>
+      <button id="lunchBtn">lunch</button>
+      <button id="dinnerBtn">dinner</button>
+      <button id="dessertBtn">dessert</button>
+      <button id="snackBtn">snack</button>
+      <button id="otherBtn">other</button>
       </label>
 
       <label>
@@ -83,9 +83,18 @@ const form = document.getElementById("recipeForm");
 const instructionsContainer = document.getElementById("instructionsContainer");
 const addStepBtn = document.getElementById("addStepBtn");
 
+const breakfastBtn = document.getElementById("breakfastBtn");
+
 let stepCount = 0;
 addStep();
 addStepBtn.addEventListener("click", () => addStep());
+
+breakfastBtn.addEventListener("click", addTag)
+
+      function addTag() {
+            console.log("i am breakfast")
+      };
+
 
     function addStep(initialValue = "") {
       stepCount++;
@@ -164,6 +173,7 @@ addStepBtn.addEventListener("click", () => addStep());
 
       const recipe = {
         title,
+        tags,
         cookingTime,
         ingredients,
         instructions
