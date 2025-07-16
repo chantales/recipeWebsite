@@ -41,7 +41,7 @@
       <button type="button" id="addStepBtn">Add Step</button>
       </label>
 
-      <button type="submitRecipe">save recipe</button>
+      <button type="saveRecipeBtn">save recipe</button>
 </form>
 
 
@@ -82,6 +82,7 @@ console.log("code updated 5");
 const form = document.getElementById("recipeForm");
 const instructionsContainer = document.getElementById("instructionsContainer");
 const addStepBtn = document.getElementById("addStepBtn");
+const saveRecipeBtn = document.getElementById("saveRecipeBtn");
 
 const breakfastBtn = document.getElementById("breakfastBtn");
 
@@ -117,8 +118,8 @@ breakfastBtn.addEventListener("click", addTag)
       removeBtn.classList.add("remove-btn")
 
       removeBtn.addEventListener("click", () => {
-        instructionsContainer.removeChild(stepDiv);
-        updateStepNumbers();
+            instructionsContainer.removeChild(stepDiv);
+            updateStepNumbers();
       });
 
       stepDiv.appendChild(stepLabel);
@@ -146,7 +147,7 @@ breakfastBtn.addEventListener("click", addTag)
 
 
 
-    form.addEventListener("submit", (e) => {
+      saveRecipeBtn.addEventListener("submit", (e) => {
       e.preventDefault();
 
       const title = document.getElementById("titleOfRecipe").value.trim();
@@ -162,37 +163,37 @@ breakfastBtn.addEventListener("click", addTag)
       
 
       const ingredients = ingredientsString
-        ? ingredientsString.split("\n").map(line => line.trim()).filter(line => line !== "")
-        : [];
+            ? ingredientsString.split("\n").map(line => line.trim()).filter(line => line !== "")
+            : [];
 
     
       const instructionInputs = instructionsContainer.querySelectorAll("input");
       const instructions = Array.from(instructionInputs)
-        .map(input => input.value.trim())
-        .filter(line => line !== "");
+            .map(input => input.value.trim())
+            .filter(line => line !== "");
 
       const recipe = {
-        title,
-        tags,
-        cookingTime,
-        ingredients,
-        instructions
+            title,
+            tags,
+            cookingTime,
+            ingredients,
+            instructions
       };
 
       const recipesRef = ref(database, "recipes");
       const newRecipeRef = push(recipesRef);
 
       set(newRecipeRef, recipe)
-        .then(() => {
-          alert("Recipe saved successfully!");
-          form.reset();
-          instructionsContainer.innerHTML = "";
-          stepCount = 0;
-          addStep(); // start fresh
+            .then(() => {
+            alert("Recipe saved successfully!");
+            form.reset();
+            instructionsContainer.innerHTML = "";
+            stepCount = 0;
+            addStep(); // refreshes the page
         })
-        .catch((error) => {
-          console.error("Error saving recipe:", error);
-          alert("something went wrong :(");
+            .catch((error) => {
+            console.error("Error saving recipe:", error);
+            alert("something went wrong :(");
         });
     });
 </script>
