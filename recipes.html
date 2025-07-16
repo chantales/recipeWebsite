@@ -117,8 +117,11 @@ addStepBtn.addEventListener("click", () => addStep());
     function updateStepNumbers() {
       stepCount = 0;
       instructionsContainer.querySelectorAll(".step-container").forEach((div) => {
-        stepCount++;
-        div.querySelector(".step-number").textContent = `Step ${stepCount}:`;
+            stepCount++;
+            const stepLabel = div.querySelector(".step-number");
+            if (stepLabel) {
+      stepLabel.textContent = `Step ${stepCount}:`;
+            }
       });
     }
 
