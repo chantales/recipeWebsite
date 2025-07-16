@@ -85,7 +85,7 @@ const addStepBtn = document.getElementById("addStepBtn");
 
 let stepCount = 0;
 addStep();
-addStepBtn.addEventListener("click", addStep);
+addStepBtn.addEventListener("click", () => addStep());
 
     function addStep(initialValue = "") {
       stepCount++;
@@ -96,6 +96,7 @@ addStepBtn.addEventListener("click", addStep);
 
       const stepLabel = document.createElement("div");
       stepLabel.classList.add("step-number");
+      stepLabel.textContent = `Step ${stepCount}:`;
 
       const stepInput = document.createElement("input");
       stepInput.type = "text";
@@ -119,9 +120,12 @@ addStepBtn.addEventListener("click", addStep);
 
     function updateStepNumbers() {
       stepCount = 0;
-      instructionsContainer.querySelectorAll("step-container").forEach((div) => {
-        stepCount++;
-        div.querySelector("step-number").textContent = `Step ${stepCount}:`;
+      instructionsContainer.querySelectorAll(".step-container").forEach((div) => {
+            stepCount++;
+            const stepLabel = div.querySelector(".step-number");
+            if (stepLabel) {
+      stepLabel.textContent = `Step ${stepCount}:`;
+            }
       });
     }
 
