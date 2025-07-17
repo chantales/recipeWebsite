@@ -77,7 +77,7 @@ const database = getDatabase();
 
 
 
-console.log("code updated 6");
+console.log("code updated 7");
 
 const form = document.getElementById("recipeForm");
 const instructionsContainer = document.getElementById("instructionsContainer");
@@ -92,9 +92,9 @@ addStepBtn.addEventListener("click", () => addStep());
 
 breakfastBtn.addEventListener("click", addTag)
 
-      function addTag() {
-            console.log("i am breakfast")
-      };
+function addTag() {
+      console.log("i am breakfast")
+};
 
 
 function addStep(initialValue = "") {
@@ -146,55 +146,54 @@ function addStep(initialValue = "") {
 
 
 
-
 saveRecipeBtn.addEventListener("click", (e) => {
-e.preventDefault();
+      e.preventDefault();
 
-const title = document.getElementById("titleOfRecipe").value.trim();
-//const tagsString = document.getElementById("tags").value.trim();
-const cookingTime = document.getElementById("cookingTimeOfRecipe").value;
-const ingredientsString = document.getElementById("ingredientsOfRecipe").value.trim();
+      const title = document.getElementById("titleOfRecipe").value.trim();
+      //const tagsString = document.getElementById("tags").value.trim();
+      const cookingTime = document.getElementById("cookingTimeOfRecipe").value;
+      const ingredientsString = document.getElementById("ingredientsOfRecipe").value.trim();
 
-/*
-const tags = tagsString
-? tagsString.split(",").map(tag => tag.trim()).filter(tag => tag !== "")
-: [];
-*/
-
-
-const ingredients = ingredientsString
-      ? ingredientsString.split("\n").map(line => line.trim()).filter(line => line !== "")
+      /*
+      const tags = tagsString
+      ? tagsString.split(",").map(tag => tag.trim()).filter(tag => tag !== "")
       : [];
+      */
 
 
-const instructionInputs = instructionsContainer.querySelectorAll("input");
-const instructions = Array.from(instructionInputs)
-      .map(input => input.value.trim())
-      .filter(line => line !== "");
+      const ingredients = ingredientsString
+            ? ingredientsString.split("\n").map(line => line.trim()).filter(line => line !== "")
+            : [];
 
-const recipe = {
-      title,
-      tags,
-      cookingTime,
-      ingredients,
-      instructions
-};
 
-const recipesRef = ref(database, "recipes");
-const newRecipeRef = push(recipesRef);
+      const instructionInputs = instructionsContainer.querySelectorAll("input");
+      const instructions = Array.from(instructionInputs)
+            .map(input => input.value.trim())
+            .filter(line => line !== "");
 
-set(newRecipeRef, recipe)
-      .then(() => {
-      alert("Recipe saved successfully!");
-      form.reset();
-      instructionsContainer.innerHTML = "";
-      stepCount = 0;
-      addStep(); // refreshes the page
-})
-      .catch((error) => {
-      console.error("Error saving recipe:", error);
-      alert("something went wrong :(");
-});
+      const recipe = {
+            title,
+            tags,
+            cookingTime,
+            ingredients,
+            instructions
+      };
+
+      const recipesRef = ref(database, "recipes");
+      const newRecipeRef = push(recipesRef);
+
+      set(newRecipeRef, recipe) 
+            .then(() => { // after saving the recipe, the elements in the page are cleared and reset. 
+            alert("Recipe saved successfully!");
+            form.reset();
+            instructionsContainer.innerHTML = "";
+            stepCount = 0;
+            addStep(); 
+      })
+            .catch((error) => {
+            console.error("Error saving recipe:", error);
+            alert("something went wrong :(");
+      });
 });
 </script>
 
