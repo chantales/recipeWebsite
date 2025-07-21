@@ -42,15 +42,16 @@
       </label>
 
       <button type="button" id="saveRecipeBtn">Save recipe</button>
+
+      <br>
+      <br>
+      <h1>title of recipe</h1>
+      <input id="pullRecipeTitle">
+
+      <button id="pullRecipeBtn">Pull Recipe</button>
+      <h3 id="pullRecipeSpace"></h3>
+
 </form>
-
-<br>
-<br>
-<h1>title of recipe</h1>
-<input id="pullRecipeTitle">
-
-<button id="pullRecipeBtn">Pull Recipe</button>
-<h3 id="pullRecipeSpace"></h3>
 
 
 
@@ -174,7 +175,7 @@ e.preventDefault();
 
       const recipe = {
             title,
-            tags,
+
             cookingTime,
             ingredients,
             instructions
