@@ -81,24 +81,38 @@ const database = getDatabase();
 
 
 
-console.log("code updated 1");
+console.log("code updated 2");
 
 const form = document.getElementById("recipeForm");
 const instructionsContainer = document.getElementById("instructionsContainer");
 const addStepBtn = document.getElementById("addStepBtn");
 const saveRecipeBtn = document.getElementById("saveRecipeBtn");
 
-const breakfastBtn = document.getElementById("breakfastBtn");
+document.getElementById("breakfastBtn").addEventListener("click", () => addTag("breakfast"));
+document.getElementById("lunchBtn").addEventListener("click", () => addTag("lunch"));
+document.getElementById("dinnerBtn").addEventListener("click", () => addTag("dinner"));
+document.getElementById("dessertBtn").addEventListener("click", () => addTag("dessert"));
+document.getElementById("snackBtn").addEventListener("click", () => addTag("snack"));
+document.getElementById("otherBtn").addEventListener("click", () => addTag("other"));
 
+
+
+
+let tags = [];
 let stepCount = 0;
+
 addStep();
 addStepBtn.addEventListener("click", () => addStep());
 
-breakfastBtn.addEventListener("click", addTag)
-
-function addTag() {
-      console.log("i am breakfast")
+function addTag(tag) {
+      if (tags.includes(tag)) {
+            tags = tags.filter(t => t !==tag);
+      } else {
+            tags.push(tag);
+      }
+      console.log("tags selected:", tags);
 };
+
 
 
 function addStep(initialValue = "") {
@@ -175,7 +189,7 @@ e.preventDefault();
 
       const recipe = {
             title,
-
+            tags,
             cookingTime,
             ingredients,
             instructions
