@@ -41,13 +41,16 @@
       <button type="button" id="addStepBtn">Add Step</button>
       </label>
 
-      <button type="saveRecipeBtn">Save recipe</button>
+      <button type="button" id="saveRecipeBtn">Save recipe</button>
 </form>
 
+<br>
+<br>
+<h1>title of recipe</h1>
+<input id="pullRecipeTitle">
 
-
-
-
+<button id="pullRecipeBtn">Pull Recipe</button>
+<h3 id="pullRecipeSpace"></h3>
 
 
 
@@ -70,14 +73,14 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-import {getDatabase, set, ref, push}
+import {getDatabase, set, ref, push, get, update, remove, child}
 from "https://www.gstatic.com/firebasejs/11.10.0/firebase-database.js";
 
 const database = getDatabase();
 
 
 
-console.log("code updated 7");
+console.log("code updated 1");
 
 const form = document.getElementById("recipeForm");
 const instructionsContainer = document.getElementById("instructionsContainer");
@@ -144,10 +147,8 @@ function addStep(initialValue = "") {
 
 
 
-
-
 saveRecipeBtn.addEventListener("click", (e) => {
-      e.preventDefault();
+e.preventDefault();
 
       const title = document.getElementById("titleOfRecipe").value.trim();
       //const tagsString = document.getElementById("tags").value.trim();
@@ -195,6 +196,15 @@ saveRecipeBtn.addEventListener("click", (e) => {
             alert("something went wrong :(");
       });
 });
+
+
+function findData() {
+      const databaseref =ref(database);
+      get(child(databaseref))
+
+};
+
+
 </script>
 
 
