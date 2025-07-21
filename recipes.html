@@ -49,7 +49,7 @@
       <input id="pullRecipeTitle">
 
       <button id="pullRecipeBtn">Pull Recipe</button>
-      <h3 id="pullRecipeSpace"></h3>
+      <h3 id="pullRecipeSpace" type="text"></h3>
 
 </form>
 
@@ -95,7 +95,7 @@ document.getElementById("dessertBtn").addEventListener("click", () => addTag("de
 document.getElementById("snackBtn").addEventListener("click", () => addTag("snack"));
 document.getElementById("otherBtn").addEventListener("click", () => addTag("other"));
 
-
+var pullRecipeSpace = document.querySelector("#pullRecipeSpace");
 
 
 let tags = [];
@@ -215,8 +215,12 @@ e.preventDefault();
 
 function findData() {
       const databaseref =ref(database);
-      get(child(databaseref))
-
+      get(child(databaseref, "recipes/" + title.value))
+      .then((snapshot)=>{
+            if(snapshot.exists()) {
+                  pullRecipeSpace.innerHTML = "ingredients" +snapshot.val().ingredients;
+            }
+      })
 };
 
 
