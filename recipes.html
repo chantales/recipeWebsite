@@ -81,7 +81,7 @@ const database = getDatabase();
 
 
 
-console.log("code updated 5");
+console.log("code updated 1");
 
 const form = document.getElementById("recipeForm");
 const instructionsContainer = document.getElementById("instructionsContainer");
@@ -217,7 +217,7 @@ e.preventDefault();
 
 function findData() {
       const databaseref =ref(database);
-      get(child(databaseref, "recipes/" + title.value))
+      get(child(databaseref, "recipes/" + title))
       .then((snapshot)=>{
             if(snapshot.exists()) {
                   pullRecipeSpace.innerHTML = "ingredients:" +snapshot.val().ingredients;
