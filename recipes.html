@@ -215,7 +215,7 @@ e.preventDefault();
 
 onChildAdded(recipesRef, (snapshot) => {
 const recipe = snapshot.val();
-displayNewRecipe(recipe);
+displayRecipe(recipe);
 });
 
 get(recipesRef)
@@ -247,7 +247,7 @@ function displayRecipe(recipe) {
     <hr>
   `;
 
-  recipesList.appendChild(recipeDiv);
+  pullAllRecipes.appendChild(recipeDiv);
 }
 
 
