@@ -218,8 +218,13 @@ function findData() {
       get(child(databaseref, "recipes/" + title.value))
       .then((snapshot)=>{
             if(snapshot.exists()) {
-                  pullRecipeSpace.innerHTML = "ingredients" +snapshot.val().ingredients;
+                  pullRecipeSpace.innerHTML = "ingredients:" +snapshot.val().ingredients;
+            } else {
+                  alert ("Pullling Recipe went wrong")
             }
+      })
+      .catch((error)=> {
+            alert(error)
       })
 };
 
