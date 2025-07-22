@@ -48,7 +48,7 @@
       <h1>title of recipe</h1>
       <input id="pullRecipeTitle">
 
-      <button id="pullRecipeBtn">Pull Recipe</button>
+      <button type="button" id="pullRecipeBtn">Pull Recipe</button>
       <h3 id="pullRecipeSpace" type="text"></h3>
 
 </form>
@@ -81,12 +81,13 @@ const database = getDatabase();
 
 
 
-console.log("code updated 4");
+console.log("code updated 5");
 
 const form = document.getElementById("recipeForm");
 const instructionsContainer = document.getElementById("instructionsContainer");
 const addStepBtn = document.getElementById("addStepBtn");
 const saveRecipeBtn = document.getElementById("saveRecipeBtn");
+const pullRecipeBtn = document.getElementById("pullRecipeBtn");
 
 document.getElementById("breakfastBtn").addEventListener("click", () => addTag("breakfast"));
 document.getElementById("lunchBtn").addEventListener("click", () => addTag("lunch"));
@@ -96,6 +97,7 @@ document.getElementById("snackBtn").addEventListener("click", () => addTag("snac
 document.getElementById("otherBtn").addEventListener("click", () => addTag("other"));
 
 var pullRecipeSpace = document.querySelector("#pullRecipeSpace");
+pullRecipeBtn.addEventListener("click", () => findData());
 
 
 let tags = [];
