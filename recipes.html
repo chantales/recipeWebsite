@@ -8,6 +8,8 @@
 </head>
 <body>
 <h1>Add a New Recipe</h1>
+<br>
+<br>
 
 <form id="recipeForm">
       <label>
@@ -45,11 +47,8 @@
 
       <br>
       <br>
-      <h1>title of recipe</h1>
-      <input id="pullRecipeTitle">
-
-      <button type="button" id="pullRecipeBtn">Pull Recipe</button>
-      <h3 id="pullRecipeSpace" type="text"></h3>
+      <h1>All recipes </h1>
+      <div id="pullAllRecipes"></div>
 
 </form>
 
@@ -76,6 +75,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 import {getDatabase, set, ref, push, get, update, remove, child}
 from "https://www.gstatic.com/firebasejs/11.10.0/firebase-database.js";
+import { onChildAdded } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-database.js";
 
 const database = getDatabase();
 
@@ -87,7 +87,10 @@ const form = document.getElementById("recipeForm");
 const instructionsContainer = document.getElementById("instructionsContainer");
 const addStepBtn = document.getElementById("addStepBtn");
 const saveRecipeBtn = document.getElementById("saveRecipeBtn");
-const pullRecipeBtn = document.getElementById("pullRecipeBtn");
+const pullAllRecipes = document.getElementById("pullAllRecipes");
+const recipesRef = ref(database, "recipes");
+
+
 
 document.getElementById("breakfastBtn").addEventListener("click", () => addTag("breakfast"));
 document.getElementById("lunchBtn").addEventListener("click", () => addTag("lunch"));
@@ -96,8 +99,6 @@ document.getElementById("dessertBtn").addEventListener("click", () => addTag("de
 document.getElementById("snackBtn").addEventListener("click", () => addTag("snack"));
 document.getElementById("otherBtn").addEventListener("click", () => addTag("other"));
 
-var pullRecipeSpace = document.querySelector("#pullRecipeSpace");
-pullRecipeBtn.addEventListener("click", () => findData());
 
 
 let tags = [];
@@ -197,7 +198,6 @@ e.preventDefault();
             instructions
       };
 
-      const recipesRef = ref(database, "recipes");
       const newRecipeRef = push(recipesRef);
 
       set(newRecipeRef, recipe) 
@@ -215,20 +215,42 @@ e.preventDefault();
 });
 
 
-function findData() {
-      const databaseref =ref(database);
-      get(child(databaseref, "recipes/" + title))
-      .then((snapshot)=>{
-            if(snapshot.exists()) {
-                  pullRecipeSpace.innerHTML = "ingredients:" +snapshot.val().ingredients;
-            } else {
-                  alert ("Pullling Recipe went wrong")
-            }
-      })
-      .catch((error)=> {
-            alert(error)
-      })
-};
+onChildAdded(recipesRef, (snapshot) => {
+const recipe = snapshot.val();
+displayNewRecipe(recipe);
+});
+
+get(recipesRef)
+.then((snapshot) => {
+if (snapshot.exists()) {
+      const recipes = snapshot.val();
+      Object.values(recipes).forEach((recipe) => {
+      displayRecipe(recipe);
+      });
+} else {
+      pullAllRecipes.innerHTML = "<p>No recipes found.</p>";
+}
+})
+.catch((error) => {
+console.error("Error loading recipes:", error);
+});
+
+
+function displayRecipe(recipe) {
+  const recipeDiv = document.createElement("div");
+  recipeDiv.classList.add("recipe-card");
+
+  recipeDiv.innerHTML = `
+    <h3>${recipe.title}</h3>
+    <p><strong>Tags:</strong> ${recipe.tags?.join(", ") || "None"}</p>
+    <p><strong>Cooking Time:</strong> ${recipe.cookingTime || "?"} mins</p>
+    <p><strong>Ingredients:</strong><br>${recipe.ingredients?.join("<br>") || "None"}</p>
+    <p><strong>Instructions:</strong><br>${recipe.instructions?.map((s, i) => `Step ${i + 1}: ${s}`).join("<br>") || "None"}</p>
+    <hr>
+  `;
+
+  recipesList.appendChild(recipeDiv);
+}
 
 
 </script>
