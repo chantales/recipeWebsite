@@ -73,12 +73,10 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-import {getDatabase, set, ref, push, get, update, remove, child}
+import {getDatabase, set, ref, push, get, update, remove, child, onChildAdded}
 from "https://www.gstatic.com/firebasejs/11.10.0/firebase-database.js";
-import { onChildAdded } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-database.js";
 
 const database = getDatabase();
-
 
 
 console.log("code updated 1");
