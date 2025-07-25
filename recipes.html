@@ -18,13 +18,18 @@
       </label>
 
       <label>
-      meal of the day
+      Meal of the day
       <button type="button" id="breakfastBtn">breakfast</button>
       <button type="button" id="lunchBtn">lunch</button>
       <button type="button" id="dinnerBtn">dinner</button>
       <button type="button" id="dessertBtn">dessert</button>
       <button type="button" id="snackBtn">snack</button>
       <button type="button" id="otherBtn">other</button>
+      </label>
+
+      <label>
+      Prep Time:
+      <input type="number" id="prepTimeOfRecipe" />
       </label>
 
       <label>
@@ -166,7 +171,7 @@ saveRecipeBtn.addEventListener("click", (e) => {
 e.preventDefault();
 
       const title = document.getElementById("titleOfRecipe").value.trim();
-      //const tagsString = document.getElementById("tags").value.trim();
+      const prepTime = document.getElementById("prepTimeOfRecipe").value;
       const cookingTime = document.getElementById("cookingTimeOfRecipe").value;
       const ingredientsString = document.getElementById("ingredientsOfRecipe").value.trim();
 
@@ -241,6 +246,7 @@ function displayRecipe(recipe, ID) {
   recipeDiv.innerHTML = `
       <h3><a href="recipe.html?id=${ID}" target="_blank">${recipe.title}</a></h3>
       <p><strong>Tags:</strong> ${recipe.tags?.join(", ") || "None"}</p>
+      <p><strong>Prep Time:<strong> ${recipe.prepTime || "?"} mins </p>
       <p><strong>Cooking Time:</strong> ${recipe.cookingTime || "?"} mins</p>
       <p><strong>Ingredients:</strong><br>${recipe.ingredients?.join("<br>") || "None"}</p>
       <p><strong>Instructions:</strong><br>${recipe.instructions?.map((s, i) => `Step ${i + 1}: ${s}`).join("<br>") || "None"}</p>
