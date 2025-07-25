@@ -239,7 +239,7 @@ function displayRecipe(recipe, ID) {
   recipeDiv.classList.add("recipe-card");
 
   recipeDiv.innerHTML = `
-      <h3><a href="recipe.html?id=${ID}">${recipe.title} target="_blank" </a></h3>
+      <h3><a href="recipe.html?id=${ID}" target="_blank">${recipe.title}</a></h3>
       <p><strong>Tags:</strong> ${recipe.tags?.join(", ") || "None"}</p>
       <p><strong>Cooking Time:</strong> ${recipe.cookingTime || "?"} mins</p>
       <p><strong>Ingredients:</strong><br>${recipe.ingredients?.join("<br>") || "None"}</p>
