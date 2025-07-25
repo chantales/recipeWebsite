@@ -89,7 +89,6 @@ const pullAllRecipes = document.getElementById("pullAllRecipes");
 const recipesRef = ref(database, "recipes");
 
 
-
 document.getElementById("breakfastBtn").addEventListener("click", () => addTag("breakfast"));
 document.getElementById("lunchBtn").addEventListener("click", () => addTag("lunch"));
 document.getElementById("dinnerBtn").addEventListener("click", () => addTag("dinner"));
@@ -197,8 +196,9 @@ e.preventDefault();
       };
 
       const newRecipeRef = push(recipesRef);
+      const recipeID = newRecipeRef.key;
 
-      set(newRecipeRef, recipe) 
+      set(newRecipeRef, {recipe, ID: recipeID}) 
             .then(() => { // after saving the recipe, the elements in the page are cleared and reset. 
             alert("Recipe saved successfully!");
             form.reset();
@@ -222,8 +222,8 @@ get(recipesRef)
 .then((snapshot) => {
 if (snapshot.exists()) {
       const recipes = snapshot.val();
-      Object.values(recipes).forEach((recipe) => {
-      displayRecipe(recipe);
+      Object.entries(recipes).forEach(([ID, recipe]) => {
+      displayRecipe(recipe, ID);
       });
 } else {
       pullAllRecipes.innerHTML = "<p>No recipes found.</p>";
@@ -234,12 +234,12 @@ console.error("Error loading recipes:", error);
 });
 
 
-function displayRecipe(recipe) {
+function displayRecipe(recipe, id) {
   const recipeDiv = document.createElement("div");
   recipeDiv.classList.add("recipe-card");
 
   recipeDiv.innerHTML = `
-    <h3>${recipe.title}</h3>
+  <h3><a href="recipe.html?id=${ID}">${recipe.title}</a></h3>
     <p><strong>Tags:</strong> ${recipe.tags?.join(", ") || "None"}</p>
     <p><strong>Cooking Time:</strong> ${recipe.cookingTime || "?"} mins</p>
     <p><strong>Ingredients:</strong><br>${recipe.ingredients?.join("<br>") || "None"}</p>
