@@ -197,7 +197,7 @@ e.preventDefault();
       const newRecipeRef = push(recipesRef);
       const recipeID = newRecipeRef.key;
 
-      set(newRecipeRef, {recipe, ID: recipeID}) 
+      set(newRecipeRef, recipe) 
             .then(() => { // after saving the recipe, the elements in the page are cleared and reset. 
             alert("Recipe saved successfully!");
             form.reset();
@@ -222,7 +222,7 @@ get(recipesRef)
 if (snapshot.exists()) {
       const recipes = snapshot.val();
       Object.entries(recipes).forEach(([ID, recipe]) => {
-      displayRecipe(data.recipe, ID);
+      displayRecipe(recipe, ID);
       });
 } else {
       pullAllRecipes.innerHTML = "<p>No recipes found.</p>";
