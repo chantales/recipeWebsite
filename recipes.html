@@ -222,7 +222,7 @@ get(recipesRef)
 if (snapshot.exists()) {
       const recipes = snapshot.val();
       Object.entries(recipes).forEach(([ID, recipe]) => {
-      displayRecipe(recipe, ID);
+      displayRecipe(data.recipe, ID);
       });
 } else {
       pullAllRecipes.innerHTML = "<p>No recipes found.</p>";
@@ -234,10 +234,10 @@ console.error("Error loading recipes:", error);
 
 
 function displayRecipe(recipe, ID) {
-  const recipeDiv = document.createElement("div");
-  recipeDiv.classList.add("recipe-card");
+      const recipeDiv = document.createElement("div");
+      recipeDiv.classList.add("recipe-card");
 
-  recipeDiv.innerHTML = `
+recipeDiv.innerHTML = `
       <h3><a href="recipe.html?id=${ID}" target="_blank">${recipe.title}</a></h3>
       <p><strong>Tags:</strong> ${recipe.tags?.join(", ") || "None"}</p>
       <p><strong>Preparing Time:</strong> ${recipe.prepTime || "?"} mins</p>
