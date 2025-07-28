@@ -84,7 +84,7 @@ from "https://www.gstatic.com/firebasejs/11.10.0/firebase-database.js";
 const database = getDatabase();
 
 
-console.log("code updated 4");
+console.log("code updated 1");
 
 const form = document.getElementById("recipeForm");
 const instructionsContainer = document.getElementById("instructionsContainer");
@@ -195,6 +195,7 @@ e.preventDefault();
       const recipe = {
             title,
             tags,
+            prepTime,
             cookingTime,
             ingredients,
             instructions
@@ -246,7 +247,7 @@ function displayRecipe(recipe, ID) {
   recipeDiv.innerHTML = `
       <h3><a href="recipe.html?id=${ID}" target="_blank">${recipe.title}</a></h3>
       <p><strong>Tags:</strong> ${recipe.tags?.join(", ") || "None"}</p>
-      <p><strong>Prep Time:<strong> ${recipe.prepTime || "?"} mins </p>
+      <p><strong>Preparing Time:</strong> ${recipe.prepTime || "?"} mins</p>
       <p><strong>Cooking Time:</strong> ${recipe.cookingTime || "?"} mins</p>
       <p><strong>Ingredients:</strong><br>${recipe.ingredients?.join("<br>") || "None"}</p>
       <p><strong>Instructions:</strong><br>${recipe.instructions?.map((s, i) => `Step ${i + 1}: ${s}`).join("<br>") || "None"}</p>
