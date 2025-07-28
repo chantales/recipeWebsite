@@ -219,18 +219,20 @@ displayRecipe(recipe);
 
 get(recipesRef)
 .then((snapshot) => {
-if (snapshot.exists()) {
-      const recipes = snapshot.val();
-      Object.entries(recipes).forEach(([ID, recipe]) => {
-      displayRecipe(recipe, ID);
+      if (snapshot.exists()) {
+            const recipes = snapshot.val();
+            pullAllRecipes.innerHTML = "";  // Clear old list
+            Object.entries(recipes).forEach(([ID, recipe]) => {
+                  displayRecipe(recipe, ID);
       });
-} else {
-      pullAllRecipes.innerHTML = "<p>No recipes found.</p>";
-}
+      } else {
+            pullAllRecipes.innerHTML = "<p>No recipes found.</p>";
+      }
 })
 .catch((error) => {
-console.error("Error loading recipes:", error);
+  console.error("Error loading recipes:", error);
 });
+
 
 
 function displayRecipe(recipe, ID) {
