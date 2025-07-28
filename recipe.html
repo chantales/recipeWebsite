@@ -46,6 +46,7 @@
 
             recipeDetails.innerHTML = `
             <p><strong>Tags:</strong> ${recipe.tags?.join(", ") || "None"}</p>
+            <p><strong>Preparing Time:</strong> ${recipe.prepTime || "?"} mins</p>
             <p><strong>Cooking Time:</strong> ${recipe.cookingTime || "?"} mins</p>
             <p><strong>Ingredients:</strong><br>${recipe.ingredients?.join("<br>") || "None"}</p>
             <p><strong>Instructions:</strong><br>${recipe.instructions?.map((s, i) => `Step ${i + 1}: ${s}`).join("<br>") || "None"}</p>

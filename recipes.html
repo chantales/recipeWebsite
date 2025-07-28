@@ -29,12 +29,12 @@
 
       <label>
       Prep Time:
-      <input type="number" id="prepTimeOfRecipe" />
+      <input type="number" id="prepTimeOfRecipe"/>
       </label>
 
       <label>
       Cooking Time:
-      <input type="number" id="cookingTimeOfRecipe" />
+      <input type="number" id="cookingTimeOfRecipe"/>
       </label>
 
       <label>
@@ -174,13 +174,6 @@ e.preventDefault();
       const prepTime = document.getElementById("prepTimeOfRecipe").value;
       const cookingTime = document.getElementById("cookingTimeOfRecipe").value;
       const ingredientsString = document.getElementById("ingredientsOfRecipe").value.trim();
-
-      /*
-      const tags = tagsString
-      ? tagsString.split(",").map(tag => tag.trim()).filter(tag => tag !== "")
-      : [];
-      */
-
 
       const ingredients = ingredientsString
             ? ingredientsString.split("\n").map(line => line.trim()).filter(line => line !== "")
