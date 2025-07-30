@@ -224,8 +224,9 @@ get(recipesRef)
                                                                         console.log("Firebase Recipes Object");
             pullAllRecipes.innerHTML = "";  // Clear old list
             Object.entries(recipes).forEach(([ID, recipe]) => {
+                  console.log(`Recipe ID: ${ID}`, recipe);
                   displayRecipe(recipe, ID);
-      });
+            });
       } else {
             pullAllRecipes.innerHTML = "<p>No recipes found.</p>";
       }
@@ -239,6 +240,8 @@ get(recipesRef)
 function displayRecipe(recipe, ID) {
       const recipeDiv = document.createElement("div");
       recipeDiv.classList.add("recipe-card");
+      
+      console.log("Displaying recipe:", recipe);
 
 recipeDiv.innerHTML = `
       <h3><a href="recipe.html?id=${ID}" target="_blank">${recipe.title}</a></h3>
