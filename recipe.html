@@ -27,9 +27,9 @@
 
 
       const app = initializeApp(firebaseConfig);
-      const database = getDatabase();
+      const database = getDatabase(app);
 
-      // get recipe ID from URL
+      // get recipe ID from the URL
       const params = new URLSearchParams(window.location.search);
       const recipeId = params.get("id");
 
@@ -41,7 +41,8 @@
 
       get(recipeRef).then(snapshot => {
             if (snapshot.exists()) {
-            const recipe = snapshot.val();
+            const data = snapshot.val();
+            const recipe = data.recipe;
             recipeTitle.textContent = recipe.title;
 
             recipeDetails.innerHTML = `
@@ -59,7 +60,7 @@
             recipeTitle.textContent = "Error loading recipe.";
       });
       } else {
-      recipeTitle.textContent = "No recipe ID provided.";
+            recipeTitle.textContent = "No recipe ID provided.";
       }
 </script>
 </body>
