@@ -224,7 +224,6 @@ get(recipesRef)
                                                                         console.log("Firebase Recipes Object");
             pullAllRecipes.innerHTML = "";  // Clear old list
             Object.entries(recipes).forEach(([ID, recipe]) => {
-                  const recipe = data.recipe || data;
                   displayRecipe(recipe, ID);
             });
       } else {
