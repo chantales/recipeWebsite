@@ -221,7 +221,6 @@ get(recipesRef)
 .then((snapshot) => {
       if (snapshot.exists()) {
             const recipes = snapshot.val();
-                                                                        console.log("Firebase Recipes Object");
             pullAllRecipes.innerHTML = "";  // Clear old list
             Object.entries(recipes).forEach(([ID, recipe]) => {
                   displayRecipe(recipe, ID);
