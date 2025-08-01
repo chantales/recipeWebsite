@@ -41,8 +41,7 @@
 
       get(recipeRef).then(snapshot => {
             if (snapshot.exists()) {
-            const data = snapshot.val();
-            const recipe = data.recipe;
+            const recipe = snapshot.val();
             recipeTitle.textContent = recipe.title;
 
             recipeDetails.innerHTML = `
