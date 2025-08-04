@@ -49,10 +49,6 @@
       flex-direction: column;
       gap: 2rem;
     }
-    
-    .searchInputBar {
-      padding: 30px;
-    };
 
 
     .recipeList {

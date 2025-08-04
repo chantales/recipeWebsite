@@ -23,16 +23,24 @@
       </label>
 
       <label>
-      Meal of the day
-      <button type="button" id="breakfastBtn">breakfast</button>
-      <button type="button" id="lunchBtn">lunch</button>
-      <button type="button" id="dinnerBtn">dinner</button>
-      <button type="button" id="dessertBtn">dessert</button>
-      <button type="button" id="snackBtn">snack</button>
-      <button type="button" id="otherBtn">other</button>
-      </label>
+            Meal of the day
+            <button type="button" class="tag-btn" data-tag="Breakfast">Breakfast</button>
+            <button type="button" class="tag-btn" data-tag="lunch">Lunch</button>
+            <button type="button" class="tag-btn" data-tag="dinner">Dinner</button>
+            <button type="button" class="tag-btn" data-tag="dessert">Dessert</button>
+            <button type="button" class="tag-btn" data-tag="snack">Snack</button>
+            <button type="button" class="tag-btn" data-tag="other">Other</button>
+      </label>    
 
       <label>
+            Dietary specifcations
+            <button type="button" class="tag-btn" data-tag="vegetarian">Vegetarian</button>
+            <button type="button" class="tag-btn" data-tag="vegan">Vegan</button>
+            <button type="button" class="tag-btn" data-tag="glutenFree">Gluten-free</button>
+            <button type="button" class="tag-btn" data-tag="halal">Halal</button>
+            <button type="button" class="tag-btn" data-tag="kosher">Kosher</button>
+      </label> 
+
       Prep Time:
       <input type="number" id="prepTimeOfRecipe"/>
       </label>
@@ -99,14 +107,6 @@ const pullAllRecipes = document.getElementById("pullAllRecipes");
 const recipesRef = ref(database, "recipes");
 
 
-document.getElementById("breakfastBtn").addEventListener("click", () => addTag("breakfast"));
-document.getElementById("lunchBtn").addEventListener("click", () => addTag("lunch"));
-document.getElementById("dinnerBtn").addEventListener("click", () => addTag("dinner"));
-document.getElementById("dessertBtn").addEventListener("click", () => addTag("dessert"));
-document.getElementById("snackBtn").addEventListener("click", () => addTag("snack"));
-document.getElementById("otherBtn").addEventListener("click", () => addTag("other"));
-
-
 let allRecipesList = [];
 let tags = [];
 let stepCount = 0;
@@ -136,7 +136,12 @@ document.getElementById("searchInputBar").addEventListener("input", (e) => {
 
 
 
-
+document.querySelectorAll(".tag-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const tag = btn.dataset.tag;
+    addTag(tag);
+  });
+});
 
 
 addStep();
@@ -221,6 +226,7 @@ e.preventDefault();
       const recipe = {
             title,
             tags,
+            dietarySpef,
             prepTime,
             cookingTime,
             ingredients,
@@ -276,6 +282,7 @@ function displayRecipe(recipe, ID) {
 recipeDiv.innerHTML = `
       <h3><a href="recipe.html?id=${ID}" target="_blank">${recipe.title}</a></h3>
       <p><strong>Tags:</strong> ${recipe.tags?.join(", ") || "None"}</p>
+      <p><strong>Dietary Specifications:</strong> ${recipe.dietarySpef?.join(", ") || "None"}</p>
       <p><strong>Preparing Time:</strong> ${recipe.prepTime || "?"} mins</p>
       <p><strong>Cooking Time:</strong> ${recipe.cookingTime || "?"} mins</p>
       <p><strong>Ingredients:</strong><br>${recipe.ingredients?.join("<br>") || "None"}</p>
