@@ -8,7 +8,7 @@
 </head>
 <body>
 <div id="searchContainer">
-      <input type="text" id="searchInput" placeholder="Search recipes by title..." />
+      <input type="text" id="searchInputBar" placeholder="Search recipes by title..." />
 </div>
 
 
@@ -128,7 +128,7 @@ function renderFilteredRecipes(query) {
 }
 
 // Listen to search input
-document.getElementById("searchInput").addEventListener("input", (e) => {
+document.getElementById("searchInputBar").addEventListener("input", (e) => {
   const query = e.target.value;
   renderFilteredRecipes(query);
 });
