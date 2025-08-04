@@ -7,7 +7,7 @@
     }
     
     body {
-      display: flex;
+      display: inline-block;
       height: 100vh;
       background-color: #fefcf8;
       color: #333;
@@ -50,41 +50,11 @@
       gap: 2rem;
     }
     
-    /* Search bar */
-    .searchBar {
-      display: flex;
-      gap: 1rem;
-      align-items: center;
-    }
-    
-    .searchBar input {
-      flex: 1;
-      padding: 0.75rem 1rem;
-      border: 2px solid #ccc;
-      border-radius: 12px;
-      font-size: 1rem;
-    }
-    
-    .searchBar .filter-btn {
-      padding: 0.75rem 1.2rem;
-      border: none;
-      border-radius: 10px;
-      background-color: #eee;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    
-    .searchBar .filter-btn:hover {
-      background-color: #ddd;
-    }
+    .searchContainer {
+      display: block;
+      padding: 30px;
+    };
 
-    #searchBarInput {
-      width: 100%; /* Full-width */
-      font-size: 16px; /* Increase font-size */
-      padding: 12px 20px 12px 40px; /* Add some padding */
-      border: 1px solid #ddd; /* Add a grey border */
-      margin-bottom: 12px; /* Add some space below the input */
-    }
 
     .recipeList {
       list-style-type: none;

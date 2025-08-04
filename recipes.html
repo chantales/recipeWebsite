@@ -7,6 +7,11 @@
       <link rel="stylesheet" href="styles.css"/>
 </head>
 <body>
+<div id="searchContainer">
+      <input type="text" id="searchInput" placeholder="Search recipes by title..." />
+</div>
+
+
 <h1>Add a New Recipe</h1>
 <br>
 <br>
@@ -102,9 +107,37 @@ document.getElementById("snackBtn").addEventListener("click", () => addTag("snac
 document.getElementById("otherBtn").addEventListener("click", () => addTag("other"));
 
 
-
+let allRecipesList = [];
 let tags = [];
 let stepCount = 0;
+
+function renderFilteredRecipes(query) {
+      pullAllRecipes.innerHTML = "";
+      const filtered = allRecipesList.filter(([id, recipe]) =>
+      recipe.title.toLowerCase().includes(query.toLowerCase())
+      );
+            filtered.forEach(([id, recipe]) => {
+            const recipeDiv = displayRecipe(recipe, id);
+            pullAllRecipes.appendChild(recipeDiv);
+      });
+}
+
+// Listen to search input
+document.getElementById("searchInput").addEventListener("input", (e) => {
+  const query = e.target.value;
+  renderFilteredRecipes(query);
+});
+
+
+
+
+
+
+
+
+
+
+
 
 addStep();
 addStepBtn.addEventListener("click", () => addStep());
@@ -221,16 +254,16 @@ get(recipesRef)
 .then((snapshot) => {
       if (snapshot.exists()) {
             const recipes = snapshot.val();
-            pullAllRecipes.innerHTML = "";  // Clear old list
-            Object.entries(recipes).forEach(([ID, recipe]) => {
-                  displayRecipe(recipe, ID);
-            });
+            pullAllRecipes.innerHTML = "";
+            allRecipesList = Object.entries(recipes); // store as [id, recipe] pairs
+
+            renderFilteredRecipes(""); // show all recipes at first
       } else {
             pullAllRecipes.innerHTML = "<p>No recipes found.</p>";
-      }
+    }
 })
 .catch((error) => {
-  console.error("Error loading recipes:", error);
+      console.error("Error loading recipes:", error);
 });
 
 
@@ -250,7 +283,7 @@ recipeDiv.innerHTML = `
       <hr>
   `   ;
 
-  pullAllRecipes.appendChild(recipeDiv);
+      return recipeDiv;
 }
 
 
