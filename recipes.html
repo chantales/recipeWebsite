@@ -111,6 +111,10 @@ let allRecipesList = [];
 let tags = [];
 let stepCount = 0;
 
+
+
+
+
 function renderFilteredRecipes(query) {
       pullAllRecipes.innerHTML = "";
       const filtered = allRecipesList.filter(([id, recipe]) =>
@@ -119,6 +123,7 @@ function renderFilteredRecipes(query) {
             filtered.forEach(([id, recipe]) => {
             const recipeDiv = displayRecipe(recipe, id);
             pullAllRecipes.appendChild(recipeDiv);
+
       });
 }
 
@@ -127,11 +132,6 @@ document.getElementById("searchInput").addEventListener("input", (e) => {
   const query = e.target.value;
   renderFilteredRecipes(query);
 });
-
-
-
-
-
 
 
 
