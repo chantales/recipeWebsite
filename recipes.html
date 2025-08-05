@@ -34,13 +34,13 @@
 
       <label>
             Dietary specifcations
-            <button type="button" class="tag-btn" data-tag="vegetarian">Vegetarian</button>
-            <button type="button" class="tag-btn" data-tag="vegan">Vegan</button>
-            <button type="button" class="tag-btn" data-tag="glutenFree">Gluten-free</button>
-            <button type="button" class="tag-btn" data-tag="halal">Halal</button>
-            <button type="button" class="tag-btn" data-tag="kosher">Kosher</button>
-            <button type="button" class="tag-btn" data-tag="other">Other</button>
-            <button type="button" class="tag-btn" data-tag="none">None</button>
+            <button type="button" class="dietSpef-btn" data-tag="vegetarian">Vegetarian</button>
+            <button type="button" class="dietSpef-btn" data-tag="vegan">Vegan</button>
+            <button type="button" class="dietSpef-btn" data-tag="glutenFree">Gluten-free</button>
+            <button type="button" class="dietSpef-btn" data-tag="halal">Halal</button>
+            <button type="button" class="dietSpef-btn" data-tag="kosher">Kosher</button>
+            <button type="button" class="dietSpef-btn" data-tag="other">Other</button>
+            <button type="button" class="dietSpef-btn" data-tag="none">None</button>
       </label> 
 
       Prep Time:
@@ -111,6 +111,7 @@ const recipesRef = ref(database, "recipes");
 
 let allRecipesList = [];
 let tags = [];
+let dietarySpef = [];
 let stepCount = 0;
 
 
@@ -145,6 +146,13 @@ document.querySelectorAll(".tag-btn").forEach(btn => {
   });
 });
 
+document.querySelectorAll(".dietSpef-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const dietSpef = btn.dataset.tag;
+    addDietSpef(dietSpef);
+  });
+});
+
 
 addStep();
 addStepBtn.addEventListener("click", () => addStep());
@@ -158,6 +166,14 @@ function addTag(tag) {
       console.log("tags selected:", tags);
 };
 
+function addDietSpef(dietSpef) {
+      if (dietarySpef.includes(dietSpef)) {
+            dietarySpef = dietarySpef.filter(t => t !==dietSpef);
+      } else {
+            dietarySpef.push(dietSpef);
+      }
+      console.log("Dietary Specifications selected:", dietarySpef);
+};
 
 
 function addStep(initialValue = "") {
