@@ -11,7 +11,7 @@
       <input type="text" id="searchInputBar" placeholder="Search recipes by title..." />
       
       <div class="searchContDropD">
-            <button onclick="filterBtnFunction()" type="button" id="filterBtn">Filter</button>
+            <button onclick="filterBtnFunction()" type="button" class="filterBtn">Filter</button>
                   <div id="filterDropD" class="filterDropDContent">
                         <a href="recipe.html">testing 1</a>
                         <a href="recipe.html">testing 2</a>
@@ -148,6 +148,28 @@ document.getElementById("filterBtn").addEventListener("click", () => {
       const query = document.getElementById("searchInputBar").value;
       renderFilteredRecipes(query);
 });
+
+
+function filterBtnFunction() {
+      document.getElementById("filterDropD").classList.toggle("show");
+};
+
+window.onclick = function(event) {
+      if (!event.target.matches('.filterBtn')) {
+            var dropdowns = document.getElementsByClassName("filterDropDContent");
+            var i;
+            for (i= 0, i < dropdowns.length; i++;) {
+                  var openDropdown = dropdowns[i];
+                  if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                  }
+            }
+      }
+}
+
+
+
+
 
 
 
