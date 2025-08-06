@@ -9,6 +9,14 @@
 <body>
 <div id="searchContainer">
       <input type="text" id="searchInputBar" placeholder="Search recipes by title..." />
+      
+      <div class="searchContDropD">
+            <button onclick="filterBtnFunction()" type="button" id="filterBtn">Filter</button>
+                  <div id="filterDropD" class="filterDropDContent">
+                        <a href="recipe.html">testing 1</a>
+                        <a href="recipe.html">testing 2</a>
+                  </div>
+      </div>
 </div>
 
 
@@ -24,23 +32,23 @@
 
       <label>
             Meal of the day
-            <button type="button" class="tag-btn" data-tag="Breakfast">Breakfast</button>
-            <button type="button" class="tag-btn" data-tag="lunch">Lunch</button>
-            <button type="button" class="tag-btn" data-tag="dinner">Dinner</button>
-            <button type="button" class="tag-btn" data-tag="dessert">Dessert</button>
-            <button type="button" class="tag-btn" data-tag="snack">Snack</button>
-            <button type="button" class="tag-btn" data-tag="other">Other</button>
+            <button type="button" class="tagBtn" data-tag="breakfast">Breakfast</button>
+            <button type="button" class="tagBtn" data-tag="lunch">Lunch</button>
+            <button type="button" class="tagBtn" data-tag="dinner">Dinner</button>
+            <button type="button" class="tagBtn" data-tag="dessert">Dessert</button>
+            <button type="button" class="tagBtn" data-tag="snack">Snack</button>
+            <button type="button" class="tagBtn" data-tag="other">Other</button>
       </label>    
 
       <label>
             Dietary specifcations
-            <button type="button" class="dietSpef-btn" data-tag="vegetarian">Vegetarian</button>
-            <button type="button" class="dietSpef-btn" data-tag="vegan">Vegan</button>
-            <button type="button" class="dietSpef-btn" data-tag="glutenFree">Gluten-free</button>
-            <button type="button" class="dietSpef-btn" data-tag="halal">Halal</button>
-            <button type="button" class="dietSpef-btn" data-tag="kosher">Kosher</button>
-            <button type="button" class="dietSpef-btn" data-tag="other">Other</button>
-            <button type="button" class="dietSpef-btn" data-tag="none">None</button>
+            <button type="button" class="dietSpefBtn" data-tag="vegetarian">Vegetarian</button>
+            <button type="button" class="dietSpefBtn" data-tag="vegan">Vegan</button>
+            <button type="button" class="dietSpefBtn" data-tag="gluten-free">Gluten-free</button>
+            <button type="button" class="dietSpefBtn" data-tag="halal">Halal</button>
+            <button type="button" class="dietSpefBtn" data-tag="kosher">Kosher</button>
+            <button type="button" class="dietSpefBtn" data-tag="other">Other</button>
+            <button type="button" class="dietSpefBtn" data-tag="none">None</button>
       </label> 
 
       Prep Time:
@@ -119,34 +127,39 @@ let stepCount = 0;
 
 
 function renderFilteredRecipes(query) {
-      pullAllRecipes.innerHTML = "";
-      const filtered = allRecipesList.filter(([id, recipe]) =>
-      recipe.title.toLowerCase().includes(query.toLowerCase())
-      );
-            filtered.forEach(([id, recipe]) => {
-            const recipeDiv = displayRecipe(recipe, id);
-            pullAllRecipes.appendChild(recipeDiv);
+  pullAllRecipes.innerHTML = "";
+  
+      const filtered = allRecipesList.filter(([id, recipe]) => {
+            const matchesTitle = recipe.title.toLowerCase().includes(query.toLowerCase());
 
-      });
+            const matchesTags = tags.length === 0 || tags.every(tag => recipe.tags?.includes(tag));
+            const matchesDiet = dietarySpef.length === 0 || dietarySpef.every(diet => recipe.dietarySpef?.includes(diet));
+
+      return matchesTitle && matchesTags && matchesDiet;
+  });
+
+      filtered.forEach(([id, recipe]) => {
+            const recipeDiv = displayRecipe(recipe, id);
+      pullAllRecipes.appendChild(recipeDiv);
+  });
 }
 
-// Listen to search input
-document.getElementById("searchInputBar").addEventListener("input", (e) => {
-  const query = e.target.value;
-  renderFilteredRecipes(query);
+document.getElementById("filterBtn").addEventListener("click", () => {
+      const query = document.getElementById("searchInputBar").value;
+      renderFilteredRecipes(query);
 });
 
 
 
 
-document.querySelectorAll(".tag-btn").forEach(btn => {
+document.querySelectorAll(".tagBtn").forEach(btn => {
   btn.addEventListener("click", () => {
     const tag = btn.dataset.tag;
     addTag(tag);
   });
 });
 
-document.querySelectorAll(".dietSpef-btn").forEach(btn => {
+document.querySelectorAll(".dietSpefBtn").forEach(btn => {
   btn.addEventListener("click", () => {
     const dietSpef = btn.dataset.tag;
     addDietSpef(dietSpef);
@@ -176,15 +189,16 @@ function addDietSpef(dietSpef) {
 };
 
 
+
 function addStep(initialValue = "") {
       stepCount++;
       console.log("step function was activated");
 
       const stepDiv = document.createElement("div");
-      stepDiv.classList.add("step-container");
+      stepDiv.classList.add("stepContainer");
 
       const stepLabel = document.createElement("div");
-      stepLabel.classList.add("step-number");
+      stepLabel.classList.add("stepNumber");
       stepLabel.textContent = `Step ${stepCount}:`;
 
       const stepInput = document.createElement("input");
@@ -194,7 +208,7 @@ function addStep(initialValue = "") {
       const removeBtn = document.createElement("button");
       removeBtn.type = "button";
       removeBtn.textContent = "X";
-      removeBtn.classList.add("remove-btn")
+      removeBtn.classList.add("removeBtn")
 
       removeBtn.addEventListener("click", () => {
             instructionsContainer.removeChild(stepDiv);
@@ -209,9 +223,9 @@ function addStep(initialValue = "") {
 
       function updateStepNumbers() {
             stepCount = 0;
-            instructionsContainer.querySelectorAll(".step-container").forEach((div) => {
+            instructionsContainer.querySelectorAll(".stepContainer").forEach((div) => {
                   stepCount++;
-                  const stepLabel = div.querySelector(".step-number");
+                  const stepLabel = div.querySelector(".stepNumber");
                   if (stepLabel) {
             stepLabel.textContent = `Step ${stepCount}:`;
                   }
@@ -281,7 +295,7 @@ get(recipesRef)
             pullAllRecipes.innerHTML = "";
             allRecipesList = Object.entries(recipes); // store as [id, recipe] pairs
 
-            renderFilteredRecipes(""); // show all recipes at first
+            renderFilteredRecipes(""); // show all recipes on page load
       } else {
             pullAllRecipes.innerHTML = "<p>No recipes found.</p>";
     }
@@ -294,17 +308,17 @@ get(recipesRef)
 
 function displayRecipe(recipe, ID) {
       const recipeDiv = document.createElement("div");
-      recipeDiv.classList.add("recipe-card");
+      recipeDiv.classList.add("recipeCard");
       
 
 recipeDiv.innerHTML = `
-      <h3><a href="recipe.html?id=${ID}" target="_blank">${recipe.title}</a></h3>
-      <p><strong>Tags:</strong> ${recipe.tags?.join(", ") || "None"}</p>
-      <p><strong>Dietary Specifications:</strong> ${recipe.dietarySpef?.join(", ") || "None"}</p>
-      <p><strong>Preparing Time:</strong> ${recipe.prepTime || "?"} mins</p>
-      <p><strong>Cooking Time:</strong> ${recipe.cookingTime || "?"} mins</p>
-      <p><strong>Ingredients:</strong><br>${recipe.ingredients?.join("<br>") || "None"}</p>
-      <p><strong>Instructions:</strong><br>${recipe.instructions?.map((s, i) => `Step ${i + 1}: ${s}`).join("<br>") || "None"}</p>
+      <h3> <a href="recipe.html?id=${ID}" target="_blank">${recipe.title}</a></h3>
+      <p> <strong>Tags:</strong> ${recipe.tags?.join(", ") || "None"}</p>
+      <p> <strong>Dietary Specifications:</strong> ${recipe.dietarySpef?.join(", ") || "None"}</p>
+      <p> <strong>Preparing Time:</strong> ${recipe.prepTime || "?"} mins</p>
+      <p> <strong>Cooking Time:</strong> ${recipe.cookingTime || "?"} mins</p>
+      <p> <strong>Ingredients:</strong> <br>${recipe.ingredients?.join("<br>") || "None"}</p>
+      <p> <strong>Instructions:</strong> <br>${recipe.instructions?.map((s, i) => `Step ${i + 1}: ${s}`).join("<br>") || "None"}</p>
       <hr>
   `   ;
 
