@@ -11,11 +11,27 @@
       <input type="text" id="searchInputBar" placeholder="Search recipes by title..." />
       
       <div class="searchContDropD">
-            <button onclick="filterBtnFunction()" type="button" class="filterBtn">Filter</button>
-                  <div id="filterDropD" class="filterDropDContent">
-                        <a href="recipe.html">testing 1</a>
-                        <a href="recipe.html">testing 2</a>
+
+            <button type="button" id="mealFilterBtn">Meals</button>
+                  <div id="mealDropD" class="filterDropDContent">
+                        <button type="button" class="dropDBtn" data-tag="breakfast">Breakfast</button>
+                        <button type="button" class="dropDBtn" data-tag="lunch">Lunch</button>
+                        <button type="button" class="dropDBtn" data-tag="dinner">Dinner</button>
+                        <button type="button" class="dropDBtn" data-tag="dessert">Dessert</button>
+                        <button type="button" class="dropDBtn" data-tag="snack">Snack</button>
+                        <button type="button" class="dropDBtn" data-tag="other">Other</button>
                   </div>
+
+            <button type="button" id="dietFilterBtn">Dietary Specifications</button>
+                  <div id="dietDropD" class="filterDropDContent">
+                        <button type="button" class="dropDBtn" data-tag="vegetarian">Vegetarian</button>
+                        <button type="button" class="dropDBtn" data-tag="vegan">Vegan</button>
+                        <button type="button" class="dropDBtn" data-tag="gluten-free">Gluten-free</button>
+                        <button type="button" class="dropDBtn" data-tag="halal">Halal</button>
+                        <button type="button" class="dropDBtn" data-tag="kosher">Kosher</button>
+                        <button type="button" class="dropDBtn" data-tag="other">Other</button>
+                        <button type="button" class="dropDBtn" data-tag="none">None</button>
+                  </div>      
       </div>
 </div>
 
@@ -142,32 +158,24 @@ function renderFilteredRecipes(query) {
             const recipeDiv = displayRecipe(recipe, id);
       pullAllRecipes.appendChild(recipeDiv);
   });
-}
+};
 
-document.getElementById("filterBtn").addEventListener("click", () => {
-      const query = document.getElementById("searchInputBar").value;
-      renderFilteredRecipes(query);
+document.getElementById("mealFilterBtn").addEventListener("click", () => {
+  document.getElementById("mealDropD").classList.toggle("show");
+});
+
+document.getElementById("dietFilterBtn").addEventListener("click", () => {
+  document.getElementById("dietDropD").classList.toggle("show");
 });
 
 
-function filterBtnFunction() {
-      document.getElementById("filterDropD").classList.toggle("show");
-};
-
 window.onclick = function(event) {
-      if (!event.target.matches('.filterBtn')) {
-            var dropdowns = document.getElementsByClassName("filterDropDContent");
-            var i;
-            for (i= 0, i < dropdowns.length; i++;) {
-                  var openDropdown = dropdowns[i];
-                  if (openDropdown.classList.contains('show')) {
-                        openDropdown.classList.remove('show');
-                  }
-            }
-      }
-}
-
-
+  if (!event.target.matches('#mealFilterBtn') && !event.target.matches('#dietSpefFilterBtn')) {
+    document.querySelectorAll(".filterDropDContent").forEach(dropdown => {
+      dropdown.classList.remove("show");
+    });
+  }
+};
 
 
 
@@ -187,6 +195,34 @@ document.querySelectorAll(".dietSpefBtn").forEach(btn => {
     addDietSpef(dietSpef);
   });
 });
+
+
+document.querySelectorAll(".dropDBtn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const tag = btn.dataset.tag;
+
+    if (tags.includes(tag)) {
+      tags = tags.filter(t => t !== tag);
+    } else {
+      tags.push(tag);
+    }
+
+    console.log("Dropdown tag selected:", tags);
+
+    const query = document.getElementById("searchInputBar").value;
+    renderFilteredRecipes(query);
+  });
+});
+
+
+
+
+
+
+
+
+
+
 
 
 addStep();

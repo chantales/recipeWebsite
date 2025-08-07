@@ -211,6 +211,13 @@
 
 
 
+
+
+
+
+
+
+
     #searchInputBar{
       padding: 15px;
       font-size: 15px;
@@ -219,7 +226,7 @@
     }
 
     /* Dropdown Button */
-    .filterBtn {
+    #mealFilterBtn, #dietSpefFilterBtn {
       background-color: #3498DB;
       color: white;
       padding: 15px;
@@ -229,7 +236,7 @@
     }
 
     /* Dropdown button on hover & focus */
-    .filterBtn:hover, .filterBtn:focus {
+    #mealFilterBtn, #dietSpefFilterBtn:hover, .filterBtn:focus {
       background-color: #2980B9;
     }
 
@@ -250,7 +257,7 @@
     }
 
     /* Links inside the dropdown */
-    .filterDropDContent a {
+    .filterDropDContent button {
       color: black;
       padding: 12px 16px;
       text-decoration: none;
@@ -258,10 +265,25 @@
     }
 
     /* Change color of dropdown links on hover */
-    .filterDropDContent a:hover {background-color: #ddd;}
+    .filterDropDContent button:click {background-color: #ddd;}
 
     /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
     .show {display:block;}
+
+    #dropDBtn{
+      padding:15px;
+      background-color: #a9c9ff;
+      border: none;
+    }
+
+
+
+
+
+
+
+
+
 
 
 
