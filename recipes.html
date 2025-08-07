@@ -31,71 +31,73 @@
                         <button type="button" class="dropDBtn" data-tag="kosher">Kosher</button>
                         <button type="button" class="dropDBtn" data-tag="other">Other</button>
                         <button type="button" class="dropDBtn" data-tag="none">None</button>
-                  </div>      
+                  </div> 
+            <button type="button" id="searchBtn">Search</button>      
+            
       </div>
 </div>
 
 
-<h1>Add a New Recipe</h1>
-<br>
-<br>
-
-<form id="recipeForm">
-      <label>
-      Title:
-      <input type="text" id="titleOfRecipe" required />
-      </label>
-
-      <label>
-            Meal of the day
-            <button type="button" class="tagBtn" data-tag="breakfast">Breakfast</button>
-            <button type="button" class="tagBtn" data-tag="lunch">Lunch</button>
-            <button type="button" class="tagBtn" data-tag="dinner">Dinner</button>
-            <button type="button" class="tagBtn" data-tag="dessert">Dessert</button>
-            <button type="button" class="tagBtn" data-tag="snack">Snack</button>
-            <button type="button" class="tagBtn" data-tag="other">Other</button>
-      </label>    
-
-      <label>
-            Dietary specifcations
-            <button type="button" class="dietSpefBtn" data-tag="vegetarian">Vegetarian</button>
-            <button type="button" class="dietSpefBtn" data-tag="vegan">Vegan</button>
-            <button type="button" class="dietSpefBtn" data-tag="gluten-free">Gluten-free</button>
-            <button type="button" class="dietSpefBtn" data-tag="halal">Halal</button>
-            <button type="button" class="dietSpefBtn" data-tag="kosher">Kosher</button>
-            <button type="button" class="dietSpefBtn" data-tag="other">Other</button>
-            <button type="button" class="dietSpefBtn" data-tag="none">None</button>
-      </label> 
-
-      Prep Time:
-      <input type="number" id="prepTimeOfRecipe"/>
-      </label>
-
-      <label>
-      Cooking Time:
-      <input type="number" id="cookingTimeOfRecipe"/>
-      </label>
-
-      <label>
-      Ingredients (working on it)
-      <textarea id="ingredientsOfRecipe"></textarea>
-      </label>
-
-      <label>
-      Instructions:
-      <div id="instructionsContainer"></div>
-      <button type="button" id="addStepBtn">Add Step</button>
-      </label>
-
-      <button type="button" id="saveRecipeBtn">Save recipe</button>
-
+<button type="button" id="addRecpBtn">Add new recipe</button>
+<div id="addRecpDropD" class="addRecpDropDContent">
+      <h1>Add a New Recipe</h1>
       <br>
       <br>
-      <h1>All recipes </h1>
-      <div id="pullAllRecipes"></div>
+      <form id="recipeForm">
+            <label>
+            Title:
+            <input type="text" id="titleOfRecipe" required />
+            </label>
 
-</form>
+            <label>
+                  Meal of the day
+                  <button type="button" class="tagBtn" data-tag="breakfast">Breakfast</button>
+                  <button type="button" class="tagBtn" data-tag="lunch">Lunch</button>
+                  <button type="button" class="tagBtn" data-tag="dinner">Dinner</button>
+                  <button type="button" class="tagBtn" data-tag="dessert">Dessert</button>
+                  <button type="button" class="tagBtn" data-tag="snack">Snack</button>
+                  <button type="button" class="tagBtn" data-tag="other">Other</button>
+            </label>    
 
+            <label>
+                  Dietary specifcations
+                  <button type="button" class="dietSpefBtn" data-tag="vegetarian">Vegetarian</button>
+                  <button type="button" class="dietSpefBtn" data-tag="vegan">Vegan</button>
+                  <button type="button" class="dietSpefBtn" data-tag="gluten-free">Gluten-free</button>
+                  <button type="button" class="dietSpefBtn" data-tag="halal">Halal</button>
+                  <button type="button" class="dietSpefBtn" data-tag="kosher">Kosher</button>
+                  <button type="button" class="dietSpefBtn" data-tag="other">Other</button>
+                  <button type="button" class="dietSpefBtn" data-tag="none">None</button>
+            </label> 
+
+            Prep Time:
+            <input type="number" id="prepTimeOfRecipe"/>
+            </label>
+
+            <label>
+            Cooking Time:
+            <input type="number" id="cookingTimeOfRecipe"/>
+            </label>
+
+            <label>
+            Ingredients (working on it)
+            <textarea id="ingredientsOfRecipe"></textarea>
+            </label>
+
+            <label>
+            Instructions:
+            <div id="instructionsContainer"></div>
+            <button type="button" id="addStepBtn">Add Step</button>
+            </label>
+
+            <button type="button" id="saveRecipeBtn">Save recipe</button>
+
+            <br>
+            <br>
+            <h1>All recipes </h1>
+            <div id="pullAllRecipes"></div>
+      </form>
+</div>
 
 
 <script type="module">
@@ -140,23 +142,24 @@ let stepCount = 0;
 
 
 
-
+// Search bar code
 
 function renderFilteredRecipes(query) {
   pullAllRecipes.innerHTML = "";
-  
+
       const filtered = allRecipesList.filter(([id, recipe]) => {
             const matchesTitle = recipe.title.toLowerCase().includes(query.toLowerCase());
 
             const matchesTags = tags.length === 0 || tags.every(tag => recipe.tags?.includes(tag));
             const matchesDiet = dietarySpef.length === 0 || dietarySpef.every(diet => recipe.dietarySpef?.includes(diet));
 
+            
       return matchesTitle && matchesTags && matchesDiet;
   });
 
       filtered.forEach(([id, recipe]) => {
             const recipeDiv = displayRecipe(recipe, id);
-      pullAllRecipes.appendChild(recipeDiv);
+            pullAllRecipes.appendChild(recipeDiv);
   });
 };
 
@@ -166,6 +169,11 @@ document.getElementById("mealFilterBtn").addEventListener("click", () => {
 
 document.getElementById("dietFilterBtn").addEventListener("click", () => {
   document.getElementById("dietDropD").classList.toggle("show");
+});
+
+document.getElementById("searchBtn").addEventListener("click", () => {
+  const query = document.getElementById("searchInputBar").value;
+  renderFilteredRecipes(query);
 });
 
 
@@ -181,6 +189,12 @@ window.onclick = function(event) {
 
 
 
+
+// Code for the rest of the page
+document.getElementById("addRecpBtn").addEventListener("click", () => {
+  document.getElementById("addRecpDropD").classList.toggle("show");
+  console.log("add recp triggered");
+});
 
 document.querySelectorAll(".tagBtn").forEach(btn => {
   btn.addEventListener("click", () => {
@@ -209,24 +223,8 @@ document.querySelectorAll(".dropDBtn").forEach(btn => {
 
     console.log("Dropdown tag selected:", tags);
 
-    const query = document.getElementById("searchInputBar").value;
-    renderFilteredRecipes(query);
   });
 });
-
-
-
-
-
-
-
-
-
-
-
-
-addStep();
-addStepBtn.addEventListener("click", () => addStep());
 
 function addTag(tag) {
       if (tags.includes(tag)) {
@@ -247,6 +245,8 @@ function addDietSpef(dietSpef) {
 };
 
 
+addStep();
+addStepBtn.addEventListener("click", () => addStep());
 
 function addStep(initialValue = "") {
       stepCount++;
