@@ -290,10 +290,35 @@ if (pageType === "mealplan") {
   function chooseMeal(recipeId, recipeTitle) {
     const day = prompt("Day? (e.g. Monday)");
     const meal = prompt("Meal? (Breakfast / Lunch / Dinner)");
+
+    if (mealPlan[day] && mealPlan[day][meal]) {
+      mealPlan[day][meal].push(recipeId);
+      updateMealPlanUI();
+    } else {
+      alert("Invalid day or meal.");
+    }
   }
 
+  function updateMealPlanUI() {
+    document.querySelectorAll(".day").forEach(dayDiv => {
+      const dayName = dayDiv.dataset.day;
+      dayDiv.querySelectorAll(".mealSlot").forEach(slot => {
+        const mealName = slot.dataset.meal;
+        slot.innerHTML = mealPlan[dayName][mealName]
+          .map(id => {
+            const recipe = allRecipesList.find(([rid]) => rId === id)?.[1]; // <- rId typo
+            return `<li>${recipe?.title || "Unknown"}</li>`;
+          }).join("");
+      });
+    });
+  }
 
-
-
+  document.getElementById("saveMealPlan").addEventListener("click", () => {
+    const mealPlansRef = ref(db, "mealPlans");
+    const newRef = push(mealPlansRef);
+    set(newRef, mealPlanObj) // <- mealPlanObj doesn't exist
+      .then(() => alert("Saved meal plan!"))
+      .catch(err => console.error(err));
+  });
 }
 
