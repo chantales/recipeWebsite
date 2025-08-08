@@ -324,15 +324,13 @@ textarea:focus {
   line-height: 1.4;
 }
 
-.addRecipeBtn {
-  background-color: #3498db;
+.addRecipeBtn, #mealPlanBtn {
   color: white;
   padding: 10px 18px;
   font-size: 16px;
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.25s ease;
   font-weight: 600;
 }
 
