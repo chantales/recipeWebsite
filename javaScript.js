@@ -255,25 +255,43 @@ if (pageType === "detail") {
 if (pageType === "mealplan") {
   const recipesRef = ref(database, "recipes");
 
-  get(recipesRef).then(snapshot => {
+  let mealPlan = {};
+
+  function addToMealPlan(day, meal, recipeId) {
+    if (!mealPlan[day]) mealPlan[day] = {};
+    mealPlan[day][meal].push(recipeId); 
+  }
+
+
+  get(ref(database, "recipes")).then(snapshot => {
     if (snapshot.exists()) {
       allRecipesList = Object.entries(snapshot.val());
-      console.log(allRecipesList)
-      renderRecipeChoices()
+      renderRecipeChoices();
+    } else {
+      document.getElementById("recipeList").innerHTML = "<p>No recipes found.</p>";
     }
-  });
+  }).catch(err => console.error(err));
+
 
   function renderRecipeChoices() {
     const container = document.getElementById("recipeList");
+    container.innerHTML = "";
     allRecipesList.forEach(([id, recipe]) => {
-      const btn = document.createElement("button");
-      btn.textContent = "Add to Plan";
-      btn.addEventListener("click", () => {
-        mealPlan[day][meal].push(id); // <-- bug: 'day' and 'meal' not defined here
+      const div = document.createElement("div");
+      div.className = "recipeCard";
+      div.innerHTML = `<h4>${recipe.title}</h4><button data-id="${id}">Add to Plan</button>`;
+      div.querySelector("button").addEventListener("click", () => {
+        chooseMeal(id, recipe.title); // <-- function name mismatch
       });
-      container.appendChild(btn);
+      container.appendChild(div);
     });
   }
+  
+  function chooseMeal(recipeId, recipeTitle) {
+    const day = prompt("Day? (e.g. Monday)");
+    const meal = prompt("Meal? (Breakfast / Lunch / Dinner)");
+  }
+
 
 
 
