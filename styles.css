@@ -325,7 +325,7 @@ textarea:focus {
 }
 
 .addRecipeBtn, #mealPlanBtn {
-  background-color: #3498db;
+  color: #3498db;
   padding: 10px 18px;
   font-size: 16px;
   border: none;
