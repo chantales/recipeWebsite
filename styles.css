@@ -109,11 +109,6 @@ body {
   transition: background-color 0.2s ease;
 }
 
-.filterDropDContent button:hover,
-.filterDropDContent button:focus {
-  background-color: #e1f0ff;
-  outline: none;
-}
 
 .addRecpDropDContent {
   display: none;
@@ -164,7 +159,6 @@ label {
   background-color: #27ae60;
   font-weight: bold;
   border: 2px solid #1e8449;
-  box-shadow: 0 0 6px #27ae60;
   color: white;
 }
 
