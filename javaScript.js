@@ -345,7 +345,5 @@ document.getElementById("saveMealPlan").addEventListener("click", () => {
 
 
 
-
-
 }
 
