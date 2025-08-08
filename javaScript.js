@@ -341,11 +341,19 @@ function updateMealPlanUI() {
 document.getElementById("saveMealPlan").addEventListener("click", () => {
   const mealPlansRef = ref(database, "mealPlans");
   const newRef = push(mealPlansRef);
-  set(newRef, mealPlan)
+  const date = document.getElementById("dateOfMealPlan").value;
+  if (!date) {
+    alert("Please enter a date for your meal plan.");
+    return;
+  }
+  const mealPlanToSave = {
+    date,     // save the date set
+    plan: mealPlan, // the meal plan object
+  };
+  set(newRef, mealPlanToSave)
     .then(() => alert("Saved meal plan!"))
     .catch(console.error);
 });
-
 
 
 
