@@ -256,7 +256,6 @@ if (pageType === "mealplan") {
   const recipesRef = ref(database, "recipes");
 
   let mealPlan = {};
-  let allRecipesList = [];
   
   function addToMealPlan(day, meal, recipeId) {
     if (!mealPlan[day]) mealPlan[day] = {};
