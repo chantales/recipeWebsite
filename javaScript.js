@@ -267,6 +267,10 @@ get(ref(database, "recipes")).then(snapshot => {
   }
 }).catch(console.error);
 
+document.getElementById("mealPlanBtn").addEventListener("click", () => {
+  document.getElementById("mealPlanDropD").classList.toggle("show");
+});
+
 function setupMealPlanUI() {
   document.querySelectorAll(".addRecipeBtn").forEach(button => {
     button.addEventListener("click", () => {
