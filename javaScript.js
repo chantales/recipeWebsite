@@ -253,7 +253,7 @@ if (pageType === "detail") {
 
 // ==== RECIPE DETAIL PAGE LOGIC ====
 if (pageType === "mealplan") {
-  console.log("this page is correctly linked! Good job chantale!")
+  console.log("you ate")
 } else {
   console.log("hey so u did smth wrong");
 }
