@@ -370,7 +370,9 @@ textarea:focus {
 }
 
 .recipeChoice:hover,
-.recipeChoice:focus {
+.recipeChoice:focus,
+#mealPlanBtn:hover,
+#mealPlanBtn:focus {
   background-color: #3498db;
   color: white;
   outline: none;
