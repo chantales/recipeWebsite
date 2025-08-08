@@ -253,10 +253,14 @@ if (pageType === "detail") {
 
 // ==== RECIPE DETAIL PAGE LOGIC ====
 if (pageType === "mealplan") {
-  console.log("you ate")
-} else {
-  console.log("hey so u did smth wrong!");
+  const recipesRef = ref(database, "recipes");
 
+  get(recipesRef).then(snapshot => {
+    if (snapshot.exists()) {
+      allRecipesList = Object.entries(snapshot.val());
+    }
+  });
 
+  renderRecipeChoices()
 }
 
