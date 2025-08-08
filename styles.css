@@ -7,6 +7,9 @@ body {
 }
 
 
+
+
+
 /* Recipes Page */
 #searchInputBar {
   padding: 12px 10px;
@@ -212,6 +215,10 @@ textarea:focus {
 
 
 
+
+
+
+
 /* Individual Recipe Pages */
 
 #recipeTitle {
@@ -250,6 +257,13 @@ textarea:focus {
     font-size: 1rem;
   }
 }
+
+
+
+
+
+
+
 
 
 
