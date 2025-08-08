@@ -23,6 +23,11 @@ const database = getDatabase(app);
 // Detect which page is being read
 const pageType = document.body.dataset.page || "list";
 
+
+
+
+
+
 // ==== RECIPE LIST PAGE LOGIC ====
 if (pageType === "list") {
     const form = document.getElementById("recipeForm");
@@ -200,6 +205,12 @@ if (pageType === "list") {
     }
 }
 
+
+
+
+
+
+
 // ==== RECIPE DETAIL PAGE LOGIC ====
 if (pageType === "detail") {
     const params = new URLSearchParams(window.location.search);
@@ -233,3 +244,15 @@ if (pageType === "detail") {
         recipeTitle.textContent = "No recipe ID provided.";
     }
 }
+
+
+
+
+
+
+
+// ==== RECIPE DETAIL PAGE LOGIC ====
+if (pageType === "mealplan") {
+  console.log("this page is correctly linked! Good job chantale!")
+}
+
