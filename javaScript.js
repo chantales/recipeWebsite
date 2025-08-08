@@ -251,7 +251,7 @@ if (pageType === "detail") {
 
 
 
-// ==== RECIPE DETAIL PAGE LOGIC ====
+// ==== MEAL PLAN PAGE LOGIC ====
 if (pageType === "mealplan") {
   const recipesRef = ref(database, "recipes");
 
