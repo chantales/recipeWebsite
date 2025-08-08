@@ -306,7 +306,7 @@ if (pageType === "mealplan") {
         const mealName = slot.dataset.meal;
         slot.innerHTML = mealPlan[dayName][mealName]
           .map(id => {
-            const recipe = allRecipesList.find(([rid]) => rId === id)?.[1]; // <- rId typo
+            const recipe = allRecipesList.find(([rid]) => rid === id)?.[1]; 
             return `<li>${recipe?.title || "Unknown"}</li>`;
           }).join("");
       });
@@ -314,9 +314,9 @@ if (pageType === "mealplan") {
   }
 
   document.getElementById("saveMealPlan").addEventListener("click", () => {
-    const mealPlansRef = ref(db, "mealPlans");
+    const mealPlansRef = ref(database, "mealPlans");
     const newRef = push(mealPlansRef);
-    set(newRef, mealPlanObj) // <- mealPlanObj doesn't exist
+    set(newRef, mealPlan) // 
       .then(() => alert("Saved meal plan!"))
       .catch(err => console.error(err));
   });
