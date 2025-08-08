@@ -258,9 +258,24 @@ if (pageType === "mealplan") {
   get(recipesRef).then(snapshot => {
     if (snapshot.exists()) {
       allRecipesList = Object.entries(snapshot.val());
+      console.log(allRecipesList)
+      renderRecipeChoices()
     }
   });
 
-  renderRecipeChoices()
+  function renderRecipeChoices() {
+    const container = document.getElementById("recipeList");
+    allRecipesList.forEach(([id, recipe]) => {
+      const btn = document.createElement("button");
+      btn.textContent = "Add to Plan";
+      btn.addEventListener("click", () => {
+        mealPlan[day][meal].push(id); // <-- bug: 'day' and 'meal' not defined here
+      });
+      container.appendChild(btn);
+    });
+  }
+
+
+
 }
 
