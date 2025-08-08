@@ -1,338 +1,264 @@
-/* Reset & base */
-* {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: "Segoe UI", sans-serif;
-    }
-    
-    body {
-      display: inline-block;
-      height: 100vh;
-      background-color: #ffffff;
-      color: #333;
-    }
-    
-    /* Sidebar */
-    .sidebar {
-      width: 220px;
-      background-color: #f3f1ea;
-      padding: 1.5rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      border-right: 2px solid #e3ded4;
-    }
-    
-    .topNavLinks a,
-    .bottomNavLinks a {
-      display: block;
-      text-decoration: none;
-      padding: 0.8rem 1rem;
-      margin-bottom: 0.4rem;
-      color: #444;
-      border-radius: 12px;
-      transition: background 0.2s;
-    }
-    
-    .topNavLinks a.active,
-    .topNavLinks a:hover,
-    .bottomNavLinks a:hover {
-      background-color: #eae4d9;
-    }
-    
-    /* Main layout */
-    .index {
-      flex: 1;
-      padding: 2rem;
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-    }
+body {
+  font-family: sans-serif;
+  background-color: #fafafa;
+  color: #222;
+  padding: 20px;
+  line-height: 1.5;
+}
 
 
-    .recipeList {
-      list-style-type: none;
-      padding: 0;
-      margin: 0;
-    }
+/* Recipes Page */
+#searchInputBar {
+  padding: 12px 10px;
+  font-size: 16px;
+  width: 300px;
+  border: 1.8px solid #ccc;
+  border-radius: 6px;
+  transition: border-color 0.3s ease;
+}
 
-    .recipeList li a {
-      border: 1px solid #ddd; /* Add a border to all links */
-      margin-top: -1px; /* Prevent double borders */
-      background-color: #f6f6f6; /* Grey background color */
-      padding: 12px; /* Add some padding */
-      text-decoration: none; /* Remove default text underline */
-      font-size: 18px; /* Increase the font-size */
-      color: black; /* Add a black text color */
-      display: block; /* Make it into a block element to fill the whole list */
-    }
+#searchInputBar:focus {
+  border-color: #3498db;
+  outline: none;
+  background-color: #f0f8ff;
+}
 
-    .recipeList li a:hover:not(.header) {
-      background-color: #a9c9ff;
-    }
-    
-    /* Greeting */
-    .greeting h1 {
-      font-size: 1.6rem;
-      margin-bottom: 0.2rem;
-    }
-    
-    .greeting p {
-      font-size: 1rem;
-      color: #666;
-    }
-    
-    /* Meals */
-    .meals {
-      display: flex;
-      gap: 1.5rem;
-      flex-wrap: wrap;
-    }
-    
-    .mealCard,
-    .meal-card {
-      background-color: #f9f7f3;
-      padding: 1rem;
-      border-radius: 16px;
-      width: 250px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
-    
-    .mealCard img,
-    .meal-card img {
-      width: 100%;
-      border-radius: 12px;
-      margin-bottom: 0.5rem;
-    }
-    
-    .mealCard h3,
-    .meal-card h3 {
-      font-size: 1.1rem;
-      margin-bottom: 0.3rem;
-    }
-    
-    .mealCard p,
-    .meal-card p {
-      font-size: 0.9rem;
-      color: #555;
-    }
-    
-    .mealCard .meal-type,
-    .meal-card .meal-type {
-      font-size: 0.8rem;
-      color: #999;
-      margin-bottom: 0.3rem;
-    }
-    
-    .mealCard button,
-    .meal-card button {
-      margin-top: 0.5rem;
-      padding: 0.5rem 1rem;
-      border: none;
-      background-color: #e0dbd0;
-      color: #333;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    
-    .mealCard button:hover,
-    .meal-card button:hover {
-      background-color: #d6d0c3;
-    }
-    
-    /* Empty state */
-    .meal-card.empty .placeholder-img {
-      width: 100%;
-      height: 120px;
-      background-color: #ddd;
-      border-radius: 12px;
-      margin-bottom: 0.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #999;
-      font-size: 0.9rem;
-    }
-    
-    /* Macros section */
-    .macros {
-      margin-top: 1rem;
-    }
-    
-    .macros h2 {
-      font-size: 1.3rem;
-      margin-bottom: 0.5rem;
-    }
-    
-    .macro-labels {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.9rem;
-      color: #666;
-      margin-bottom: 0.5rem;
-    }
-    
-    .macro-bar {
-      display: flex;
-      height: 20px;
-      border-radius: 10px;
-      overflow: hidden;
-      background-color: #eee;
-    }
-    
-    .bar {
-      height: 100%;
-    }
-    
-    .carbs {
-      width: 33%;
-      background-color: #ffa9a9;
-    }
-    
-    .protein {
-      width: 33%;
-      background-color: #a9c9ff;
-    }
-    
-    .fats {
-      width: 34%;
-      background-color: #b9f5b9;
-    }
-    
+/* Buttons */
+#mealFilterBtn,
+#dietFilterBtn,
+#searchBtn,
+.dropDBtn,
+.tagBtn,
+.dietSpefBtn,
+#addRecpBtn,
+#saveRecipeBtn,
+.removeBtn,
+#addStepBtn {
+  background-color: #3498db;
+  color: white;
+  padding: 10px 16px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.25s ease;
+}
+
+#mealFilterBtn:hover,
+#dietFilterBtn:hover,
+#searchBtn:hover,
+.dropDBtn:hover,
+.tagBtn:hover,
+.dietSpefBtn:hover,
+#addRecpBtn:hover,
+#saveRecipeBtn:hover,
+.removeBtn:hover,
+#addStepBtn:hover,
+#mealFilterBtn:focus,
+#dietFilterBtn:focus,
+#searchBtn:focus,
+.dropDBtn:focus,
+.tagBtn:focus,
+.dietSpefBtn:focus,
+#addRecpBtn:focus,
+#saveRecipeBtn:focus,
+.removeBtn:focus,
+#addStepBtn:focus {
+  background-color: #2980b9;
+  outline: none;
+}
+
+.dropDBtn.selected {
+  background-color: #27ae60;
+  font-weight: bold;
+  border: 2px solid #1e8449;
+  box-shadow: 0 0 6px #27ae60;
+  color: white;
+}
+
+.searchContDropD {
+  position: relative;
+  display: inline-block;
+  margin-left: 10px;
+}
+
+.filterDropDContent {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  min-width: 160px;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  z-index: 100;
+  padding: 6px 0;
+}
+
+.show {
+  display: block;
+}
+
+.filterDropDContent button {
+  color: #333;
+  padding: 10px 20px;
+  text-align: left;
+  width: 100%;
+  background: none;
+  border: none;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.filterDropDContent button:hover,
+.filterDropDContent button:focus {
+  background-color: #e1f0ff;
+  outline: none;
+}
+
+.addRecpDropDContent {
+  display: none;
+  margin-top: 15px;
+  padding: 20px;
+  border: 1.5px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+.addRecpDropDContent.show {
+  display: block;
+}
 
 
 
 
 
 
+label {
+  display: block;
+  margin-top: 15px;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.stepContainer {
+  display: flex;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.stepNumber {
+  width: 75px;
+  font-weight: 700;
+  color: #3498db;
+}
+
+.stepContainer input {
+  flex-grow: 1;
+  padding: 8px 10px;
+  font-size: 16px;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+}
+
+#tagBtn, #dietSpefBtn.selected {
+  background-color: #27ae60;
+  font-weight: bold;
+  border: 2px solid #1e8449;
+  box-shadow: 0 0 6px #27ae60;
+  color: white;
+}
+
+.removeBtn {
+  background-color: #e74c3c;
+  padding: 8px 12px;
+  margin-left: 10px;
+  font-weight: bold;
+  border-radius: 6px;
+}
+
+.removeBtn:hover,
+.removeBtn:focus {
+  background-color: #c0392b;
+  outline: none;
+}
+
+.recipeCard {
+  background-color: #ffffff;
+  border: 1.5px solid #89d5d8;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 20px 0;
+}
+
+.recipeCard h3 {
+  margin-top: 0;
+  color: #2980b9;
+  font-weight: 700;
+}
+
+.recipeCard p {
+  margin: 0.5em 0;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+button:focus,
+input:focus,
+textarea:focus {
+  outline: 3px solid #2980b9;
+  outline-offset: 2px;
+}
+
+@media (max-width: 480px) {
+  #searchInputBar {
+    width: 100%;
+  }
+
+  .filterDropDContent {
+    min-width: 100%;
+  }
+}
 
 
 
 
 
+/* Individual Recipe Pages */
 
+#recipeTitle {
+  color: #2980b9;
+  font-weight: 700;
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
+}
 
-    #searchInputBar{
-      padding: 15px;
-      font-size: 15px;
-      padding-left: 5px;
-      width: 300px;
-    }
+#recipeDetails p {
+  font-size: 1.1rem;
+  margin: 0.8rem 0;
+  color: #333;
+}
 
-    /* Dropdown Button */
-    #mealFilterBtn, #dietFilterBtn {
-      background-color: #3498DB;
-      color: white;
-      padding: 15px;
-      font-size: 20px;
-      border: none;
-      cursor: pointer;
-    }
+#recipeDetails strong {
+  color: #3498db;
+  font-weight: 700;
+}
 
-    /* Dropdown button on hover & focus */
-    #mealFilterBtn, #dietFilterBtn:hover, .filterBtn:focus {
-      background-color: #2980B9;
-    }
+#recipeDetails p:last-child {
+  white-space: pre-line;
+}
 
-    /* The container <div> - needed to position the dropdown content */
-    .searchContDropD {
-      position: relative;
-      display: inline-block;
-    }
+@media (max-width: 480px) {
+  body {
+    padding: 15px 10px;
+    max-width: 100%;
+  }
 
-    /* Dropdown Content (Hidden by Default) */
-    .filterDropDContent {
-      display: none;
-      position: absolute;
-      background-color: #f1f1f1;
-      min-width: 160px;
-      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-      z-index: 1;
-    }
+  #recipeTitle {
+    font-size: 1.8rem;
+  }
 
-    /* Links inside the dropdown */
-    .filterDropDContent button {
-      color: black;
-      padding: 12px 16px;
-      text-decoration: none;
-      display: block;
-    }
+  #recipeDetails p {
+    font-size: 1rem;
+  }
+}
 
-    /* Change color of dropdown links on hover */
-    .filterDropDContent button:click {background-color: #ddd;}
-
-    /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
-    .show {
-      display: block;
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-    .addRecpDropD {
-      display: inline-block;
-    }
-
-    .addRecpDropDContent {
-      display: none;
-    }
-
-    .show {
-      display: block;
-    }
-
-
-    label {
-      display: block;
-      margin-top: 1em;
-    }
-
-    .stepContainer {
-      display: flex;
-      align-items: center;
-      margin-top: 0.5em;
-    }
-
-    .stepContainer input {
-      flex-grow: 1;
-    }
-
-    .stepNumber {
-      width: 80px;
-      font-weight: bold;
-    }
-
-    .removeBtn {
-      background: #e74c3c;
-      color: #fff;
-      border: none;
-      margin-left: 10px;
-      cursor: pointer;
-      font-size: 14px;
-      padding: 4px 8px;
-    }
-
-
-    
-    .recipeCard {
-      border: 1px solid #89d5d8;
-      padding: 15px;
-      margin-bottom: 15px;
-      border-radius: 8px;
-      background-color: #e9ffff;
-      margin: 20px;
-    }
