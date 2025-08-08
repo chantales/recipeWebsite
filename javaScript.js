@@ -256,5 +256,7 @@ if (pageType === "mealplan") {
   console.log("you ate")
 } else {
   console.log("hey so u did smth wrong");
+
+  
 }
 
