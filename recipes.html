@@ -38,7 +38,7 @@
 </div>
 
 
-<button type="button" id="addRecpBtn">Add new recipe</button>
+<button id="addRecpBtn">Add new recipe</button>
 <div id="addRecpDropD" class="addRecpDropDContent">
       <h1>Add a New Recipe</h1>
       <br>
@@ -91,13 +91,14 @@
             </label>
 
             <button type="button" id="saveRecipeBtn">Save recipe</button>
-
-            <br>
-            <br>
-            <h1>All recipes </h1>
-            <div id="pullAllRecipes"></div>
       </form>
 </div>
+<br>
+<br>
+<h1>All recipes </h1>
+<div id="pullAllRecipes"></div>
+
+
 
 
 <script type="module">
@@ -164,23 +165,23 @@ function renderFilteredRecipes(query) {
 };
 
 document.getElementById("mealFilterBtn").addEventListener("click", () => {
-  document.getElementById("mealDropD").classList.toggle("show");
+      document.getElementById("mealDropD").classList.toggle("show");
 });
 
 document.getElementById("dietFilterBtn").addEventListener("click", () => {
-  document.getElementById("dietDropD").classList.toggle("show");
+      document.getElementById("dietDropD").classList.toggle("show");
 });
 
 document.getElementById("searchBtn").addEventListener("click", () => {
-  const query = document.getElementById("searchInputBar").value;
-  renderFilteredRecipes(query);
+      const query = document.getElementById("searchInputBar").value;
+      renderFilteredRecipes(query);
 });
 
 
 window.onclick = function(event) {
-  if (!event.target.matches('#mealFilterBtn') && !event.target.matches('#dietSpefFilterBtn')) {
-    document.querySelectorAll(".filterDropDContent").forEach(dropdown => {
-      dropdown.classList.remove("show");
+      if (!event.target.matches('#mealFilterBtn') && !event.target.matches('#dietFilterBtn')) {
+            document.querySelectorAll(".filterDropDContent").forEach(dropdown => {
+            dropdown.classList.remove("show");
     });
   }
 };
@@ -190,40 +191,41 @@ window.onclick = function(event) {
 
 
 
+
 // Code for the rest of the page
 document.getElementById("addRecpBtn").addEventListener("click", () => {
-  document.getElementById("addRecpDropD").classList.toggle("show");
-  console.log("add recp triggered");
+      document.getElementById("addRecpDropD").classList.toggle("show");
+      console.log("add recp button triggered");
 });
 
 document.querySelectorAll(".tagBtn").forEach(btn => {
-  btn.addEventListener("click", () => {
-    const tag = btn.dataset.tag;
-    addTag(tag);
-  });
+      btn.addEventListener("click", () => {
+      const tag = btn.dataset.tag;
+      addTag(tag);
+      });
 });
 
 document.querySelectorAll(".dietSpefBtn").forEach(btn => {
-  btn.addEventListener("click", () => {
-    const dietSpef = btn.dataset.tag;
-    addDietSpef(dietSpef);
-  });
+      btn.addEventListener("click", () => {
+      const dietSpef = btn.dataset.tag;
+      addDietSpef(dietSpef);
+      });
 });
 
 
 document.querySelectorAll(".dropDBtn").forEach(btn => {
-  btn.addEventListener("click", () => {
-    const tag = btn.dataset.tag;
+      btn.addEventListener("click", () => {
+      const tag = btn.dataset.tag;
 
-    if (tags.includes(tag)) {
-      tags = tags.filter(t => t !== tag);
-    } else {
-      tags.push(tag);
-    }
+      if (tags.includes(tag)) {
+            tags = tags.filter(t => t !== tag);
+      } else {
+            tags.push(tag);
+      }
 
-    console.log("Dropdown tag selected:", tags);
+      console.log("Dropdown tag selected:", tags);
 
-  });
+      });
 });
 
 function addTag(tag) {
@@ -341,11 +343,6 @@ e.preventDefault();
 });
 
 
-/* onChildAdded(recipesRef, (snapshot) => {
-const recipe = snapshot.val();
-displayRecipe(recipe);
-}); */
-
 get(recipesRef)
 .then((snapshot) => {
       if (snapshot.exists()) {
@@ -373,10 +370,7 @@ recipeDiv.innerHTML = `
       <h3> <a href="recipe.html?id=${ID}" target="_blank">${recipe.title}</a></h3>
       <p> <strong>Tags:</strong> ${recipe.tags?.join(", ") || "None"}</p>
       <p> <strong>Dietary Specifications:</strong> ${recipe.dietarySpef?.join(", ") || "None"}</p>
-      <p> <strong>Preparing Time:</strong> ${recipe.prepTime || "?"} mins</p>
-      <p> <strong>Cooking Time:</strong> ${recipe.cookingTime || "?"} mins</p>
       <p> <strong>Ingredients:</strong> <br>${recipe.ingredients?.join("<br>") || "None"}</p>
-      <p> <strong>Instructions:</strong> <br>${recipe.instructions?.map((s, i) => `Step ${i + 1}: ${s}`).join("<br>") || "None"}</p>
       <hr>
   `   ;
 

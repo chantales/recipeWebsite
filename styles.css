@@ -9,7 +9,7 @@
     body {
       display: inline-block;
       height: 100vh;
-      background-color: #fefcf8;
+      background-color: #ffffff;
       color: #333;
     }
     
@@ -226,7 +226,7 @@
     }
 
     /* Dropdown Button */
-    #mealFilterBtn, #dietSpefFilterBtn {
+    #mealFilterBtn, #dietFilterBtn {
       background-color: #3498DB;
       color: white;
       padding: 15px;
@@ -236,7 +236,7 @@
     }
 
     /* Dropdown button on hover & focus */
-    #mealFilterBtn, #dietSpefFilterBtn:hover, .filterBtn:focus {
+    #mealFilterBtn, #dietFilterBtn:hover, .filterBtn:focus {
       background-color: #2980B9;
     }
 
@@ -268,7 +268,9 @@
     .filterDropDContent button:click {background-color: #ddd;}
 
     /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
-    .show {display:block;}
+    .show {
+      display: block;
+    }
 
 
 
@@ -280,10 +282,19 @@
 
 
 
+
+    .addRecpDropD {
+      display: inline-block;
+    }
 
     .addRecpDropDContent {
       display: none;
     }
+
+    .show {
+      display: block;
+    }
+
 
     label {
       display: block;
@@ -317,10 +328,11 @@
 
 
     
-    .recipe-card {
-      border: 1px solid #ccc;
-      padding: 10px;
+    .recipeCard {
+      border: 1px solid #89d5d8;
+      padding: 15px;
       margin-bottom: 15px;
       border-radius: 8px;
-      background-color: #f9f9f9;
+      background-color: #e9ffff;
+      margin: 20px;
     }
