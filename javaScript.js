@@ -254,52 +254,67 @@ if (pageType === "detail") {
 
 // ==== MEAL PLAN PAGE LOGIC ====
 if (pageType === "mealplan") {
-
-let mealPlan = {}; 
   
-function addToMealPlan(day, meal, recipeId) {
-  if (!mealPlan[day]) mealPlan[day] = {};
-  if (!mealPlan[day][meal]) mealPlan[day][meal] = [];  // <-- initialize array
-  mealPlan[day][meal].push(recipeId);
-}
+let mealPlan = {};
 
+// Pull all recipes first
 get(ref(database, "recipes")).then(snapshot => {
   if (snapshot.exists()) {
     allRecipesList = Object.entries(snapshot.val());
-    renderRecipeChoices();
+    setupMealPlanUI();
   } else {
-    document.getElementById("recipeList").innerHTML = "<p>No recipes found.</p>";
+    document.getElementById("recipeList").innerHTML = "No recipes found!";
   }
-}).catch(err => console.error(err));
+}).catch(console.error);
 
-function renderRecipeChoices() {
-  const container = document.getElementById("recipeList");
+function setupMealPlanUI() {
+  document.querySelectorAll(".addRecipeBtn").forEach(button => {
+    button.addEventListener("click", () => {
+      const mealSlot = button.closest(".mealSlot");
+      const dayDiv = button.closest(".day");
+      const day = dayDiv.dataset.day;
+      const meal = mealSlot.dataset.meal;
+
+      showRecipeChoices(mealSlot.querySelector(".recipeChoices"), day, meal);
+    });
+  });
+
+  updateMealPlanUI();
+}
+
+function showRecipeChoices(container, day, meal) {
+  // Show the container
+  container.style.display = "block";
   container.innerHTML = "";
-  allRecipesList.forEach(([id, recipe]) => {
+
+  // Filter recipes by meal tag
+  const filteredRecipes = allRecipesList.filter(([id, recipe]) =>
+    recipe.tags?.some(tag => tag.toLowerCase() === meal.toLowerCase())
+  );
+
+  if (filteredRecipes.length === 0) {
+    container.innerHTML = "<p>No recipes for this meal.</p>";
+    return;
+  }
+
+  filteredRecipes.forEach(([id, recipe]) => {
     const div = document.createElement("div");
-    div.className = "recipeCard";
-    div.innerHTML = `<h4>${recipe.title}</h4><button data-id="${id}">Add to Plan</button>`;
-    div.querySelector("button").addEventListener("click", () => {
-      chooseMeal(id, recipe.title);  // this is correct
+    div.className = "recipeChoice";
+    div.textContent = recipe.title;
+    div.style.cursor = "pointer";
+    div.addEventListener("click", () => {
+      addToMealPlan(day, meal, id);
+      container.style.display = "none";  // Hide choices after selection
+      updateMealPlanUI();
     });
     container.appendChild(div);
   });
 }
 
-function chooseMeal(recipeId, recipeTitle) {
-  const day = prompt("Day? (e.g. Monday)");
-  const meal = prompt("Meal? (Breakfast / Lunch / Dinner)");
-
-  if (!day || !meal) {
-    alert("Day and Meal are required.");
-    return;
-  }
-
+function addToMealPlan(day, meal, recipeId) {
   if (!mealPlan[day]) mealPlan[day] = {};
   if (!mealPlan[day][meal]) mealPlan[day][meal] = [];
-  
   mealPlan[day][meal].push(recipeId);
-  updateMealPlanUI();
 }
 
 function updateMealPlanUI() {
@@ -308,7 +323,8 @@ function updateMealPlanUI() {
     dayDiv.querySelectorAll(".mealSlot").forEach(slot => {
       const mealName = slot.dataset.meal;
       const recipesForMeal = mealPlan[dayName]?.[mealName] || [];
-      slot.innerHTML = recipesForMeal
+      const list = slot.querySelector(".recipeList");
+      list.innerHTML = recipesForMeal
         .map(id => {
           const recipe = allRecipesList.find(([rid]) => rid === id)?.[1];
           return `<li>${recipe?.title || "Unknown"}</li>`;
@@ -317,13 +333,19 @@ function updateMealPlanUI() {
   });
 }
 
+
 document.getElementById("saveMealPlan").addEventListener("click", () => {
   const mealPlansRef = ref(database, "mealPlans");
   const newRef = push(mealPlansRef);
   set(newRef, mealPlan)
     .then(() => alert("Saved meal plan!"))
-    .catch(err => console.error(err));
+    .catch(console.error);
 });
-  
+
+
+
+
+
+
 }
 
