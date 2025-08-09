@@ -243,25 +243,25 @@ if (pageType === "detail") {
                 recipeTitle.textContent = recipe.title;
                 recipeDetails.innerHTML = `
                   <h3>Tags:</h3>
-                      <p>${tags?.join(", ") || "None"}</p>
+                      <p>${recipe.tags?.join(", ") || "None"}</p>
 
                       <h3>Dietary Specifications:</h3>
-                      <p>${dietarySpef?.join(", ") || "None"}</p>
+                      <p>${recipe.dietarySpef?.join(", ") || "None"}</p>
 
                       <h3>Preparing Time:</h3>
-                      <p>${prepTime || "?"} mins</p>
+                      <p>${recipe.prepTime || "?"} mins</p>
 
                       <h3>Cooking Time:</h3>
-                      <p>${cookingTime || "?"} mins</p>
+                      <p>${recipe.ookingTime || "?"} mins</p>
 
                       <h3>Ingredients:</h3>
                       <ul>
-                          ${(ingredients?.map(i => `<li>${i}</li>`).join("")) || "<li>None</li>"}
+                          ${(recipe.ingredients?.map(i => `<li>${i}</li>`).join("")) || "<li>None</li>"}
                       </ul>
 
                       <h3>Instructions:</h3>
                       <ol>
-                          ${(instructions?.map(s => `<li>${s}</li>`).join("")) || "<li>None</li>"}
+                          ${(recipe.nstructions?.map(s => `<li>${s}</li>`).join("")) || "<li>None</li>"}
                       </ol>
                   `;
                                     
@@ -300,10 +300,16 @@ get(mealPlansRef).then(snapshot => {
   plans.forEach(([id, data]) => {
     const div = document.createElement("div");
     div.innerHTML = `
-      "we are the meal plan. we have come to save you from hunger!!!"
+      <a href="mealplan-detail.html?id=${id}">
+        Meal Plan for: ${data.date || "Unknown Date"}
+      </a>
     `;
+    container.appendChild(div);
   });
 }).catch(console.error);
+
+
+
 
 
 // Pull all recipes first
