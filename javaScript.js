@@ -201,18 +201,18 @@ document.getElementById("addRecpBtn").addEventListener("click", () => {
         recipeDiv.classList.add("recipeCard");
         recipeDiv.innerHTML = `
           <h3>
-            <a href="recipe.html?id=${ID}" target="_blank">${title}</a>
+            <a href="recipe.html?id=${ID}" target="_blank">${recipe.title}</a>
           </h3>
               
             <h4>Tags:</h4>
-              <p>${tags?.join(", ") || "None"}</p>
+              <p>${recipe.tags?.join(", ") || "None"}</p>
                 
             <h4>Dietary Specifications:</h4>
-              <p>${dietarySpef?.join(", ") || "None"}</p>
+              <p>${recipe.dietarySpef?.join(", ") || "None"}</p>
                 
             <h4>Ingredients:</h4>
             <ul>
-              ${(ingredients?.map(i => `<li>${i}</li>`).join("")) || "<li>None</li>"}
+              ${(recipe.ingredients?.map(i => `<li>${i}</li>`).join("")) || "<li>None</li>"}
             </ul>
               
         <hr>
