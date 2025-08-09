@@ -28,7 +28,7 @@ const recipesRef = ref(database, "recipes");
 let allRecipesList = [];
 
 const title = document.getElementById("titleOfRecipe").value.trim();
-
+console.log("code updated 1");
 
 
 
@@ -48,7 +48,6 @@ if (pageType === "list") {
     let dietarySpef = [];
     let stepCount = 0;
 
-  console.log("code updated 1");
   function showFilteredRecipes(query) {
       pullAllRecipes.innerHTML = "";
       const filtered = allRecipesList.filter(([id, recipe]) => {
