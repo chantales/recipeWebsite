@@ -449,7 +449,7 @@ if (pageType === "mp-detail") {
     get(mplanRef).then(snapshot => {
       if (snapshot.exists()) {
         const data = snapshot.val();
-        mplanTitle.textContent = `Meal Plan for: ${data.date || "The date is still unknown!"}`;
+        mplanTitle.textContent = `Meal Plan for: ${data.date}`;
 
       } else {
         mplanTitle.textContent = "Sorry, that meal plan could not be found. I'll try looking in the back.";
