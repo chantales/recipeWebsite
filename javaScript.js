@@ -34,7 +34,6 @@ const title = document.getElementById("titleOfRecipe").value.trim();
 
 // ==== RECIPE LIST PAGE LOGIC ====
 if (pageType === "list") {
-  console.log("code updated 1")
   const form = document.getElementById("recipeForm");
   const instructCont = document.getElementById("instructionsContainer");
   const addStepBtn = document.getElementById("addStepBtn");
@@ -49,6 +48,7 @@ if (pageType === "list") {
     let dietarySpef = [];
     let stepCount = 0;
 
+  console.log("code updated 1")
   function showFilteredRecipes(query) {
       pullAllRecipes.innerHTML = "";
       const filtered = allRecipesList.filter(([id, recipe]) => {
