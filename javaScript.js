@@ -33,52 +33,52 @@ let allRecipesList = [];
 
 // ==== RECIPE LIST PAGE LOGIC ====
 if (pageType === "list") {
-    const form = document.getElementById("recipeForm");
-    const instructionsContainer = document.getElementById("instructionsContainer");
-    const addStepBtn = document.getElementById("addStepBtn");
-    const saveRecipeBtn = document.getElementById("saveRecipeBtn");
-    const pullAllRecipes = document.getElementById("pullAllRecipes");
+  const form = document.getElementById("recipeForm");
+  const instructCont = document.getElementById("instructionsContainer");
+  const addStepBtn = document.getElementById("addStepBtn");
+  const saveRecipeBtn = document.getElementById("saveRecipeBtn");
+  const pullAllRecipes = document.getElementById("pullAllRecipes");
 
-    const mealButtons = document.querySelectorAll("#mealDropD .dropDBtn");
-    const dietaryButtons = document.querySelectorAll("#dietDropD .dropDBtn");
-    const searchInputBar = document.getElementById("searchInputBar");
+  const mealButtons = document.querySelectorAll("#mealDropD .dropDBtn");
+  const dietaryButtons = document.querySelectorAll("#dietDropD .dropDBtn");
+  const searchInputBar = document.getElementById("searchInputBar");
 
     let tags = [];
     let dietarySpef = [];
     let stepCount = 0;
 
-    function renderFilteredRecipes(query) {
-        pullAllRecipes.innerHTML = "";
-        const filtered = allRecipesList.filter(([id, recipe]) => {
-            const matchesTitle = recipe.title.toLowerCase().includes(query.toLowerCase());
-            const matchesTags = tags.length === 0 || tags.every(tag => recipe.tags?.includes(tag));
-            const matchesDiet = dietarySpef.length === 0 || dietarySpef.every(diet => recipe.dietarySpef?.includes(diet));
-            return matchesTitle && matchesTags && matchesDiet;
-        });
+  function showFilteredRecipes(query) {
+      pullAllRecipes.innerHTML = "";
+      const filtered = allRecipesList.filter(([id, recipe]) => {
+          const matchesTitle = recipe.title.toLowerCase().includes(query.toLowerCase());
+          const matchesTags = tags.length === 0 || tags.every(tag => recipe.tags?.includes(tag));
+          const matchesDiet = dietarySpef.length === 0 || dietarySpef.every(diet => recipe.dietarySpef?.includes(diet));
+          return matchesTitle && matchesTags && matchesDiet;
+      });
 
-        filtered.forEach(([id, recipe]) => {
-            const recipeDiv = displayRecipe(recipe, id);
-            pullAllRecipes.appendChild(recipeDiv);
-        });
-    }
+      filtered.forEach(([id, recipe]) => {
+          const recipeDiv = displayRecipe(recipe, id);
+          pullAllRecipes.appendChild(recipeDiv);
+      });
+  }
 
-    document.getElementById("mealFilterBtn").addEventListener("click", () => {
-        document.getElementById("mealDropD").classList.toggle("show");
-    });
+document.getElementById("mealFilterBtn").addEventListener("click", () => {
+    document.getElementById("mealDropD").classList.toggle("show");
+});
 
-    document.getElementById("dietFilterBtn").addEventListener("click", () => {
-        document.getElementById("dietDropD").classList.toggle("show");
-    });
+document.getElementById("dietFilterBtn").addEventListener("click", () => {
+    document.getElementById("dietDropD").classList.toggle("show");
+});
 
-    document.getElementById("searchBtn").addEventListener("click", () => {
-        renderFilteredRecipes(searchInputBar.value);
-    });
+document.getElementById("searchBtn").addEventListener("click", () => {
+    renderFilteredRecipes(searchInputBar.value);
+});
 
-    document.getElementById("addRecpBtn").addEventListener("click", () => {
-        document.getElementById("addRecpDropD").classList.toggle("show");
-    });
+document.getElementById("addRecpBtn").addEventListener("click", () => {
+    document.getElementById("addRecpDropD").classList.toggle("show");
+});
 
-    function updateSelectedFilters() {
+    function updateYourFilters() {
         const filterDisplay = [...tags, ...dietarySpef];
         document.getElementById("filterTags").textContent = filterDisplay.length
             ? filterDisplay.join(", ")
@@ -86,25 +86,25 @@ if (pageType === "list") {
     }
 
     // Filter buttons
-    mealButtons.forEach(btn => {
-        btn.addEventListener("click", () => {
-            const tag = btn.dataset.tag;
-            btn.classList.toggle("selected");
-            tags = tags.includes(tag) ? tags.filter(t => t !== tag) : [...tags, tag];
-            updateSelectedFilters();
-            renderFilteredRecipes(searchInputBar.value);
+        mealButtons.forEach(btn => {
+            btn.addEventListener("click", () => {
+                const tag = btn.dataset.tag;
+                btn.classList.toggle("selected");
+                tags = tags.includes(tag) ? tags.filter(t => t !== tag) : [...tags, tag];
+                updateYourFilters();
+                showFilteredRecipes(searchInputBar.value);
+            });
         });
-    });
 
-    dietaryButtons.forEach(btn => {
-        btn.addEventListener("click", () => {
-            const diet = btn.dataset.tag;
-            btn.classList.toggle("selected");
-            dietarySpef = dietarySpef.includes(diet) ? dietarySpef.filter(d => d !== diet) : [...dietarySpef, diet];
-            updateSelectedFilters();
-            renderFilteredRecipes(searchInputBar.value);
+        dietaryButtons.forEach(btn => {
+            btn.addEventListener("click", () => {
+                const diet = btn.dataset.tag;
+                btn.classList.toggle("selected");
+                dietarySpef = dietarySpef.includes(diet) ? dietarySpef.filter(d => d !== diet) : [...dietarySpef, diet];
+                updateYourFilters();
+                showFilteredRecipes(searchInputBar.value);
+            });
         });
-    });
 
     // Add step logic
     function addStep(initialValue = "") {
@@ -125,17 +125,17 @@ if (pageType === "list") {
         removeBtn.textContent = "X";
         removeBtn.classList.add("removeBtn");
         removeBtn.addEventListener("click", () => {
-            instructionsContainer.removeChild(stepDiv);
+          instructCont.removeChild(stepDiv);
             updateStepNumbers();
         });
 
         stepDiv.append(stepLabel, stepInput, removeBtn);
-        instructionsContainer.appendChild(stepDiv);
+        instructCont.appendChild(stepDiv);
     }
 
     function updateStepNumbers() {
         stepCount = 0;
-        instructionsContainer.querySelectorAll(".stepContainer").forEach((div) => {
+        instructCont.querySelectorAll(".stepContainer").forEach((div) => {
             stepCount++;
             const stepLabel = div.querySelector(".stepNumber");
             if (stepLabel) stepLabel.textContent = `Step ${stepCount}:`;
@@ -148,8 +148,8 @@ if (pageType === "list") {
     saveRecipeBtn.addEventListener("click", (e) => {
         e.preventDefault();
 
-        const instructionInputs = instructionsContainer.querySelectorAll("input");
-        const instructions = Array.from(instructionInputs).map(input => input.value.trim()).filter(line => line !== "");
+        const instructInputs = instructCont.querySelectorAll("input");
+        const instructions = Array.from(instructInputs).map(input => input.value.trim()).filter(line => line !== "");
 
         const title = document.getElementById("titleOfRecipe").value.trim();
         const prepTime = document.getElementById("prepTimeOfRecipe").value.trim();
@@ -157,26 +157,32 @@ if (pageType === "list") {
         const ingredientsString = document.getElementById("ingredientsOfRecipe").value.trim();
 
         if (!title || !prepTime || !cookingTime || tags.length === 0 || dietarySpef.length === 0 || !ingredientsString || instructions.length === 0) {
-            alert("You have not completed the recipe.");
+              alert("You have not completed the recipe! Complete it!");
             return;
         }
 
         const ingredients = ingredientsString ? ingredientsString.split("\n").map(line => line.trim()).filter(line => line !== "") : [];
 
-        const recipe = { title, tags, dietarySpef, prepTime, cookingTime, ingredients, instructions };
+        const recipe = { 
+          title, 
+          tags, 
+          dietarySpef, 
+          prepTime, 
+          cookingTime, 
+          ingredients, 
+          instructions };
 
         const newRecipeRef = push(recipesRef);
         set(newRecipeRef, recipe)
             .then(() => {
-                alert("Recipe saved successfully!");
+                  alert("Recipe saved successfully!!");
                 form.reset();
-                instructionsContainer.innerHTML = "";
+                instructCont.innerHTML = "";
                 stepCount = 0;
                 addStep();
             })
             .catch((error) => {
-                console.error("Error saving recipe:", error);
-                alert("Something went wrong :(");
+                alert("Something went wrong D:");
             });
     });
 
@@ -184,23 +190,33 @@ if (pageType === "list") {
         .then((snapshot) => {
             if (snapshot.exists()) {
                 allRecipesList = Object.entries(snapshot.val());
-                renderFilteredRecipes("");
+                showFilteredRecipes("");
             } else {
                 pullAllRecipes.innerHTML = "<p>No recipes found.</p>";
             }
         })
-        .catch((error) => console.error("Error loading recipes:", error));
 
     function displayRecipe(recipe, ID) {
         const recipeDiv = document.createElement("div");
         recipeDiv.classList.add("recipeCard");
         recipeDiv.innerHTML = `
-            <h3><a href="recipe.html?id=${ID}" target="_blank">${recipe.title}</a></h3>
-            <p><h3>Tags:</h3> ${recipe.tags?.join(", ") || "None"}</p>
-            <p><h3>Dietary Specifications:</h3> ${recipe.dietarySpef?.join(", ") || "None"}</p>
-            <p><h3>Ingredients:</h3><br>${recipe.ingredients?.join("<br>") || "None"}</p>
-            <hr>
-        `;
+          <h3>
+            <a href="recipe.html?id=${ID}" target="_blank">${title}</a>
+          </h3>
+              
+            <h4>Tags:</h4>
+              <p>${tags?.join(", ") || "None"}</p>
+                
+            <h4>Dietary Specifications:</h4>
+              <p>${dietarySpef?.join(", ") || "None"}</p>
+                
+            <h4>Ingredients:</h4>
+            <ul>
+              ${(ingredients?.map(i => `<li>${i}</li>`).join("")) || "<li>None</li>"}
+            </ul>
+              
+        <hr>
+          `;
         return recipeDiv;
     }
 }
@@ -226,22 +242,21 @@ if (pageType === "detail") {
                 const recipe = snapshot.val();
                 recipeTitle.textContent = recipe.title;
                 recipeDetails.innerHTML = `
-                    <p><strong>Tags:</strong> ${recipe.tags?.join(", ") || "None"}</p>
-                    <p><strong>Dietary Specifications:</strong> ${recipe.dietarySpef?.join(", ") || "None"}</p>
-                    <p><strong>Preparing Time:</strong> ${recipe.prepTime || "?"} mins</p>
-                    <p><strong>Cooking Time:</strong> ${recipe.cookingTime || "?"} mins</p>
-                    <p><strong>Ingredients:</strong><br>${recipe.ingredients?.join("<br>") || "None"}</p>
-                    <p><strong>Instructions:</strong><br>${recipe.instructions?.map((s, i) => `Step ${i + 1}: ${s}`).join("<br>") || "None"}</p>
+                    <p><h3>Tags:</h3> ${recipe.tags?.join(", ") || "None"}</p>
+                    <p><h3>Dietary Specifications:</h3> ${recipe.dietarySpef?.join(", ") || "None"}</p>
+                    <p><h3>Preparing Time:</h3> ${recipe.prepTime || "?"} mins</p>
+                    <p><h3>Cooking Time:</h3> ${recipe.cookingTime || "?"} mins</p>
+                    <p><h3>Ingredients:</h3><br>${recipe.ingredients?.join("<br>") || "None"}</p>
+                    <p><h3>Instructions:</h3><br>${recipe.instructions?.map((s, i) => `Step ${i + 1}: ${s}`).join("<br>") || "None"}</p>
                 `;
             } else {
-                recipeTitle.textContent = "Recipe not found.";
+                recipeTitle.textContent = "Sorry. Your recipe seems to have disappeared. We will send someone out to find it.";
             }
         }).catch(error => {
-            console.error(error);
-            recipeTitle.textContent = "Error loading recipe.";
+            recipeTitle.textContent = "Whoever went out to get your recipe got lost. Error will be sorted soon.";
         });
     } else {
-        recipeTitle.textContent = "No recipe ID provided.";
+        recipeTitle.textContent = "No recipe ID provided. Your recipe may have commited identitify theft.";
     }
 }
 
