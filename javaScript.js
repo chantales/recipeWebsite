@@ -531,7 +531,6 @@ if (pageType === "mp-detail") {
   if (!mplanId) {
     mplanTitle.textContent = "No meal plan ID given.";
     mplanDetails.innerHTML = "";
-    return;
   }
 
 
