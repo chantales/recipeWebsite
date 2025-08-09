@@ -33,7 +33,7 @@ function objKeysToArray(obj) {
   return obj ? Object.keys(obj) : [];
 }
 
-console.log("code updated 0239")
+console.log("code updated 02459")
 
 
 
@@ -345,7 +345,9 @@ if (pageType === "r-detail") {
               `;
                                     
             } else {
-                recipeTitle.textContent = "Sorry. Your recipe seems to have disappeared. We will send someone out to find it.";
+                recipeTitle.textContent = "Sorry. Your recipe seems to have disappeared. We will send someone out to find it";
+                document.getElementById("deleteRecipeBtn").style.display = "none";
+                
             }
         }).catch(error => {
             recipeTitle.textContent = "Whoever went out to get your recipe got lost. Error will be sorted soon.";
@@ -366,7 +368,7 @@ if (pageType === "r-detail") {
       const recipeRef = ref(database, "recipes/" + recipeId);
       remove(recipeRef).then(() => {
           alert("Recipe deleted successfully!");
-          // window.location.href = "recipeList.html"; 
+          window.location.href = "recipeList.html"; 
       }).catch(error => {
           alert("Error deleting recipe: " + error.message);
       });
