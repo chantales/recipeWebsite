@@ -569,7 +569,8 @@ if (pageType === "mp-detail") {
             </ul>
           `;
         }).join("");
-                  console.log("Saving meal plan:", JSON.stringify(mealPlan, null, 2));
+
+        
         mplanDetails.innerHTML = html;
       });
     })
