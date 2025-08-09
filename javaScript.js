@@ -33,7 +33,7 @@ function objKeysToArray(obj) {
   return obj ? Object.keys(obj) : [];
 }
 
-console.log("code updated 09")
+console.log("code updated 0239")
 
 
 
@@ -363,7 +363,8 @@ if (pageType === "r-detail") {
           alert("No recipe ID provided.");
           return;
       }
-      remove(database, "recipes/" + recipeId).then(() => {
+      const recipeRef = ref(database, "recipes/" + recipeId);
+      remove(recipeRef).then(() => {
           alert("Recipe deleted successfully!");
           // window.location.href = "recipeList.html"; 
       }).catch(error => {
