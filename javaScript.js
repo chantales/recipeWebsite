@@ -447,15 +447,22 @@ if (pageType === "mp-detail") {
 
   if (mplanId) {
     const mplanRef = ref(database, "mealPlans/" + mplanId);
+
     get(mplanRef).then(snapshot => {
       if (snapshot.exists()) {
         const data = snapshot.val();
-        mplanTitle.textContent = `Meal Plan for: ${data.dayName || "Unknown day D:"}, ${data.date || "Unknown date D:"}`;
+        mplanTitle.textContent = `Meal Plan for: ${data.date || "Unknown date D:"}`;
         mplanDetails.innerHTML = Object.entries(data.mplan || {})
         .map(([meal, recipeIds]) => {
-          return `<h3>${meal}</h3><ul>${Object.values(recipeIds).map(recipe => `<li>${recipe}</li>`).join("")}</ul>`;
+            const ids = Array.isArray(recipeIds) ? recipeIds : Object.values(recipeIds);
+            return `<h3>${meal}</h3><ul>${ids.map(id => {
+            const recipe = allRecipesList.find(([rid]) => rid === id)?.[1];
+            return `<li><a href="recipe.html?id=${id}">${recipe?.title || "Unknown"}</a></li>`;
+          }).join("")}</ul>`;
         })
-  .join("");
+        .join("");
+
+
       } else {
         mplanTitle.textContent = "Sorry, that meal plan could not be found. I'll try looking in the back.";
         mplanDetails.innerHTML = "";
@@ -469,13 +476,6 @@ if (pageType === "mp-detail") {
     mplanTitle.textContent = "No meal plan ID given. how else am i supposed to get the meal plan?";
     mplanDetails.innerHTML = "";
   }
-
-
-
-
-
-
-
 
 
 
