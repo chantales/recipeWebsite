@@ -411,16 +411,15 @@ document.getElementById("mealPlanBtn").addEventListener("click", () => {
 
 
 document.getElementById("dateMealPlan").addEventListener("change", e => {
-  document.getElementById("dateMealPlan").addEventListener("change", e => {
-    const date = new Date(e.target.value);
-    const dayName = date.toLocaleDateString(undefined, { weekday: 'long' });
+  const date = new Date(e.target.value);
+  const dayName = date.toLocaleDateString(undefined, { weekday: 'long' });
 
-    const dayDiv = document.querySelector(".day");
-    dayDiv.dataset.day = dayName; 
-    document.getElementById("dayName").textContent = dayName;
-        updateMP();
-  });
+  const dayDiv = document.querySelector(".day");
+  dayDiv.dataset.day = dayName; 
+  document.getElementById("dayName").textContent = dayName;
+      updateMP();
 });
+
 
 function setupMP() {
   document.querySelectorAll(".addRecipeBtn").forEach(button => {
@@ -468,7 +467,7 @@ function showRecipeChoices(container, day, meal) {
 }
 
 function addToMP(day, meal, recipeId) {
-  mealPlan[day] ??= [];
+  mealPlan[day] ??= {};
   mealPlan[day][meal] = recipeId;
 }
 
@@ -529,44 +528,56 @@ if (pageType === "mp-detail") {
   const mplanTitle = document.getElementById("mplanTitle");
   const mplanDetails = document.getElementById("mplanDetails");
 
-  if (mplanId) {
-    // Grab all recipes first
-    get(ref(database, "recipes")).then(recipeSnapshot => {
-      if (recipeSnapshot.exists()) {
-        allRecipesList = Object.entries(recipeSnapshot.val());
-
-        const mplanRef = ref(database, "mealPlans/" + mplanId);
-        get(mplanRef).then(snapshot => {
-          if (snapshot.exists()) {
-            const data = snapshot.val();
-            mplanTitle.textContent = `Meal Plan for: ${data.date || "Unknown date D:"}`;
-
-            console.log("Meal Plan Data:", data.mplan);
-            console.log("All Recipes List:", allRecipesList);
-
-            mplanDetails.innerHTML = Object.entries(data.mplan || {})
-              .map(([meal, recipeIds]) => {
-                const ids = Array.isArray(recipeIds) ? recipeIds : Object.values(recipeIds);
-                return `<h3>${meal}</h3><ul>${ids.map(id => {
-                const recipe = allRecipesList.find(([rid]) => rid === id)?.[1];
-                const title = recipe ? recipe.title : "Unknown Recipe";
-                return `<li><a href="recipe.html?id=${id}" target="_blank">${title}</a></li>`;
-                }).join("")}</ul>`;
-              })
-              .join("");
-          } else {
-            mplanTitle.textContent = "Sorry, that meal plan could not be found. We will try looking again!";
-            mplanDetails.innerHTML = "";
-          }
-        });
-      } else {
-        mplanTitle.textContent = "No recipes found in database. We will check in the back for some more.";
-        mplanDetails.innerHTML = "";
-      }
-    }).catch(console.error);
-
-  } else {
+  if (!mplanId) {
     mplanTitle.textContent = "No meal plan ID given.";
     mplanDetails.innerHTML = "";
+    return;
   }
+
+
+  get(ref(database, "recipes"))
+    .then(recipeSnapshot => {
+      if (!recipeSnapshot.exists()) {
+        mplanTitle.textContent = "No recipes found in database.";
+        mplanDetails.innerHTML = "";
+        return;
+      }
+      const allRecipesList = Object.entries(recipeSnapshot.val());
+
+
+      const mplanRef = ref(database, "mealPlans/" + mplanId);
+      return get(mplanRef).then(snapshot => {
+        if (!snapshot.exists()) {
+          mplanTitle.textContent = "Sorry, that meal plan could not be found.";
+          mplanDetails.innerHTML = "";
+          return;
+        }
+        const data = snapshot.val();
+        mplanTitle.textContent = `Meal Plan for: ${data.date || "Unknown date"}`;
+
+
+        const mealPlanObj = data.mplan || {};
+
+
+        const html = Object.entries(mealPlanObj).map(([day, meals]) => {
+          return `
+            <h3>${day}</h3>
+            <ul>
+              ${Object.entries(meals).map(([mealName, recipeId]) => {
+                const recipe = allRecipesList.find(([rid]) => rid === recipeId)?.[1];
+                const title = recipe ? recipe.title : "Recipe not found";
+                return `<li><strong>${mealName}:</strong> <a href="recipe.html?id=${recipeId}" target="_blank">${title}</a></li>`;
+              }).join("")}
+            </ul>
+          `;
+        }).join("");
+
+        mplanDetails.innerHTML = html;
+      });
+    })
+    .catch(error => {
+      mplanTitle.textContent = "Error loading meal plan.";
+      mplanDetails.innerHTML = "";
+      console.error(error);
+    });
 }
