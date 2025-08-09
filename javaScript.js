@@ -360,6 +360,7 @@ if (pageType === "r-detail") {
 
     // deleting
     document.getElementById("deleteRecipeBtn").addEventListener("click", () => {
+      console.log("Delete button clicked");
         if (!recipeId) {
             alert("No recipe ID provided.");
             return;
