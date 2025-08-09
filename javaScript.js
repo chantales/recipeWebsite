@@ -501,8 +501,14 @@ document.getElementById("saveMealPlan").addEventListener("click", () => {
     mplan: mealPlan, // the meal plan object
   };
   set(newRef, mealPlanSave)
-    .then(() => alert("Saved meal plan!"))
-    .catch(console.error);
+  .then(() => alert("Saved meal plan!"))
+  .catch(error => {
+    if (error.code === 'PERMISSION_DENIED') {
+      alert("Save failed: Date must be between 2025 and 2026.");
+    } else {
+      alert("Save failed: " + error.message);
+    }
+  });
 });
 
 
