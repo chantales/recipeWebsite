@@ -388,9 +388,8 @@ function showRecipeChoices(container, day, meal) {
 }
 
 function addToMP(day, meal, recipeId) {
-  mealPlan[day] ??= {};
-  mealPlan[day][meal] ??= [];
-  mealPlan[day][meal].push(recipeId);
+  mealPlan[meal] ??= [];
+  mealPlan[meal].push(recipeId);
 }
 
 function updateMP() {
