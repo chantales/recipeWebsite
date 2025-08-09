@@ -200,8 +200,8 @@ document.getElementById("addRecpBtn").addEventListener("click", () => {
         const instructions = Array.from(instructInputs).map(input => input.value.trim()).filter(line => line !== "");
 
         const title = document.getElementById("titleOfRecipe").value.trim();
-        const prepTime = document.getElementById("prepTimeOfRecipe").value.trim();
-        const cookingTime = document.getElementById("cookingTimeOfRecipe").value.trim();
+        const prepTime = Number(document.getElementById("prepTimeOfRecipe").value.trim());
+        const cookingTime = Number(document.getElementById("cookingTimeOfRecipe").value.trim());
         const ingredientsString = document.getElementById("ingredientsOfRecipe").value.trim();
 
         if (!title || !prepTime || !cookingTime || tags.length === 0 || dietarySpef.length === 0 || !ingredientsString || instructions.length === 0) {
@@ -231,6 +231,7 @@ document.getElementById("addRecpBtn").addEventListener("click", () => {
             })
             .catch((error) => {
                 alert("Something went wrong D:");
+                console.log(error);
             });
     });
 
