@@ -95,6 +95,8 @@ document.getElementById("addRecpBtn").addEventListener("click", () => {
                 tags = tags.includes(tag) ? tags.filter(t => t !== tag) : [...tags, tag];
                 updateYourFilters();
                 showFilteredRecipes(searchInputBar.value);
+
+                console.log(recipe.tags)
             });
         });
 
@@ -105,6 +107,9 @@ document.getElementById("addRecpBtn").addEventListener("click", () => {
                 dietarySpef = dietarySpef.includes(diet) ? dietarySpef.filter(d => d !== diet) : [...dietarySpef, diet];
                 updateYourFilters();
                 showFilteredRecipes(searchInputBar.value);
+
+
+                console.log(recipe.dietarySpef)
             });
         });
 
