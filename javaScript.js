@@ -28,7 +28,7 @@ const recipesRef = ref(database, "recipes");
 const params = new URLSearchParams(window.location.search);
 let allRecipesList = [];
 
-console.log("code updated 10")
+console.log("code updated 11")
 
 
 
@@ -193,6 +193,20 @@ document.getElementById("addRecpBtn").addEventListener("click", () => {
     addStepBtn.addEventListener("click", () => addStep());
     addStep();
 
+
+
+
+
+
+    function arrayToObj(arr) {
+      const obj = {};
+      arr.forEach(item => {
+        obj[item] = true;
+      });
+      return obj;
+    }
+    
+
     saveRecipeBtn.addEventListener("click", (e) => {
         e.preventDefault();
 
@@ -213,8 +227,8 @@ document.getElementById("addRecpBtn").addEventListener("click", () => {
 
         const recipe = { 
           title, 
-          tags, 
-          dietarySpef, 
+          tags: arrayToObj(tags), 
+          dietarySpef: arrayToObj(dietarySpef), 
           prepTime, 
           cookingTime, 
           ingredients, 
