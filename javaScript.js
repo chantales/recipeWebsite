@@ -455,7 +455,7 @@ if (pageType === "mp-detail") {
         mplanDetails.innerHTML = "";
       }
     }).catch(error => {
-      mplanTitle.textContent = "Oops, something went wrong trying to locate your meal plan!";
+      mplanTitle.textContent = "Oops, something went wrong trying to locate your meal plan!", error;
       mplanDetails.innerHTML = "";
     });
   } else {
