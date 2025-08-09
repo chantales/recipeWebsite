@@ -429,7 +429,7 @@ if (pageType === "mp-detail") {
   const mplanTitle = document.getElementById("mplanTitle");
   const mplanDetails = document.getElementById("mplanDetails");
 
-  if (planId) {
+  if (mplanId) {
     const mplanRef = ref(database, "mealPlans/" + mplanId);
     get(mplanRef).then(snapshot => {
       if (snapshot.exists()) {
