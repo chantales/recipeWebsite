@@ -191,12 +191,6 @@ label {
   line-height: 1.4;
 }
 
-button:focus,
-textarea:focus {
-  outline: 3px solid #2980b9;
-  outline-offset: 2px;
-}
-
 @media (max-width: 480px) {
   #searchInputBar {
     width: 100%;
