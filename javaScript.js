@@ -28,7 +28,7 @@ const recipesRef = ref(database, "recipes");
 const params = new URLSearchParams(window.location.search);
 let allRecipesList = [];
 
-console.log("code updated 10 gajillion")
+console.log("code updated 10")
 
 
 
@@ -43,6 +43,10 @@ if (pageType === "r-list") {
 
   const mealButtons = document.querySelectorAll("#mealDropD .dropDBtn");
   const dietaryButtons = document.querySelectorAll("#dietDropD .dropDBtn");
+
+  const tagAddBtn = document.querySelectorAll(".tagBtn");
+  const dietAddBtn = document.querySelectorAll(".dietSpefBtn");
+
   const searchInputBar = document.getElementById("searchInputBar");
 
     let tags = [];
@@ -96,7 +100,8 @@ document.getElementById("addRecpBtn").addEventListener("click", () => {
                 updateYourFilters();
                 showFilteredRecipes(searchInputBar.value);
 
-                console.log(recipe.tags)
+
+                console.log(tags);
             });
         });
 
@@ -109,9 +114,45 @@ document.getElementById("addRecpBtn").addEventListener("click", () => {
                 showFilteredRecipes(searchInputBar.value);
 
 
-                console.log(recipe.dietarySpef)
+                console.log(dietarySpef);
             });
         });
+
+
+
+        tagAddBtn.forEach(btn => {
+          btn.addEventListener("click", () => {
+            const tag = btn.dataset.tag;
+            btn.classList.toggle("selected");
+            if (tags.includes(tag)) {
+              tags = tags.filter(t => t !== tag);
+            } else {
+              tags.push(tag);
+            }
+            console.log("tags:", tags);
+          });
+        });
+
+        dietAddBtn.forEach(btn => {
+          btn.addEventListener("click", () => {
+            const diet = btn.dataset.tag;
+            btn.classList.toggle("selected");
+            if (dietarySpef.includes(diet)) {
+              dietarySpef = dietarySpef.filter(d => d !== diet);
+            } else {
+              dietarySpef.push(diet);
+            }
+            console.log("dietary spefs:", dietarySpef);
+          });
+        });
+
+
+
+
+
+
+
+
 
     // Add step logic
     function addStep(initialValue = "") {
