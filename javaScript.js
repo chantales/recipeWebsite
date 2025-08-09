@@ -25,7 +25,6 @@ const pageType = document.body.dataset.page || "list";
 
 // ==== COMMON THINGS ====
 const recipesRef = ref(database, "recipes");
-
 let allRecipesList = [];
 
 
@@ -256,6 +255,9 @@ if (pageType === "detail") {
 if (pageType === "mealplan") {
   
 let mealPlan = {};
+const mealPlansRef = ref(database, "mealPlans");
+const container = document.getElementById("mealPlansList");
+
 
 // Pull all recipes first
 get(ref(database, "recipes")).then(snapshot => {
@@ -354,6 +356,23 @@ document.getElementById("saveMealPlan").addEventListener("click", () => {
     .then(() => alert("Saved meal plan!"))
     .catch(console.error);
 });
+
+
+get(mealPlansRef).then(snapshot => {
+  if (!snapshot.exists()) {
+    container.textContent = "No meal plans saved.";
+    return;
+  }
+  const plans = Object.entries(snapshot.val());
+  plans.forEach(([id, data]) => {
+    const div = document.createElement("div");
+    div.innerHTML = `
+      "we are the meal plan. we have come to save you from hunger!!!"
+    `;
+  });
+}).catch(console.error);
+
+
 
 
 
