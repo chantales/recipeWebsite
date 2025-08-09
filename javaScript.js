@@ -301,7 +301,7 @@ get(mealPlansRef).then(snapshot => {
   plans.forEach(([id, data]) => {
     const div = document.createElement("div");
     div.innerHTML = `
-        <a href="mealplan-detail.html?id=${id}" target="_blank">
+        <a href="mealPlan.html?id=${id}" target="_blank">
           Meal Plan for: ${data.date || "OOO scary the date is Unknown."}
         </a>
     `;
