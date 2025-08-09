@@ -291,6 +291,7 @@ const mealPlansRef = ref(database, "mealPlans");
 const container = document.getElementById("mealPlansList");
 
 
+
 // Pull any saved mealplans onto the page for the user to be enamoured by my cool code
 get(mealPlansRef).then(snapshot => {
   if (!snapshot.exists()) {
@@ -311,23 +312,36 @@ get(mealPlansRef).then(snapshot => {
 
 
 
-
-
 // Pull all recipes first
 get(ref(database, "recipes")).then(snapshot => {
   if (snapshot.exists()) {
     allRecipesList = Object.entries(snapshot.val());
-    setupMealPlanUI();
+    setupMP();
   } else {
     document.getElementById("recipeList").innerHTML = "No recipes found!";
   }
 }).catch(console.error);
 
+
+
+
+
 document.getElementById("mealPlanBtn").addEventListener("click", () => {
   document.getElementById("mealPlanDropD").classList.toggle("show");
 });
 
-function setupMealPlanUI() {
+
+document.getElementById("dateMealPlan").addEventListener("change", e => {
+  document.getElementById("dateMealPlan").addEventListener("change", e => {
+    const date = e.target.value;
+    const dayDiv = document.querySelector(".day");
+    dayDiv.dataset.day = date;
+    document.getElementById("dayName").textContent = date;
+    updateMP();
+  });
+});
+
+function setupMP() {
   document.querySelectorAll(".addRecipeBtn").forEach(button => {
     button.addEventListener("click", () => {
       const mealSlot = button.closest(".mealSlot");
@@ -339,7 +353,7 @@ function setupMealPlanUI() {
     });
   });
 
-  updateMealPlanUI();
+  updateMP();
 }
 
 function showRecipeChoices(container, day, meal) {
@@ -363,32 +377,31 @@ function showRecipeChoices(container, day, meal) {
     div.textContent = recipe.title;
     div.style.cursor = "pointer";
     div.addEventListener("click", () => {
-      addToMealPlan(day, meal, id);
+      addToMP(day, meal, id);
       container.style.display = "none";  // Hide choices after selection
-      updateMealPlanUI();
+      updateMP();
     });
     container.appendChild(div);
   });
 }
 
-function addToMealPlan(day, meal, recipeId) {
-  if (!mealPlan[day]) mealPlan[day] = {};
-  if (!mealPlan[day][meal]) mealPlan[day][meal] = [];
+function addToMP(day, meal, recipeId) {
+  mealPlan[day] ??= {};
+  mealPlan[day][meal] ??= [];
   mealPlan[day][meal].push(recipeId);
 }
 
-function updateMealPlanUI() {
+function updateMP() {
   document.querySelectorAll(".day").forEach(dayDiv => {
     const dayName = dayDiv.dataset.day;
     dayDiv.querySelectorAll(".mealSlot").forEach(slot => {
       const mealName = slot.dataset.meal;
-      const recipesForMeal = mealPlan[dayName]?.[mealName] || [];
-      const list = slot.querySelector(".recipeList");
-      list.innerHTML = recipesForMeal
-        .map(id => {
-          const recipe = allRecipesList.find(([rid]) => rid === id)?.[1];
-          return `<li>${recipe?.title || "Unknown"}</li>`;
-        }).join("");
+      slot.querySelector(".recipeList").innerHTML =
+        (mealPlan[dayName]?.[mealName] || [])
+          .map(id => {
+            const recipe = allRecipesList.find(([rid]) => rid === id)?.[1];
+            return `<li>${recipe?.title || "Unknown"}</li>`;
+          }).join("");
     });
   });
 }
@@ -397,16 +410,16 @@ function updateMealPlanUI() {
 document.getElementById("saveMealPlan").addEventListener("click", () => {
   const mealPlansRef = ref(database, "mealPlans");
   const newRef = push(mealPlansRef);
-  const date = document.getElementById("dateOfMealPlan").value;
+  const date = document.getElementById("dateMealPlan").value;
   if (!date) {
     alert("Please enter a date for your meal plan.");
     return;
   }
-  const mealPlanToSave = {
+  const mealPlanSave = {
     date,     // save the date set
     mplan: mealPlan, // the meal plan object
   };
-  set(newRef, mealPlanToSave)
+  set(newRef, mealPlanSave)
     .then(() => alert("Saved meal plan!"))
     .catch(console.error);
 });
