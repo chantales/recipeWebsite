@@ -73,7 +73,7 @@ document.getElementById("dietFilterBtn").addEventListener("click", () => {
 });
 
 document.getElementById("searchBtn").addEventListener("click", () => {
-    renderFilteredRecipes(searchInputBar.value);
+    showFilteredRecipes(searchInputBar.value);
 });
 
 document.getElementById("addRecpBtn").addEventListener("click", () => {
