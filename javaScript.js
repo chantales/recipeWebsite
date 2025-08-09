@@ -28,7 +28,7 @@ const recipesRef = ref(database, "recipes");
 const params = new URLSearchParams(window.location.search);
 let allRecipesList = [];
 
-console.log("CODE updated 2")
+console.log("CODE updated 4")
 
 
 
