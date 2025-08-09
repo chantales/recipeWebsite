@@ -29,7 +29,12 @@ const recipesRef = ref(database, "recipes");
 const params = new URLSearchParams(window.location.search);
 let allRecipesList = [];
 
-console.log("code updated 204")
+function objKeysToArray(obj) {
+  return obj ? Object.keys(obj) : [];
+}
+
+console.log("code updated 2344")
+
 
 
 
@@ -365,9 +370,6 @@ let mealPlan = {};
 const mealPlansRef = ref(database, "mealPlans");
 const container = document.getElementById("mealPlansList");
 
-function objKeysToArray(obj) {
-  return obj ? Object.keys(obj) : [];
-}
 
 // Pull any saved mealplans onto the page for the user to be enamoured by my cool code
 get(mealPlansRef).then(snapshot => {
