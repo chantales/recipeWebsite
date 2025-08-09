@@ -33,7 +33,7 @@ function objKeysToArray(obj) {
   return obj ? Object.keys(obj) : [];
 }
 
-console.log("code updated im tired of this")
+console.log("code updated 09")
 
 
 
@@ -365,7 +365,7 @@ if (pageType === "r-detail") {
       }
       remove(database, "recipes/" + recipeId).then(() => {
           alert("Recipe deleted successfully!");
-          // window.location.href = "recipeList.html"; // Redirect to recipe list
+          // window.location.href = "recipeList.html"; 
       }).catch(error => {
           alert("Error deleting recipe: " + error.message);
       });
