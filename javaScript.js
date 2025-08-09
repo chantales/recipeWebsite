@@ -465,7 +465,7 @@ if (pageType === "mp-detail") {
                 const ids = Array.isArray(recipeIds) ? recipeIds : Object.values(recipeIds);
                 return `<h3>${meal}</h3><ul>${ids.map(id => {
                   const recipe = allRecipesList.find(([rid]) => rid === id)?.[1];
-                  return `<li><a href="recipe.html?id=${id}" target="_blank">${recipe?.title}</a></li>`;
+                  return `<li><a href="recipe.html?id=${id}" target="_blank">${recipe.title}</a></li>`;
                 }).join("")}</ul>`;
               })
               .join("");
