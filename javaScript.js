@@ -311,8 +311,7 @@ if (pageType === "r-detail") {
     const recipeDetails = document.getElementById("recipeDetails");
 
     if (recipeId) {
-        const recipeRef = ref(database, "recipes/" + recipeId);
-        get(recipeRef).then(snapshot => {
+        get(ref(database, "recipes/" + recipeId)).then(snapshot => {
             if (snapshot.exists()) {
                 const recipe = snapshot.val();
                 const tagsArr = objKeysToArray(recipe.tags);
@@ -552,7 +551,7 @@ if (pageType === "mp-detail") {
   }
 
 
-  get(ref(database, "recipes"))
+  get(recipesRef)
     .then(recipeSnapshot => {
       if (!recipeSnapshot.exists()) {
         mplanTitle.textContent = "No recipes found in database.";
