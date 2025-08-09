@@ -26,7 +26,7 @@ const pageType = document.body.dataset.page || "list";
 // ==== COMMON THINGS ====
 const recipesRef = ref(database, "recipes");
 let allRecipesList = [];
-console.log("recipe updated 1")
+console.log("recipe updated 2")
 
 
 
