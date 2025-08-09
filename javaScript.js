@@ -28,7 +28,7 @@ const recipesRef = ref(database, "recipes");
 const params = new URLSearchParams(window.location.search);
 let allRecipesList = [];
 
-console.log("code updated 2")
+console.log("CODE updated 2")
 
 
 
@@ -301,7 +301,7 @@ get(mealPlansRef).then(snapshot => {
   plans.forEach(([id, data]) => {
     const div = document.createElement("div");
     div.innerHTML = `
-        <a href="mealplan-detail.html?id=${id}">
+        <a href="mealplan-detail.html?id=${id}" target="_blank">
           Meal Plan for: ${data.date || "OOO scary the date is Unknown."}
         </a>
     `;
@@ -404,7 +404,7 @@ document.getElementById("saveMealPlan").addEventListener("click", () => {
   }
   const mealPlanToSave = {
     date,     // save the date set
-    plan: mealPlan, // the meal plan object
+    mplan: mealPlan, // the meal plan object
   };
   set(newRef, mealPlanToSave)
     .then(() => alert("Saved meal plan!"))
@@ -414,3 +414,49 @@ document.getElementById("saveMealPlan").addEventListener("click", () => {
 
 }
 
+
+
+
+
+
+
+
+
+// ==== MEAL PLAN DETAIL PAGE LOGIC ====
+if (pageType === "mp-detail") {
+  const mplanId = params.get("id");
+
+  const mplanTitle = document.getElementById("mplanTitle");
+  const mplanDetails = document.getElementById("mplanDetails");
+
+  if (planId) {
+    const mplanRef = ref(database, "mealPlans/" + mplanId);
+    get(mplanRef).then(snapshot => {
+      if (snapshot.exists()) {
+        const data = snapshot.val();
+        mplanTitle.textContent = `Meal Plan for: ${data.date || "The date is still unknown!"}`;
+
+
+      } else {
+        mplanTitle.textContent = "Sorry, that meal plan could not be found. I'll try looking in the back.";
+        mplanDetails.innerHTML = "";
+      }
+    }).catch(error => {
+      mplanTitle.textContent = "Oops, something went wrong trying to locate your meal plan!";
+      mplanDetails.innerHTML = "";
+    });
+  } else {
+    mplanTitle.textContent = "No meal plan ID given. how else am i supposed to get the meal plan?";
+    mplanDetails.innerHTML = "";
+  }
+
+
+
+
+
+
+
+
+
+
+}
