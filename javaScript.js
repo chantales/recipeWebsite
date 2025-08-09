@@ -55,18 +55,21 @@ if (pageType === "r-list") {
     let stepCount = 0;
 
   function showFilteredRecipes(query) {
-      pullAllRecipes.innerHTML = "";
-      const filtered = allRecipesList.filter(([id, recipe]) => {
-          const matchesTitle = recipe.title.toLowerCase().includes(query.toLowerCase());
-          const matchesTags = tags.length === 0 || tags.every(tag => recipe.tags?.includes(tag));
-          const matchesDiet = dietarySpef.length === 0 || dietarySpef.every(diet => recipe.dietarySpef?.includes(diet));
-          return matchesTitle && matchesTags && matchesDiet;
-      });
-
-      filtered.forEach(([id, recipe]) => {
-          const recipeDiv = displayRecipe(recipe, id);
-          pullAllRecipes.appendChild(recipeDiv);
-      });
+    pullAllRecipes.innerHTML = "";
+    const filtered = allRecipesList.filter(([id, recipe]) => {
+      const tagsArr = objKeysToArray(recipe.tags);
+      const dietArr = objKeysToArray(recipe.dietarySpef);
+  
+      const matchesTitle = recipe.title.toLowerCase().includes(query.toLowerCase());
+      const matchesTags = tags.length === 0 || tags.every(tag => tagsArr.includes(tag));
+      const matchesDiet = dietarySpef.length === 0 || dietarySpef.every(diet => dietArr.includes(diet));
+      return matchesTitle && matchesTags && matchesDiet;
+    });
+  
+    filtered.forEach(([id, recipe]) => {
+      const recipeDiv = displayRecipe(recipe, id);
+      pullAllRecipes.appendChild(recipeDiv);
+    });
   }
 
 document.getElementById("mealFilterBtn").addEventListener("click", () => {
