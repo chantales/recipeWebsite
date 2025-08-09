@@ -28,7 +28,7 @@ const recipesRef = ref(database, "recipes");
 const params = new URLSearchParams(window.location.search);
 let allRecipesList = [];
 
-console.log("code updated 9")
+console.log("code updated 123")
 
 
 
@@ -271,6 +271,7 @@ if (pageType === "r-detail") {
             }
         }).catch(error => {
             recipeTitle.textContent = "Whoever went out to get your recipe got lost. Error will be sorted soon.";
+            console.log(error)
         });
     } else {
         recipeTitle.textContent = "No recipe ID provided. Your recipe may have commited identitify theft.";
