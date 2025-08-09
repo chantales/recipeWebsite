@@ -333,11 +333,13 @@ document.getElementById("mealPlanBtn").addEventListener("click", () => {
 
 document.getElementById("dateMealPlan").addEventListener("change", e => {
   document.getElementById("dateMealPlan").addEventListener("change", e => {
-    const date = e.target.value;
+    const date = new Date(e.target.value);
+    const dayName = date.toLocaleDateString(undefined, { weekday: 'long' });
+
     const dayDiv = document.querySelector(".day");
-    dayDiv.dataset.day = date;
-    document.getElementById("dayName").textContent = date;
-    updateMP();
+    dayDiv.dataset.day = dayName; 
+    document.getElementById("dayName").textContent = dayName;
+        updateMP();
   });
 });
 
