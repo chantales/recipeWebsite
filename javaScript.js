@@ -445,37 +445,40 @@ if (pageType === "mp-detail") {
   const mplanDetails = document.getElementById("mplanDetails");
 
   if (mplanId) {
-    const mplanRef = ref(database, "mealPlans/" + mplanId);
+    // Grab all recipes first
+    get(ref(database, "recipes")).then(recipeSnapshot => {
+      if (recipeSnapshot.exists()) {
+        allRecipesList = Object.entries(recipeSnapshot.val());
 
-    get(mplanRef).then(snapshot => {
-      if (snapshot.exists()) {
-        const data = snapshot.val();
-        mplanTitle.textContent = `Meal Plan for: ${data.date || "Unknown date D:"}`;
-        mplanDetails.innerHTML = Object.entries(data.mplan || {})
-        .map(([meal, recipeIds]) => {
-            const ids = Array.isArray(recipeIds) ? recipeIds : Object.values(recipeIds);
-            return `<h3>${meal}</h3><ul>${ids.map(id => {
-            const recipe = allRecipesList.find(([rid]) => rid === id)?.[1];
-            return `<li><a href="recipe.html?id=${id}">${recipe?.title || "Unknown"}</a></li>`;
-          }).join("")}</ul>`;
-        })
-        .join("");
+        // 2️⃣ Now fetch the meal plan
+        const mplanRef = ref(database, "mealPlans/" + mplanId);
+        get(mplanRef).then(snapshot => {
+          if (snapshot.exists()) {
+            const data = snapshot.val();
+            mplanTitle.textContent = `Meal Plan for: ${data.date || "Unknown date D:"}`;
 
-
+            mplanDetails.innerHTML = Object.entries(data.mplan || {})
+              .map(([meal, recipeIds]) => {
+                const ids = Array.isArray(recipeIds) ? recipeIds : Object.values(recipeIds);
+                return `<h3>${meal}</h3><ul>${ids.map(id => {
+                  const recipe = allRecipesList.find(([rid]) => rid === id)?.[1];
+                  return `<li><a href="recipe.html?id=${id}" target="_blank">${recipe?.title || "Unknown"}</a></li>`;
+                }).join("")}</ul>`;
+              })
+              .join("");
+          } else {
+            mplanTitle.textContent = "Sorry, that meal plan could not be found.";
+            mplanDetails.innerHTML = "";
+          }
+        });
       } else {
-        mplanTitle.textContent = "Sorry, that meal plan could not be found. I'll try looking in the back.";
+        mplanTitle.textContent = "No recipes found in database.";
         mplanDetails.innerHTML = "";
       }
-    }).catch(error => {
-      mplanTitle.textContent = "Oops, something went wrong trying to locate your meal plan!";
-      mplanDetails.innerHTML = "";
-      console.log(error);
-    });
+    }).catch(console.error);
+
   } else {
-    mplanTitle.textContent = "No meal plan ID given. how else am i supposed to get the meal plan?";
+    mplanTitle.textContent = "No meal plan ID given.";
     mplanDetails.innerHTML = "";
   }
-
-
-
 }
