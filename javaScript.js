@@ -355,6 +355,24 @@ if (pageType === "r-detail") {
     } else {
         recipeTitle.textContent = "No recipe ID provided. Your recipe may have commited identitify theft.";
     }
+
+
+
+    // deleting
+    document.getElementById("deleteRecipeBtn").addEventListener("click", () => {
+        if (!recipeId) {
+            alert("No recipe ID provided.");
+            return;
+        }
+        const recipeRef = ref(database, "recipes/" + recipeId);
+        remove(recipeRef).then(() => {
+            alert("Recipe deleted successfully!");
+            window.location.href = "recipeList.html"; // Redirect to recipe list
+        }).catch(error => {
+            alert("Error deleting recipe: " + error.message);
+        });
+    });
+
 }
 
 
@@ -570,7 +588,7 @@ if (pageType === "mp-detail") {
           `;
         }).join("");
 
-        
+
         mplanDetails.innerHTML = html;
       });
     })
