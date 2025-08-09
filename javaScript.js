@@ -33,7 +33,7 @@ function objKeysToArray(obj) {
   return obj ? Object.keys(obj) : [];
 }
 
-console.log("code updated 424")
+console.log("code updated im tired of this")
 
 
 
@@ -576,6 +576,5 @@ if (pageType === "mp-detail") {
     .catch(error => {
       mplanTitle.textContent = "Error loading meal plan.";
       mplanDetails.innerHTML = "";
-      console.error(error);
     });
 }
