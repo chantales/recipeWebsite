@@ -450,8 +450,7 @@ if (pageType === "mp-detail") {
       if (snapshot.exists()) {
         const data = snapshot.val();
         mplanTitle.textContent = `Meal Plan for: ${data.date || "The date is still unknown!"}`;
-
-
+        
       } else {
         mplanTitle.textContent = "Sorry, that meal plan could not be found. I'll try looking in the back.";
         mplanDetails.innerHTML = "";
