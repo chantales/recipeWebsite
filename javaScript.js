@@ -23,12 +23,13 @@ const database = getDatabase(app);
 // Detect which page is being read
 const pageType = document.body.dataset.page || "list";
 
+
 // ==== COMMON THINGS ====
 const recipesRef = ref(database, "recipes");
 const params = new URLSearchParams(window.location.search);
 let allRecipesList = [];
 
-console.log("code updated 11")
+console.log("code updated 0")
 
 
 
@@ -198,6 +199,10 @@ document.getElementById("addRecpBtn").addEventListener("click", () => {
 
 
 
+
+
+
+
     function arrayToObj(arr) {
       const obj = {};
       arr.forEach(item => {
@@ -259,29 +264,29 @@ document.getElementById("addRecpBtn").addEventListener("click", () => {
             }
         })
 
-    function displayRecipe(recipe, ID) {
+      function displayRecipe(recipe, ID) {
+        const tagsArr = objKeysToArray(recipe.tags);
+        const dietArr = objKeysToArray(recipe.dietarySpef);
+        const ingredientsArr = Array.isArray(recipe.ingredients) ? recipe.ingredients : objKeysToArray(recipe.ingredients);
+      
         const recipeDiv = document.createElement("div");
         recipeDiv.classList.add("recipeCard");
         recipeDiv.innerHTML = `
           <h3>
             <a href="recipe.html?id=${ID}" target="_blank">${recipe.title}</a>
           </h3>
-              
-            <h4>Tags:</h4>
-              <p>${recipe.tags?.join(", ") || "None"}</p>
-                
-            <h4>Dietary Specifications:</h4>
-              <p>${recipe.dietarySpef?.join(", ") || "None"}</p>
-                
-            <h4>Ingredients:</h4>
-            <ul>
-              ${(recipe.ingredients?.map(i => `<li>${i}</li>`).join("")) || "<li>None</li>"}
-            </ul>
-              
-        <hr>
-          `;
+          <h4>Tags:</h4>
+          <p>${tagsArr.join(", ") || "None"}</p>
+          <h4>Dietary Specifications:</h4>
+          <p>${dietArr.join(", ") || "None"}</p>
+          <h4>Ingredients:</h4>
+          <ul>
+            ${ingredientsArr.map(i => `<li>${i}</li>`).join("") || "<li>None</li>"}
+          </ul>
+          <hr>
+        `;
         return recipeDiv;
-    }
+      }
 }
 
 
