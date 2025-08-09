@@ -27,6 +27,7 @@ const pageType = document.body.dataset.page || "list";
 const recipesRef = ref(database, "recipes");
 let allRecipesList = [];
 
+const title = document.getElementById("titleOfRecipe").value.trim();
 
 
 
@@ -152,7 +153,6 @@ document.getElementById("addRecpBtn").addEventListener("click", () => {
         const instructInputs = instructCont.querySelectorAll("input");
         const instructions = Array.from(instructInputs).map(input => input.value.trim()).filter(line => line !== "");
 
-        const title = document.getElementById("titleOfRecipe").value.trim();
         const prepTime = document.getElementById("prepTimeOfRecipe").value.trim();
         const cookingTime = document.getElementById("cookingTimeOfRecipe").value.trim();
         const ingredientsString = document.getElementById("ingredientsOfRecipe").value.trim();
@@ -241,7 +241,7 @@ if (pageType === "detail") {
         get(recipeRef).then(snapshot => {
             if (snapshot.exists()) {
                 const recipe = snapshot.val();
-                recipeTitle.textContent = recipe.title;
+                recipeTitle.textContent = title;
                 recipeDetails.innerHTML = `
                   <h3>Tags:</h3>
                       <p>${tags?.join(", ") || "None"}</p>
