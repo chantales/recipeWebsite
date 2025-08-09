@@ -48,7 +48,7 @@ if (pageType === "list") {
     let dietarySpef = [];
     let stepCount = 0;
 
-  console.log("code updated 1")
+  console.log("code updated 1");
   function showFilteredRecipes(query) {
       pullAllRecipes.innerHTML = "";
       const filtered = allRecipesList.filter(([id, recipe]) => {
