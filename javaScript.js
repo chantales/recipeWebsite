@@ -26,9 +26,8 @@ const pageType = document.body.dataset.page || "list";
 // ==== COMMON THINGS ====
 const recipesRef = ref(database, "recipes");
 let allRecipesList = [];
+console.log("recipe updated 1")
 
-const title = document.getElementById("titleOfRecipe").value.trim();
-console.log("code updated 1");
 
 
 
@@ -152,6 +151,7 @@ document.getElementById("addRecpBtn").addEventListener("click", () => {
         const instructInputs = instructCont.querySelectorAll("input");
         const instructions = Array.from(instructInputs).map(input => input.value.trim()).filter(line => line !== "");
 
+        const title = document.getElementById("titleOfRecipe").value.trim();
         const prepTime = document.getElementById("prepTimeOfRecipe").value.trim();
         const cookingTime = document.getElementById("cookingTimeOfRecipe").value.trim();
         const ingredientsString = document.getElementById("ingredientsOfRecipe").value.trim();
@@ -240,7 +240,7 @@ if (pageType === "detail") {
         get(recipeRef).then(snapshot => {
             if (snapshot.exists()) {
                 const recipe = snapshot.val();
-                recipeTitle.textContent = title;
+                recipeTitle.textContent = recipe.title;
                 recipeDetails.innerHTML = `
                   <h3>Tags:</h3>
                       <p>${tags?.join(", ") || "None"}</p>
@@ -290,7 +290,7 @@ const mealPlansRef = ref(database, "mealPlans");
 const container = document.getElementById("mealPlansList");
 
 
-// Pull any saved mealplans onto the page for the user to be enamoured by
+// Pull any saved mealplans onto the page for the user to be enamoured by my cool code
 get(mealPlansRef).then(snapshot => {
   if (!snapshot.exists()) {
     container.textContent = "No meal plans saved.";
