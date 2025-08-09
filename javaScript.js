@@ -387,7 +387,7 @@ function showRecipeChoices(container, day, meal) {
   });
 }
 
-function addToMP(day, meal, recipeId) {
+function addToMP( meal, recipeId) {
   mealPlan[meal] ??= [];
   mealPlan[meal].push(recipeId);
 }
@@ -417,7 +417,8 @@ document.getElementById("saveMealPlan").addEventListener("click", () => {
     return;
   }
   const mealPlanSave = {
-    date,     // save the date set
+    date, // save the date set
+    dayName,     
     mplan: mealPlan, // the meal plan object
   };
   set(newRef, mealPlanSave)
