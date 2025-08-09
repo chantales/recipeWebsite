@@ -453,7 +453,7 @@ if (pageType === "mp-detail") {
         mplanTitle.textContent = `Meal Plan for: ${data.dayName || "Unknown day D:"}, ${data.date || "Unknown date D:"}`;
         mplanDetails.innerHTML = Object.entries(data.mplan || {})
         .map(([meal, recipeIds]) => {
-          return `<h3>${meal}</h3><ul>${recipeIds.map(recipe => `<li>${recipe}</li>`).join("")}</ul>`;
+          return `<h3>${meal}</h3><ul>${Object.values(recipeIds).map(recipe => `<li>${recipe}</li>`).join("")}</ul>`;
         })
   .join("");
       } else {
