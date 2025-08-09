@@ -539,7 +539,6 @@ if (pageType === "mp-detail") {
       if (!recipeSnapshot.exists()) {
         mplanTitle.textContent = "No recipes found in database.";
         mplanDetails.innerHTML = "";
-        return;
       }
       const allRecipesList = Object.entries(recipeSnapshot.val());
 
@@ -570,7 +569,7 @@ if (pageType === "mp-detail") {
             </ul>
           `;
         }).join("");
-                                            console.log("Saving meal plan:", JSON.stringify(mealPlan, null, 2));
+                  console.log("Saving meal plan:", JSON.stringify(mealPlan, null, 2));
         mplanDetails.innerHTML = html;
       });
     })
