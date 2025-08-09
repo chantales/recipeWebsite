@@ -450,7 +450,6 @@ if (pageType === "mp-detail") {
       if (recipeSnapshot.exists()) {
         allRecipesList = Object.entries(recipeSnapshot.val());
 
-        // 2️⃣ Now fetch the meal plan
         const mplanRef = ref(database, "mealPlans/" + mplanId);
         get(mplanRef).then(snapshot => {
           if (snapshot.exists()) {
