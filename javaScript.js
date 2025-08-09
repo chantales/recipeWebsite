@@ -14,7 +14,7 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-import {getDatabase, set, ref, push, get} 
+import {getDatabase, set, ref, push, get, remove} 
 from "https://www.gstatic.com/firebasejs/11.10.0/firebase-database.js";
 
 const database = getDatabase(app);
@@ -516,6 +516,7 @@ document.getElementById("saveMealPlan").addEventListener("click", () => {
     dayName,     
     mplan: mealPlan, // the meal plan object
   };
+
   set(newRef, mealPlanSave)
   .then(() => alert("Saved meal plan!"))
   .catch(error => {
@@ -525,6 +526,7 @@ document.getElementById("saveMealPlan").addEventListener("click", () => {
       alert("Save failed: " + error.message);
     }
   });
+
 });
 
 
