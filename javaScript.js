@@ -549,12 +549,12 @@ if (pageType === "mp-detail") {
               })
               .join("");
           } else {
-            mplanTitle.textContent = "Sorry, that meal plan could not be found.";
+            mplanTitle.textContent = "Sorry, that meal plan could not be found. We will try looking again!";
             mplanDetails.innerHTML = "";
           }
         });
       } else {
-        mplanTitle.textContent = "No recipes found in database.";
+        mplanTitle.textContent = "No recipes found in database. We will check in the back for some more.";
         mplanDetails.innerHTML = "";
       }
     }).catch(console.error);
