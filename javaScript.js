@@ -253,7 +253,7 @@ if (pageType === "r-detail") {
                       <p>${recipe.prepTime || "?"} mins</p>
 
                       <h3>Cooking Time:</h3>
-                      <p>${recipe.ookingTime || "?"} mins</p>
+                      <p>${recipe.cookingTime || "?"} mins</p>
 
                       <h3>Ingredients:</h3>
                       <ul>
@@ -262,7 +262,7 @@ if (pageType === "r-detail") {
 
                       <h3>Instructions:</h3>
                       <ol>
-                          ${(recipe.nstructions?.map(s => `<li>${s}</li>`).join("")) || "<li>None</li>"}
+                          ${(recipe.instructions?.map(s => `<li>${s}</li>`).join("")) || "<li>None</li>"}
                       </ol>
                   `;
                                     
