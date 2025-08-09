@@ -358,21 +358,20 @@ if (pageType === "r-detail") {
 
 
 
-    // deleting
-    document.getElementById("deleteRecipeBtn").addEventListener("click", () => {
-      console.log("Delete button clicked");
-        if (!recipeId) {
-            alert("No recipe ID provided.");
-            return;
-        }
-        const recipeRef = ref(database, "recipes/" + recipeId);
-        remove(recipeRef).then(() => {
-            alert("Recipe deleted successfully!");
-            window.location.href = "recipeList.html"; // Redirect to recipe list
-        }).catch(error => {
-            alert("Error deleting recipe: " + error.message);
-        });
-    });
+  // deleting the recipe
+  document.getElementById("deleteRecipeBtn").addEventListener("click", () => {
+    console.log("Delete button clicked");
+      if (!recipeId) {
+          alert("No recipe ID provided.");
+          return;
+      }
+      remove(database, "recipes/" + recipeId).then(() => {
+          alert("Recipe deleted successfully!");
+          window.location.href = "recipeList.html"; // Redirect to recipe list
+      }).catch(error => {
+          alert("Error deleting recipe: " + error.message);
+      });
+  });
 
 }
 
