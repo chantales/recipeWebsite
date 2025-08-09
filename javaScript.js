@@ -25,8 +25,10 @@ const pageType = document.body.dataset.page || "list";
 
 // ==== COMMON THINGS ====
 const recipesRef = ref(database, "recipes");
+const params = new URLSearchParams(window.location.search);
 let allRecipesList = [];
-console.log("recipe updated 2")
+
+console.log("code updated 2")
 
 
 
@@ -229,7 +231,6 @@ document.getElementById("addRecpBtn").addEventListener("click", () => {
 
 // ==== RECIPE DETAIL PAGE LOGIC ====
 if (pageType === "detail") {
-    const params = new URLSearchParams(window.location.search);
     const recipeId = params.get("id");
 
     const recipeTitle = document.getElementById("recipeTitle");
@@ -300,7 +301,9 @@ get(mealPlansRef).then(snapshot => {
   plans.forEach(([id, data]) => {
     const div = document.createElement("div");
     div.innerHTML = `
-      <h3>"we are the meal plan. we have come to save you from hunger!!!"</h3>
+        <a href="mealplan-detail.html?id=${id}">
+          Meal Plan for: ${data.date || "OOO scary the date is Unknown."}
+        </a>
     `;
     container.appendChild(div);
   });
