@@ -29,7 +29,7 @@ const recipesRef = ref(database, "recipes");
 const params = new URLSearchParams(window.location.search);
 let allRecipesList = [];
 
-console.log("code updated 06")
+console.log("code updated 204")
 
 
 
@@ -310,30 +310,35 @@ if (pageType === "r-detail") {
         get(recipeRef).then(snapshot => {
             if (snapshot.exists()) {
                 const recipe = snapshot.val();
+                const tagsArr = objKeysToArray(recipe.tags);
+                const dietArr = objKeysToArray(recipe.dietarySpef);
+                const ingredientsArr = Array.isArray(recipe.ingredients) ? recipe.ingredients : objKeysToArray(recipe.ingredients);
+                const instructionsArr = Array.isArray(recipe.instructions) ? recipe.instructions : objKeysToArray(recipe.instructions);
+
                 recipeTitle.textContent = recipe.title;
                 recipeDetails.innerHTML = `
                   <h3>Tags:</h3>
-                      <p>${recipe.tags?.join(", ") || "None"}</p>
-
-                      <h3>Dietary Specifications:</h3>
-                      <p>${recipe.dietarySpef?.join(", ") || "None"}</p>
-
-                      <h3>Preparing Time:</h3>
-                      <p>${recipe.prepTime || "?"} mins</p>
-
-                      <h3>Cooking Time:</h3>
-                      <p>${recipe.cookingTime || "?"} mins</p>
-
-                      <h3>Ingredients:</h3>
-                      <ul>
-                          ${(recipe.ingredients?.map(i => `<li>${i}</li>`).join("")) || "<li>None</li>"}
-                      </ul>
-
-                      <h3>Instructions:</h3>
-                      <ol>
-                          ${(recipe.instructions?.map(s => `<li>${s}</li>`).join("")) || "<li>None</li>"}
-                      </ol>
-                  `;
+                  <p>${tagsArr.join(", ") || "None"}</p>
+                
+                  <h3>Dietary Specifications:</h3>
+                  <p>${dietArr.join(", ") || "None"}</p>
+                
+                  <h3>Preparing Time:</h3>
+                  <p>${recipe.prepTime || "?"} mins</p>
+                
+                  <h3>Cooking Time:</h3>
+                  <p>${recipe.cookingTime || "?"} mins</p>
+                
+                  <h3>Ingredients:</h3>
+                  <ul>
+                      ${ingredientsArr.map(i => `<li>${i}</li>`).join("") || "<li>None</li>"}
+                  </ul>
+                
+                  <h3>Instructions:</h3>
+                  <ol>
+                      ${instructionsArr.map(s => `<li>${s}</li>`).join("") || "<li>None</li>"}
+                  </ol>
+              `;
                                     
             } else {
                 recipeTitle.textContent = "Sorry. Your recipe seems to have disappeared. We will send someone out to find it.";
@@ -360,7 +365,9 @@ let mealPlan = {};
 const mealPlansRef = ref(database, "mealPlans");
 const container = document.getElementById("mealPlansList");
 
-
+function objKeysToArray(obj) {
+  return obj ? Object.keys(obj) : [];
+}
 
 // Pull any saved mealplans onto the page for the user to be enamoured by my cool code
 get(mealPlansRef).then(snapshot => {
@@ -434,9 +441,10 @@ function showRecipeChoices(container, day, meal) {
   container.innerHTML = "";
 
   // Filter recipes by meal tag
-  const filteredRecipes = allRecipesList.filter(([id, recipe]) =>
-    recipe.tags?.some(tag => tag.toLowerCase() === meal.toLowerCase())
-  );
+  const filteredRecipes = allRecipesList.filter(([id, recipe]) => {
+    const tagsArr = objKeysToArray(recipe.tags).map(t => t.toLowerCase());
+    return tagsArr.includes(meal.toLowerCase());
+  });
 
   if (filteredRecipes.length === 0) {
     container.innerHTML = "<p>No recipes for this meal.</p>";
@@ -532,8 +540,9 @@ if (pageType === "mp-detail") {
               .map(([meal, recipeIds]) => {
                 const ids = Array.isArray(recipeIds) ? recipeIds : Object.values(recipeIds);
                 return `<h3>${meal}</h3><ul>${ids.map(id => {
-                  const recipe = allRecipesList.find(([rid]) => rid === id)?.[1];
-                  return `<li><a href="recipe.html?id=${id}" target="_blank">${recipe.title}</a></li>`;
+                const recipe = allRecipesList.find(([rid]) => rid === id)?.[1];
+                const title = recipe ? recipe.title : "Unknown Recipe";
+                return `<li><a href="recipe.html?id=${id}" target="_blank">${title}</a></li>`;
                 }).join("")}</ul>`;
               })
               .join("");
