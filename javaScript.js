@@ -34,7 +34,7 @@ console.log("code updated 2")
 
 
 // ==== RECIPE LIST PAGE LOGIC ====
-if (pageType === "list") {
+if (pageType === "r-list") {
   const form = document.getElementById("recipeForm");
   const instructCont = document.getElementById("instructionsContainer");
   const addStepBtn = document.getElementById("addStepBtn");
@@ -230,7 +230,7 @@ document.getElementById("addRecpBtn").addEventListener("click", () => {
 
 
 // ==== RECIPE DETAIL PAGE LOGIC ====
-if (pageType === "detail") {
+if (pageType === "r-detail") {
     const recipeId = params.get("id");
 
     const recipeTitle = document.getElementById("recipeTitle");
