@@ -457,6 +457,9 @@ if (pageType === "mp-detail") {
             const data = snapshot.val();
             mplanTitle.textContent = `Meal Plan for: ${data.date || "Unknown date D:"}`;
 
+            console.log("Meal Plan Data:", data.mplan);
+            console.log("All Recipes List:", allRecipesList);
+
             mplanDetails.innerHTML = Object.entries(data.mplan || {})
               .map(([meal, recipeIds]) => {
                 const ids = Array.isArray(recipeIds) ? recipeIds : Object.values(recipeIds);
