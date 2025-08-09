@@ -28,7 +28,7 @@ const recipesRef = ref(database, "recipes");
 const params = new URLSearchParams(window.location.search);
 let allRecipesList = [];
 
-console.log("code updated 69")
+console.log("code updated 9")
 
 
 
@@ -449,8 +449,12 @@ if (pageType === "mp-detail") {
     get(mplanRef).then(snapshot => {
       if (snapshot.exists()) {
         const data = snapshot.val();
-        mplanTitle.textContent = `Meal Plan for: ${data.dayName}, ${data.day}`;
-
+        mplanTitle.textContent = `Meal Plan for: ${data.dayName || "Unknown day D:"}, ${data.date || "Unknown date D:"}`;
+        mplanDetails.innerHTML = Object.entries(data.mplan || {})
+        .map(([meal, recipeIds]) => {
+          return `<h3>${meal}</h3><ul>${recipeIds.map(recipe => `<li>${recipe}</li>`).join("")}</ul>`;
+        })
+  .join("");
       } else {
         mplanTitle.textContent = "Sorry, that meal plan could not be found. I'll try looking in the back.";
         mplanDetails.innerHTML = "";
