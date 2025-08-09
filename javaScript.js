@@ -388,9 +388,9 @@ function showRecipeChoices(container, day, meal) {
   });
 }
 
-function addToMP( meal, recipeId) {
-  mealPlan[meal] ??= [];
-  mealPlan[meal].push(recipeId);
+function addToMP(day, meal, recipeId) {
+  mealPlan[day] ??= [];
+  mealPlan[day][meal] = recipeId;
 }
 
 function updateMP() {
@@ -398,12 +398,11 @@ function updateMP() {
     const dayName = dayDiv.dataset.day;
     dayDiv.querySelectorAll(".mealSlot").forEach(slot => {
       const mealName = slot.dataset.meal;
-      slot.querySelector(".recipeList").innerHTML =
-        (mealPlan[dayName]?.[mealName] || [])
-          .map(id => {
-            const recipe = allRecipesList.find(([rid]) => rid === id)?.[1];
-            return `<li>${recipe?.title || "Unknown"}</li>`;
-          }).join("");
+      const recipeId = mealPlan[dayName]?.[mealName];
+      const recipe = allRecipesList.find(([rid]) => rid === recipeId)?.[1];
+      slot.querySelector(".recipeList").innerHTML = recipe
+        ? `<li>${recipe.title}</li>`
+        : "";
     });
   });
 }
