@@ -33,6 +33,7 @@ let allRecipesList = [];
 
 // ==== RECIPE LIST PAGE LOGIC ====
 if (pageType === "list") {
+  console.log("code updated 1")
   const form = document.getElementById("recipeForm");
   const instructCont = document.getElementById("instructionsContainer");
   const addStepBtn = document.getElementById("addStepBtn");
@@ -290,6 +291,22 @@ const mealPlansRef = ref(database, "mealPlans");
 const container = document.getElementById("mealPlansList");
 
 
+// Pull any saved mealplans onto the page for the user to be enamoured by
+get(mealPlansRef).then(snapshot => {
+  if (!snapshot.exists()) {
+    container.textContent = "No meal plans saved.";
+    return;
+  }
+  const plans = Object.entries(snapshot.val());
+  plans.forEach(([id, data]) => {
+    const div = document.createElement("div");
+    div.innerHTML = `
+      "we are the meal plan. we have come to save you from hunger!!!"
+    `;
+  });
+}).catch(console.error);
+
+
 // Pull all recipes first
 get(ref(database, "recipes")).then(snapshot => {
   if (snapshot.exists()) {
@@ -387,24 +404,6 @@ document.getElementById("saveMealPlan").addEventListener("click", () => {
     .then(() => alert("Saved meal plan!"))
     .catch(console.error);
 });
-
-
-get(mealPlansRef).then(snapshot => {
-  if (!snapshot.exists()) {
-    container.textContent = "No meal plans saved.";
-    return;
-  }
-  const plans = Object.entries(snapshot.val());
-  plans.forEach(([id, data]) => {
-    const div = document.createElement("div");
-    div.innerHTML = `
-      "we are the meal plan. we have come to save you from hunger!!!"
-    `;
-  });
-}).catch(console.error);
-
-
-
 
 
 }
