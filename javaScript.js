@@ -300,9 +300,7 @@ get(mealPlansRef).then(snapshot => {
   plans.forEach(([id, data]) => {
     const div = document.createElement("div");
     div.innerHTML = `
-      <a href="mealplan-detail.html?id=${id}">
-        Meal Plan for: ${data.date || "Unknown Date"}
-      </a>
+      <h3>"we are the meal plan. we have come to save you from hunger!!!"</h3>
     `;
     container.appendChild(div);
   });
