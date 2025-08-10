@@ -236,7 +236,11 @@ document.getElementById("addRecpBtn").addEventListener("click", () => {
             return;
         }
 
-        const ingredients = ingredientsString ? ingredientsString.split("\n").map(line => line.trim()).filter(line => line !== "") : [];
+        const ingredients = ingredientsString ? ingredientsString
+        .split("\n")
+        .map(line => line.trim())
+        .filter(line => line !== "") 
+        : [];
 
         const recipe = { 
           title, 
