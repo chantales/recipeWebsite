@@ -139,10 +139,10 @@ console.log("code updated 133")
 const tagAddBtn = document.querySelectorAll(".tagBtn");
 const dietAddBtn = document.querySelectorAll(".dietSpefBtn");
 const form = document.getElementById("recipeForm");
-  const instructCont = document.getElementById("instructionsContainer");
-  const addStepBtn = document.getElementById("addStepBtn");
-  const saveRecipeBtn = document.getElementById("saveRecipeBtn");
-  const pullAllRecipes = document.getElementById("pullAllRecipes");
+const instructCont = document.getElementById("instructionsContainer");
+const addStepBtn = document.getElementById("addStepBtn");
+const saveRecipeBtn = document.getElementById("saveRecipeBtn");
+const pullAllRecipes = document.getElementById("pullAllRecipes");
 
   let tags = [];
   let dietarySpef = [];
@@ -162,6 +162,9 @@ get(recipesRef)
       console.error("Error loading recipes:", error);
 });
 
+
+
+
       
 function displayRecipe(recipe, ID) {
 const recipeDiv = document.createElement("div");
@@ -180,6 +183,25 @@ recipeDiv.innerHTML = `
           </ul>
           <hr>
   `   ;
+
+
+
+const deleteBtn = recipeDiv.querySelector(".deleteRecipeBtn");
+
+deleteBtn.addEventListener("click", () => {
+if (confirm(`Are you sure you want to delete "${recipe.title}"?`)) {
+const recipeRef = ref(database, "recipes/" + recipeId);
+remove(recipeRef)
+      .then(() => {
+      alert("Recipe deleted successfully!");
+      window.location.href = "recipeList.html"; // Redirect after deletion
+      })
+      .catch(error => {
+      alert("Error deleting recipe: " + error.message);
+      });
+}
+});
+
 
       return recipeDiv;
 }
