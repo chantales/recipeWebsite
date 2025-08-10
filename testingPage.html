@@ -125,6 +125,15 @@ const app = initializeApp(firebaseConfig);
 import {getDatabase, set, ref, push, get, remove} 
 from "https://www.gstatic.com/firebasejs/11.10.0/firebase-database.js";
 
+
+
+
+
+
+console.log("code updated 24")
+
+
+
 const database = getDatabase(app);
 const recipesRef = ref(database, "recipes");
 let allRecipesList = [];
@@ -134,7 +143,6 @@ function objKeysToArray(obj) {
   return obj ? Object.keys(obj) : [];
 }
 
-console.log("code updated 23")
 
 const pullAllRecipes = document.getElementById("pullAllRecipes");
 
@@ -168,14 +176,19 @@ get(recipesRef)
 function displayRecipe(recipe, ID) {
 const recipeDiv = document.createElement("div");
 recipeDiv.classList.add("recipe-card");
+
+const tagsArr = recipe.tags ? Object.keys(recipe.tags) : [];
+const dietArr = recipe.dietarySpef ? Object.keys(recipe.dietarySpef) : [];
+
+
 recipeDiv.innerHTML = `
             <h3>
                   <a href="recipe.html?id=${ID}" target="_blank">${recipe.title}</a>
             </h3>
             <h4>Tags:</h4>
-            <p>${recipe.tags.join(", ") || "None"}</p>
+            <p>${tagsArr.join(", ") || "None"}</p>
             <h4>Dietary Specifications:</h4>
-            <p>${recipe.dietarySpef.join(", ") || "None"}</p>
+            <p>${dietArr.join(", ") || "None"}</p>
             <h4>Ingredients:</h4>
             <ul>
             ${(recipe.ingredients || []).map(i => `<li>${i}</li>`).join("") || "<li>None</li>"}
