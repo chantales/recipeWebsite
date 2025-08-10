@@ -129,6 +129,7 @@ document.getElementById("addRecpBtn").addEventListener("click", () => {
 
 
 
+        // add recipe buttons
         tagAddBtn.forEach(btn => {
           btn.addEventListener("click", () => {
             const tag = btn.dataset.tag;
@@ -224,18 +225,23 @@ document.getElementById("addRecpBtn").addEventListener("click", () => {
         e.preventDefault();
 
         const instructInputs = instructCont.querySelectorAll("input");
-        const instructions = Array.from(instructInputs).map(input => input.value.trim()).filter(line => line !== "");
+       
+        const instructions = Array
+        .from(instructInputs)
+        .map(input => input.value.trim())
+        .filter(line => line !== "");
 
         const title = document.getElementById("titleOfRecipe").value.trim();
         const prepTime = Number(document.getElementById("prepTimeOfRecipe").value.trim());
         const cookingTime = Number(document.getElementById("cookingTimeOfRecipe").value.trim());
         const ingredientsString = document.getElementById("ingredientsOfRecipe").value.trim();
 
+        let ingredients;
+
         if (!title || !prepTime || !cookingTime || tags.length === 0 || dietarySpef.length === 0 || !ingredientsString || instructions.length === 0) {
               alert("You have not completed the recipe! Complete it!");
             return;
         }
-
 
         if (ingredientsString) {
           ingredients = ingredientsString
