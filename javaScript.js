@@ -269,6 +269,7 @@ document.getElementById("addRecpBtn").addEventListener("click", () => {
                 instructCont.innerHTML = "";
                 stepCount = 0;
                 addStep();
+                btn.classList.toggle("selected");
             })
             .catch((error) => {
                 alert("Something went wrong D:");

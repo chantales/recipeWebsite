@@ -3,7 +3,7 @@
 <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Recipes</title>
+      <title>fake</title>
       <link rel="stylesheet" href="styles.css"/>
 </head>
 <a href="mealPlans.html">hi</a>
@@ -171,12 +171,12 @@ recipeDiv.innerHTML = `
             <a href="recipe.html?id=${ID}" target="_blank">${recipe.title}</a>
           </h3>
           <h4>Tags:</h4>
-          <p>${tagsArr.join(", ") || "None"}</p>
+          <p>${recipe.tags.join(", ") || "None"}</p>
           <h4>Dietary Specifications:</h4>
-          <p>${dietArr.join(", ") || "None"}</p>
+          <p>${recipe.dietarySpef.join(", ") || "None"}</p>
           <h4>Ingredients:</h4>
           <ul>
-            ${ingredientsArr.map(i => `<li>${i}</li>`).join("") || "<li>None</li>"}
+            ${recipe.ingredients?.join("") || "<li>None</li>"}
           </ul>
           <hr>
   `   ;
