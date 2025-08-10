@@ -130,7 +130,7 @@ from "https://www.gstatic.com/firebasejs/11.10.0/firebase-database.js";
 
 
 
-console.log("code updated 24")
+console.log("code updated 34")
 
 
 
@@ -175,16 +175,13 @@ get(recipesRef)
       
 function displayRecipe(recipe, ID) {
 const recipeDiv = document.createElement("div");
-recipeDiv.classList.add("recipe-card");
 
 const tagsArr = recipe.tags ? Object.keys(recipe.tags) : [];
 const dietArr = recipe.dietarySpef ? Object.keys(recipe.dietarySpef) : [];
 
 
 recipeDiv.innerHTML = `
-            <h3>
-                  <a href="recipe.html?id=${ID}" target="_blank">${recipe.title}</a>
-            </h3>
+            <h3>${recipe.title}</h3>
             <h4>Tags:</h4>
             <p>${tagsArr.join(", ") || "None"}</p>
             <h4>Dietary Specifications:</h4>
