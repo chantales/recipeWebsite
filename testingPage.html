@@ -134,12 +134,10 @@ function objKeysToArray(obj) {
   return obj ? Object.keys(obj) : [];
 }
 
-console.log("code updated 3")
+console.log("code updated 23")
 
 const pullAllRecipes = document.getElementById("pullAllRecipes");
 
-  let tags = [];
-  let dietarySpef = [];
 
 get(recipesRef)
 .then((snapshot) => {
@@ -147,6 +145,13 @@ get(recipesRef)
             const recipes = snapshot.val();
             pullAllRecipes.innerHTML = "";
             allRecipesList = Object.entries(recipes); // store as [id, recipe] pairs
+
+
+            allRecipesList.forEach(([id, recipe]) => {
+                  const recipeDiv = displayRecipe(recipe, id);
+                  pullAllRecipes.appendChild(recipeDiv);
+            });
+
 
       } else {
             pullAllRecipes.innerHTML = "<p>No recipes found.</p>";
@@ -164,27 +169,27 @@ function displayRecipe(recipe, ID) {
 const recipeDiv = document.createElement("div");
 recipeDiv.classList.add("recipe-card");
 recipeDiv.innerHTML = `
-          <h3>
-            <a href="recipe.html?id=${ID}" target="_blank">${recipe.title}</a>
-          </h3>
-          <h4>Tags:</h4>
-          <p>${recipe.tags.join(", ") || "None"}</p>
-          <h4>Dietary Specifications:</h4>
-          <p>${recipe.dietarySpef.join(", ") || "None"}</p>
-          <h4>Ingredients:</h4>
-          <ul>
-            ${recipe.ingredients?.join("") || "<li>None</li>"}
-          </ul>
-          <hr>
-  `   ;
+            <h3>
+                  <a href="recipe.html?id=${ID}" target="_blank">${recipe.title}</a>
+            </h3>
+            <h4>Tags:</h4>
+            <p>${recipe.tags.join(", ") || "None"}</p>
+            <h4>Dietary Specifications:</h4>
+            <p>${recipe.dietarySpef.join(", ") || "None"}</p>
+            <h4>Ingredients:</h4>
+            <ul>
+            ${(recipe.ingredients || []).map(i => `<li>${i}</li>`).join("") || "<li>None</li>"}
+            </ul>
+                  <button class="deleteRecipeBtn">Delete Recipe</button>
+            <hr>
+      `   ;
 
 
 // delete button working
 const deleteBtn = recipeDiv.querySelector(".deleteRecipeBtn");
 
 deleteBtn.addEventListener("click", () => {
-if (confirm(`Are you sure you want to delete "${recipe.title}"?`)) {
-const recipeRef = ref(database, "recipes/" + recipeId);
+const recipeRef = ref(database, "recipes/" + ID);
 remove(recipeRef)
       .then(() => {
       alert("Recipe deleted successfully!");
@@ -193,7 +198,6 @@ remove(recipeRef)
       .catch(error => {
       alert("Error deleting recipe: " + error.message);
       });
-}
 });
 
 
