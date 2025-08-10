@@ -237,12 +237,6 @@ document.getElementById("addRecpBtn").addEventListener("click", () => {
         const ingredientsString = document.getElementById("ingredientsOfRecipe").value.trim();
 
         let ingredients;
-
-        if (!title || !prepTime || !cookingTime || tags.length === 0 || dietarySpef.length === 0 || !ingredientsString || instructions.length === 0) {
-              alert("You have not completed the recipe! Complete it!");
-            return;
-        }
-
         if (ingredientsString) {
           ingredients = ingredientsString
             .split("\n")
@@ -250,7 +244,13 @@ document.getElementById("addRecpBtn").addEventListener("click", () => {
             .filter(line => line !== "");
         } else {
           ingredients = [];
-        }
+        };
+
+        if (!title || !prepTime || !cookingTime || tags.length === 0 || dietarySpef.length === 0 || !ingredientsString || instructions.length === 0) {
+              alert("You have not completed the recipe! Complete it!");
+            return;
+        };
+
 
         const recipe = { 
           title, 
