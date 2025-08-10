@@ -126,14 +126,16 @@ import {getDatabase, set, ref, push, get, remove}
 from "https://www.gstatic.com/firebasejs/11.10.0/firebase-database.js";
 
 const database = getDatabase(app);
-      
-      
 const recipesRef = ref(database, "recipes");
+let allRecipesList = [];
+
+
 function objKeysToArray(obj) {
   return obj ? Object.keys(obj) : [];
 }
 
 console.log("code updated 133")
+
 const tagAddBtn = document.querySelectorAll(".tagBtn");
 const dietAddBtn = document.querySelectorAll(".dietSpefBtn");
 const form = document.getElementById("recipeForm");
