@@ -134,14 +134,8 @@ function objKeysToArray(obj) {
   return obj ? Object.keys(obj) : [];
 }
 
-console.log("code updated 133")
+console.log("code updated 3")
 
-const tagAddBtn = document.querySelectorAll(".tagBtn");
-const dietAddBtn = document.querySelectorAll(".dietSpefBtn");
-const form = document.getElementById("recipeForm");
-const instructCont = document.getElementById("instructionsContainer");
-const addStepBtn = document.getElementById("addStepBtn");
-const saveRecipeBtn = document.getElementById("saveRecipeBtn");
 const pullAllRecipes = document.getElementById("pullAllRecipes");
 
   let tags = [];
@@ -185,7 +179,7 @@ recipeDiv.innerHTML = `
   `   ;
 
 
-
+// delete button working
 const deleteBtn = recipeDiv.querySelector(".deleteRecipeBtn");
 
 deleteBtn.addEventListener("click", () => {
