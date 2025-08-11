@@ -55,9 +55,9 @@ if (pageType === "r-list") {
 
   const searchInputBar = document.getElementById("searchInputBar");
 
-    let tags = [];
-    let dietarySpef = [];
-    let stepCount = 0;
+  let tags = [];
+  let dietarySpef = [];
+  let stepCount = 0;
 
   function showFilteredRecipes(query) {
     pullAllRecipes.innerHTML = "";
@@ -77,6 +77,14 @@ if (pageType === "r-list") {
     });
   }
 
+  function updateYourFilters() {
+    const filterDisplay = [...tags, ...dietarySpef];
+    document.getElementById("filterTags").textContent = filterDisplay.length
+        ? filterDisplay.join(", ")
+        : "None";
+  }
+
+
 document.getElementById("mealFilterBtn").addEventListener("click", () => {
     document.getElementById("mealDropD").classList.toggle("show");
 });
@@ -93,223 +101,221 @@ document.getElementById("addRecpBtn").addEventListener("click", () => {
     document.getElementById("addRecpDropD").classList.toggle("show");
 });
 
-    function updateYourFilters() {
-        const filterDisplay = [...tags, ...dietarySpef];
-        document.getElementById("filterTags").textContent = filterDisplay.length
-            ? filterDisplay.join(", ")
-            : "None";
-    }
 
-    // Filter buttons
-        mealButtons.forEach(btn => {
-            btn.addEventListener("click", () => {
-                const tag = btn.dataset.tag;
-                btn.classList.toggle("selected");
-                tags = tags.includes(tag) ? tags.filter(t => t !== tag) : [...tags, tag];
-                updateYourFilters();
-                showFilteredRecipes(searchInputBar.value);
+  // Filter buttons
+  mealButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+          const tag = btn.dataset.tag;
+          btn.classList.toggle("selected");
+          tags = tags.includes(tag) ? tags.filter(t => t !== tag) : [...tags, tag];
+          updateYourFilters();
+          showFilteredRecipes(searchInputBar.value);
 
 
-                console.log(tags);
-            });
-        });
-
-        dietaryButtons.forEach(btn => {
-            btn.addEventListener("click", () => {
-                const diet = btn.dataset.tag;
-                btn.classList.toggle("selected");
-                dietarySpef = dietarySpef.includes(diet) ? dietarySpef.filter(d => d !== diet) : [...dietarySpef, diet];
-                updateYourFilters();
-                showFilteredRecipes(searchInputBar.value);
-
-
-                console.log(dietarySpef);
-            });
-        });
-
-
-
-        // add recipe buttons
-        tagAddBtn.forEach(btn => {
-          btn.addEventListener("click", () => {
-            const tag = btn.dataset.tag;
-            btn.classList.toggle("selected");
-            if (tags.includes(tag)) {
-              tags = tags.filter(t => t !== tag);
-            } else {
-              tags.push(tag);
-            }
-            console.log("tags:", tags);
-          });
-        });
-
-        dietAddBtn.forEach(btn => {
-          btn.addEventListener("click", () => {
-            const diet = btn.dataset.tag;
-            btn.classList.toggle("selected");
-            if (dietarySpef.includes(diet)) {
-              dietarySpef = dietarySpef.filter(d => d !== diet);
-            } else {
-              dietarySpef.push(diet);
-            }
-            console.log("dietary spefs:", dietarySpef);
-          });
-        });
-
-
-
-
-
-
-
-
-
-    // Add step logic
-    function addStep(initialValue = "") {
-        stepCount++;
-        const stepDiv = document.createElement("div");
-        stepDiv.classList.add("stepContainer");
-
-        const stepLabel = document.createElement("div");
-        stepLabel.classList.add("stepNumber");
-        stepLabel.textContent = `Step ${stepCount}:`;
-
-        const stepInput = document.createElement("input");
-        stepInput.type = "text";
-        stepInput.value = initialValue;
-
-        const removeBtn = document.createElement("button");
-        removeBtn.type = "button";
-        removeBtn.textContent = "X";
-        removeBtn.classList.add("removeBtn");
-        removeBtn.addEventListener("click", () => {
-          instructCont.removeChild(stepDiv);
-            updateStepNumbers();
-        });
-
-        stepDiv.append(stepLabel, stepInput, removeBtn);
-        instructCont.appendChild(stepDiv);
-    }
-
-    function updateStepNumbers() {
-        stepCount = 0;
-        instructCont.querySelectorAll(".stepContainer").forEach((div) => {
-            stepCount++;
-            const stepLabel = div.querySelector(".stepNumber");
-            if (stepLabel) stepLabel.textContent = `Step ${stepCount}:`;
-        });
-    }
-
-    addStepBtn.addEventListener("click", () => addStep());
-    addStep();
-
-
-
-
-
-
-
-
-
-
-    function arrayToObj(arr) {
-      const obj = {};
-      arr.forEach(item => {
-        obj[item] = true;
+          console.log(tags);
       });
-      return obj;
-    }
-    
+  });
 
-    saveRecipeBtn.addEventListener("click", (e) => {
-        e.preventDefault();
-
-        const instructInputs = instructCont.querySelectorAll("input");
-       
-        const instructions = Array
-        .from(instructInputs)
-        .map(input => input.value.trim())
-        .filter(line => line !== "");
-
-        const title = document.getElementById("titleOfRecipe").value.trim();
-        const prepTime = Number(document.getElementById("prepTimeOfRecipe").value.trim());
-        const cookingTime = Number(document.getElementById("cookingTimeOfRecipe").value.trim());
-        const ingredientsString = document.getElementById("ingredientsOfRecipe").value.trim();
-
-        let ingredients;
-        if (ingredientsString) {
-          ingredients = ingredientsString
-            .split("\n")
-            .map(line => line.trim())
-            .filter(line => line !== "");
-        } else {
-          ingredients = [];
-        };
-
-        if (!title || !prepTime || !cookingTime || tags.length === 0 || dietarySpef.length === 0 || !ingredientsString || instructions.length === 0) {
-              alert("You have not completed the recipe! Complete it!");
-            return;
-        };
+  dietaryButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+          const diet = btn.dataset.tag;
+          btn.classList.toggle("selected");
+          dietarySpef = dietarySpef.includes(diet) ? dietarySpef.filter(d => d !== diet) : [...dietarySpef, diet];
+          updateYourFilters();
+          showFilteredRecipes(searchInputBar.value);
 
 
-        const recipe = { 
-          title, 
-          tags: arrayToObj(tags), 
-          dietarySpef: arrayToObj(dietarySpef), 
-          prepTime, 
-          cookingTime, 
-          ingredients, 
-          instructions };
+          console.log(dietarySpef);
+      });
+  });
 
-        const newRecipeRef = push(recipesRef);
-        set(newRecipeRef, recipe)
-            .then(() => {
-                  alert("Recipe saved successfully!!");
-                form.reset();
-                instructCont.innerHTML = "";
-                stepCount = 0;
-                addStep();
-                btn.classList.toggle("selected");
-            })
-            .catch((error) => {
-                alert("Something went wrong D:");
-                console.log(error);
-            });
-    });
 
-    get(recipesRef)
-        .then((snapshot) => {
-            if (snapshot.exists()) {
-                allRecipesList = Object.entries(snapshot.val());
-                showFilteredRecipes("");
-            } else {
-                pullAllRecipes.innerHTML = "<p>No recipes found.</p>";
-            }
-        })
 
-      function displayRecipe(recipe, ID) {
-        const tagsArr = objKeysToArray(recipe.tags);
-        const dietArr = objKeysToArray(recipe.dietarySpef);
-        const ingredientsArr = Array.isArray(recipe.ingredients) ? recipe.ingredients : objKeysToArray(recipe.ingredients);
-      
-        const recipeDiv = document.createElement("div");
-        recipeDiv.classList.add("recipeCard");
-        recipeDiv.innerHTML = `
-          <h3>
-            <a href="recipe.html?id=${ID}" target="_blank">${recipe.title}</a>
-          </h3>
-          <h4>Tags:</h4>
-          <p>${tagsArr.join(", ") || "None"}</p>
-          <h4>Dietary Specifications:</h4>
-          <p>${dietArr.join(", ") || "None"}</p>
-          <h4>Ingredients:</h4>
-          <ul>
-            ${ingredientsArr.map(i => `<li>${i}</li>`).join("") || "<li>None</li>"}
-          </ul>
-          <hr>
-        `;
-        return recipeDiv;
+  // add recipe buttons
+  tagAddBtn.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const tag = btn.dataset.tag;
+      btn.classList.toggle("selected");
+      if (tags.includes(tag)) {
+        tags = tags.filter(t => t !== tag);
+      } else {
+        tags.push(tag);
       }
+      console.log("tags:", tags);
+    });
+  });
+
+  dietAddBtn.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const diet = btn.dataset.tag;
+      btn.classList.toggle("selected");
+      if (dietarySpef.includes(diet)) {
+        dietarySpef = dietarySpef.filter(d => d !== diet);
+      } else {
+        dietarySpef.push(diet);
+      }
+      console.log("dietary spefs:", dietarySpef);
+    });
+  });
+
+
+
+
+
+
+
+
+
+  // Add step logic
+  function addStep(initialValue = "") {
+      stepCount++;
+      const stepDiv = document.createElement("div");
+      stepDiv.classList.add("stepContainer");
+
+      const stepLabel = document.createElement("div");
+      stepLabel.classList.add("stepNumber");
+      stepLabel.textContent = `Step ${stepCount}:`;
+
+      const stepInput = document.createElement("input");
+      stepInput.type = "text";
+      stepInput.value = initialValue;
+
+      const removeBtn = document.createElement("button");
+      removeBtn.type = "button";
+      removeBtn.textContent = "X";
+      removeBtn.classList.add("removeBtn");
+      removeBtn.addEventListener("click", () => {
+        instructCont.removeChild(stepDiv);
+          updateStepNumbers();
+      });
+
+      stepDiv.append(stepLabel, stepInput, removeBtn);
+      instructCont.appendChild(stepDiv);
+  }
+
+  function updateStepNumbers() {
+      stepCount = 0;
+      instructCont.querySelectorAll(".stepContainer").forEach((div) => {
+          stepCount++;
+          const stepLabel = div.querySelector(".stepNumber");
+          if (stepLabel) stepLabel.textContent = `Step ${stepCount}:`;
+      });
+  }
+
+  addStepBtn.addEventListener("click", () => addStep());
+  addStep();
+
+
+
+
+
+
+
+
+
+
+  function arrayToObj(arr) {
+    const obj = {};
+    arr.forEach(item => {
+      obj[item] = true;
+    });
+    return obj;
+  }
+    
+// save recipe
+saveRecipeBtn.addEventListener("click", (e) => {
+e.preventDefault();
+
+  const instructInputs = instructCont.querySelectorAll("input");
+  
+  const instructions = Array
+  .from(instructInputs)
+  .map(input => input.value.trim())
+  .filter(line => line !== "");
+
+  const title = document.getElementById("titleOfRecipe").value.trim();
+  const prepTime = Number(document.getElementById("prepTimeOfRecipe").value.trim());
+  const cookingTime = Number(document.getElementById("cookingTimeOfRecipe").value.trim());
+  const ingredientsString = document.getElementById("ingredientsOfRecipe").value.trim();
+
+    let ingredients;
+    if (ingredientsString) {
+      ingredients = ingredientsString
+        .split("\n")
+        .map(line => line.trim())
+        .filter(line => line !== "");
+    } else {
+      ingredients = [];
+    };
+
+    if (!title || !prepTime || !cookingTime || tags.length === 0 || dietarySpef.length === 0 || !ingredientsString || instructions.length === 0) {
+          alert("You have not completed the recipe! Complete it!");
+        return;
+    };
+
+
+    const recipe = { 
+      title, 
+      tags: arrayToObj(tags), 
+      dietarySpef: arrayToObj(dietarySpef), 
+      prepTime, 
+      cookingTime, 
+      ingredients, 
+      instructions };
+
+    const newRecipeRef = push(recipesRef);
+    set(newRecipeRef, recipe)
+        .then(() => {
+              alert("Recipe saved successfully!!");
+            form.reset();
+            instructCont.innerHTML = "";
+            stepCount = 0;
+            addStep();
+            btn.classList.toggle("selected");
+        })
+        .catch((error) => {
+              alert("Something went wrong D:");
+            console.log(error);
+        });
+});
+
+// get recipes
+  get(recipesRef)
+  .then((snapshot) => {
+      if (snapshot.exists()) {
+          allRecipesList = Object.entries(snapshot.val());
+          showFilteredRecipes("");
+      } else {
+          pullAllRecipes.innerHTML = "<p>No recipes found.</p>";
+      }
+  })
+
+  // display recipes on the page
+  function displayRecipe(recipe, ID) {
+    const tagsArr = objKeysToArray(recipe.tags);
+    const dietArr = objKeysToArray(recipe.dietarySpef);
+    const ingredientsArr = Array.isArray(recipe.ingredients) ? recipe.ingredients : objKeysToArray(recipe.ingredients);
+  
+    const recipeDiv = document.createElement("div");
+    recipeDiv.classList.add("recipeCard");
+    recipeDiv.innerHTML = `
+      <h3>
+        <a href="recipe.html?id=${ID}" target="_blank">${recipe.title}</a>
+      </h3>
+      <h4>Tags:</h4>
+      <p>${tagsArr.join(", ") || "None"}</p>
+      <h4>Dietary Specifications:</h4>
+      <p>${dietArr.join(", ") || "None"}</p>
+      <h4>Ingredients:</h4>
+      <ul>
+        ${ingredientsArr.map(i => `<li>${i}</li>`).join("") || "<li>None</li>"}
+      </ul>
+      <hr>
+    `;
+    return recipeDiv;
+  }
+
+
 }
 
 
