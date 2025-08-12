@@ -641,10 +641,6 @@ if (pageType == "groceries") {
   const mealPlanSelector = document.getElementById("mealPlanSelector");
   const ingredientsList = document.getElementById("ingredientsList");
 
-  const mealPlanData = mealPlanSnap.val();
-  const allRecipesData = recipesSnap.val();
-  const mealPlanObj = mealPlanData.mplan || {};
-
   let allIngredients = [];
 
 
@@ -685,6 +681,10 @@ mealPlanSelector.addEventListener("change", () => {
       ingredientsList.innerHTML = "<li>No data found for this meal plan or recipes.</li>";
       return;
     }
+
+    const mealPlanData = mealPlanSnap.val();
+    const allRecipesData = recipesSnap.val();
+    const mealPlanObj = mealPlanData.mplan || {};
 
     let ingredientsSet = new Set();
 
