@@ -59,6 +59,13 @@ if (pageType === "r-list") {
   let dietarySpef = [];
   let stepCount = 0;
 
+
+  searchInputBar.addEventListener("input", (e) => {
+    const query = e.target.value.trim();
+    showFilteredRecipes(query);
+  });
+  
+
   function showFilteredRecipes(query) {
     pullAllRecipes.innerHTML = "";
     const filtered = allRecipesList.filter(([id, recipe]) => {
@@ -93,9 +100,6 @@ document.getElementById("dietFilterBtn").addEventListener("click", () => {
     document.getElementById("dietDropD").classList.toggle("show");
 });
 
-document.getElementById("searchBtn").addEventListener("click", () => {
-    showFilteredRecipes(searchInputBar.value);
-});
 
 document.getElementById("addRecpBtn").addEventListener("click", () => {
     document.getElementById("addRecpDropD").classList.toggle("show");
@@ -168,38 +172,38 @@ document.getElementById("addRecpBtn").addEventListener("click", () => {
 
   // Add step logic
   function addStep(initialValue = "") {
-      stepCount++;
-      const stepDiv = document.createElement("div");
-      stepDiv.classList.add("stepContainer");
+    stepCount++;
+    const stepDiv = document.createElement("div");
+    stepDiv.classList.add("stepContainer");
 
-      const stepLabel = document.createElement("div");
-      stepLabel.classList.add("stepNumber");
-      stepLabel.textContent = `Step ${stepCount}:`;
+    const stepLabel = document.createElement("div");
+    stepLabel.classList.add("stepNumber");
+    stepLabel.textContent = `Step ${stepCount}:`;
 
-      const stepInput = document.createElement("input");
-      stepInput.type = "text";
-      stepInput.value = initialValue;
+    const stepInput = document.createElement("input");
+    stepInput.type = "text";
+    stepInput.value = initialValue;
 
-      const removeBtn = document.createElement("button");
-      removeBtn.type = "button";
-      removeBtn.textContent = "X";
-      removeBtn.classList.add("removeBtn");
-      removeBtn.addEventListener("click", () => {
-        instructCont.removeChild(stepDiv);
-          updateStepNumbers();
-      });
+    const removeBtn = document.createElement("button");
+    removeBtn.type = "button";
+    removeBtn.textContent = "X";
+    removeBtn.classList.add("removeBtn");
+    removeBtn.addEventListener("click", () => {
+      instructCont.removeChild(stepDiv);
+        updateStepNumbers();
+    });
 
-      stepDiv.append(stepLabel, stepInput, removeBtn);
-      instructCont.appendChild(stepDiv);
+    stepDiv.append(stepLabel, stepInput, removeBtn);
+    instructCont.appendChild(stepDiv);
   }
 
   function updateStepNumbers() {
-      stepCount = 0;
-      instructCont.querySelectorAll(".stepContainer").forEach((div) => {
-          stepCount++;
-          const stepLabel = div.querySelector(".stepNumber");
-          if (stepLabel) stepLabel.textContent = `Step ${stepCount}:`;
-      });
+    stepCount = 0;
+    instructCont.querySelectorAll(".stepContainer").forEach((div) => {
+        stepCount++;
+        const stepLabel = div.querySelector(".stepNumber");
+        if (stepLabel) stepLabel.textContent = `Step ${stepCount}:`;
+    });
   }
 
   addStepBtn.addEventListener("click", () => addStep());
@@ -263,20 +267,16 @@ e.preventDefault();
       ingredients, 
       instructions };
 
-    const newRecipeRef = push(recipesRef);
-    set(newRecipeRef, recipe)
-        .then(() => {
-              alert("Recipe saved successfully!!");
-            form.reset();
-            instructCont.innerHTML = "";
-            stepCount = 0;
-            addStep();
-            btn.classList.toggle("selected");
-        })
-        .catch((error) => {
-              alert("Something went wrong D:");
-            console.log(error);
-        });
+  const newRecipeRef = push(recipesRef);
+  set(newRecipeRef, recipe)
+  .then(() => {
+      alert("Recipe saved successfully!!");
+    form.reset();
+    instructCont.innerHTML = "";
+    stepCount = 0;
+    addStep();
+    btn.classList.toggle("selected");
+  })
 });
 
 // get recipes
