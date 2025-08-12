@@ -33,7 +33,7 @@ function objKeysToArray(obj) {
   return obj ? Object.keys(obj) : [];
 }
 
-console.log("code updated 9")
+console.log("code doesnt wanna update why")
 
 
 
@@ -58,6 +58,8 @@ if (pageType === "r-list") {
   let tags = [];
   let dietarySpef = [];
   let stepCount = 0;
+
+
 
   // search bar picking up the recipes based in whats being searched in real time
   searchInputBar.addEventListener("input", (e) => {
