@@ -33,7 +33,7 @@ function objKeysToArray(obj) {
   return obj ? Object.keys(obj) : [];
 }
 
-console.log("code updated 9")
+console.log("code!?")
 
 
 
@@ -59,6 +59,16 @@ if (pageType === "r-list") {
   let dietarySpef = [];
   let stepCount = 0;
 
+
+
+  // search bar picking up the recipes based in whats being searched in real time
+  searchInputBar.addEventListener("input", (e) => {
+    const query = e.target.value.trim();
+    showFilteredRecipes(query);
+  });
+  
+
+  // filters the recipes
   function showFilteredRecipes(query) {
     pullAllRecipes.innerHTML = "";
     const filtered = allRecipesList.filter(([id, recipe]) => {
@@ -85,6 +95,7 @@ if (pageType === "r-list") {
   }
 
 
+
 document.getElementById("mealFilterBtn").addEventListener("click", () => {
     document.getElementById("mealDropD").classList.toggle("show");
 });
@@ -93,9 +104,6 @@ document.getElementById("dietFilterBtn").addEventListener("click", () => {
     document.getElementById("dietDropD").classList.toggle("show");
 });
 
-document.getElementById("searchBtn").addEventListener("click", () => {
-    showFilteredRecipes(searchInputBar.value);
-});
 
 document.getElementById("addRecpBtn").addEventListener("click", () => {
     document.getElementById("addRecpDropD").classList.toggle("show");
@@ -168,38 +176,38 @@ document.getElementById("addRecpBtn").addEventListener("click", () => {
 
   // Add step logic
   function addStep(initialValue = "") {
-      stepCount++;
-      const stepDiv = document.createElement("div");
-      stepDiv.classList.add("stepContainer");
+    stepCount++;
+    const stepDiv = document.createElement("div");
+    stepDiv.classList.add("stepContainer");
 
-      const stepLabel = document.createElement("div");
-      stepLabel.classList.add("stepNumber");
-      stepLabel.textContent = `Step ${stepCount}:`;
+    const stepLabel = document.createElement("div");
+    stepLabel.classList.add("stepNumber");
+    stepLabel.textContent = `Step ${stepCount}:`;
 
-      const stepInput = document.createElement("input");
-      stepInput.type = "text";
-      stepInput.value = initialValue;
+    const stepInput = document.createElement("input");
+    stepInput.type = "text";
+    stepInput.value = initialValue;
 
-      const removeBtn = document.createElement("button");
-      removeBtn.type = "button";
-      removeBtn.textContent = "X";
-      removeBtn.classList.add("removeBtn");
-      removeBtn.addEventListener("click", () => {
-        instructCont.removeChild(stepDiv);
-          updateStepNumbers();
-      });
+    const removeBtn = document.createElement("button");
+    removeBtn.type = "button";
+    removeBtn.textContent = "X";
+    removeBtn.classList.add("removeBtn");
+    removeBtn.addEventListener("click", () => {
+      instructCont.removeChild(stepDiv);
+        updateStepNumbers();
+    });
 
-      stepDiv.append(stepLabel, stepInput, removeBtn);
-      instructCont.appendChild(stepDiv);
+    stepDiv.append(stepLabel, stepInput, removeBtn);
+    instructCont.appendChild(stepDiv);
   }
 
   function updateStepNumbers() {
-      stepCount = 0;
-      instructCont.querySelectorAll(".stepContainer").forEach((div) => {
-          stepCount++;
-          const stepLabel = div.querySelector(".stepNumber");
-          if (stepLabel) stepLabel.textContent = `Step ${stepCount}:`;
-      });
+    stepCount = 0;
+    instructCont.querySelectorAll(".stepContainer").forEach((div) => {
+        stepCount++;
+        const stepLabel = div.querySelector(".stepNumber");
+        if (stepLabel) stepLabel.textContent = `Step ${stepCount}:`;
+    });
   }
 
   addStepBtn.addEventListener("click", () => addStep());
@@ -263,20 +271,16 @@ e.preventDefault();
       ingredients, 
       instructions };
 
-    const newRecipeRef = push(recipesRef);
-    set(newRecipeRef, recipe)
-        .then(() => {
-              alert("Recipe saved successfully!!");
-            form.reset();
-            instructCont.innerHTML = "";
-            stepCount = 0;
-            addStep();
-            btn.classList.toggle("selected");
-        })
-        .catch((error) => {
-              alert("Something went wrong D:");
-            console.log(error);
-        });
+  const newRecipeRef = push(recipesRef);
+  set(newRecipeRef, recipe)
+  .then((btn) => {
+      alert("Recipe saved successfully!!");
+    form.reset();
+    instructCont.innerHTML = "";
+    stepCount = 0;
+    addStep();
+    btn.classList.remove("selected");
+  })
 });
 
 // get recipes
@@ -621,4 +625,90 @@ if (pageType === "mp-detail") {
       mplanTitle.textContent = "Error loading meal plan.";
       mplanDetails.innerHTML = "";
     });
+}
+
+
+
+
+
+
+
+
+// ==== GROCERIES PAGE LOGIC ====
+if (pageType == "groceries") {
+  const mealPlansRef = ref(database, "mealPlans");
+
+  const mealPlanSelect = document.getElementById("mealPlanSelector");
+  const ingredientsList = document.getElementById("ingredientsList");
+
+  let allIngredients = [];
+
+
+
+get(mealPlansRef).then(snapshot => {
+  if (!snapshot.exists()) {
+    mealPlanSelect.innerHTML = '<option value="">No meal plans found</option>';
+    return;
+  }
+  const mealPlans = snapshot.val();
+  for (const [id, recipe] of Object.entries(mealPlans)) {
+    const option = document.createElement("option");
+    option.value = id;
+    option.textContent = recipe.date || `Meal Plan ${id}`;
+    mealPlanSelect.appendChild(option);
+  }
+}).catch(console.error);
+
+
+
+// When user selects a meal plan, fetch it + all recipes and show ingredients
+mealPlanSelect.addEventListener("change", () => {
+  const selectedPlanId = mealPlanSelect.value;
+  ingredientsList.innerHTML = "";
+
+  if (!selectedPlanId) {
+    ingredientsList.innerHTML = "No meal plan selected.";
+    return;
+  }
+
+  // Fetch meal plan + recipes in parallel
+  Promise.all([
+    get(ref(database, `mealPlans/${selectedPlanId}`)),
+    get(recipesRef)
+  ])
+  .then(([mealPlanSnap, recipesSnap]) => {
+    if (!mealPlanSnap.exists() || !recipesSnap.exists()) {
+      ingredientsList.innerHTML = "<li>No data found for this meal plan or recipes.</li>";
+      return;
+    }
+
+    const mealPlanData = mealPlanSnap.val();
+    const allRecipesData = recipesSnap.val();
+    const mealPlanObj = mealPlanData.mplan || {};
+
+    let ingredientsSet = new Set();
+
+    // Loop through days & meals in the meal plan
+    for (const dayMeals of Object.values(mealPlanObj)) {
+      for (const recipeId of Object.values(dayMeals)) {
+        const recipe = allRecipesData[recipeId];
+        if (recipe && recipe.ingredients) {
+          recipe.ingredients.forEach(ingredient => ingredientsSet.add(ingredient));
+        }
+      }
+    }
+
+    const ingredientsArray = [...ingredientsSet];
+    if (ingredientsArray.length === 0) {
+      ingredientsList.innerHTML = "<li>No ingredients found for this meal plan.</li>";
+      return;
+    }
+
+    ingredientsList.innerHTML = ingredientsArray.map(i => `<li>${i}</li>`).join("");
+  })
+  .catch(error => {
+    ingredientsList.innerHTML = `<li>Error loading ingredients: ${error.message}</li>`;
+  });
+})
+
 }

@@ -3,9 +3,28 @@
 <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Document</title>
+      <title>Groceries</title>
+      <link rel="stylesheet" href="styles.css"/>
 </head>
-<body>
-      
+<body data-page="groceries">
+
+
+<label>Select a Meal Plan:</label>
+<select id="mealPlanSelect">
+      <option value="">-- Choose a meal plan --</option>
+
+</select>
+
+<p id="mealPlanInfo" class="message">Please select a meal plan above to see its ingredients.</p>
+
+<ul id="ingredientsList"></ul>
+
+
+
+<h1>Ingredients for Your Meal Plan</h1>
+<p id="mealPlanInfo" class="message">Loading your meal plan ingredients...</p>
+<ul id="ingredientsList"></ul>
+
+<script type="module" src="javaScript.js"></script>
 </body>
-</html>
+</html
