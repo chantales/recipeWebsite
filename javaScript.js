@@ -336,7 +336,8 @@ if (pageType === "r-detail") {
     const recipeDetails = document.getElementById("recipeDetails");
 
     if (recipeId) {
-        get(ref(database, "recipes/" + recipeId)).then(snapshot => {
+        get(ref(database, "recipes/" + recipeId))
+        .then(snapshot => {
             if (snapshot.exists()) {
                 const recipe = snapshot.val();
                 const tagsArr = objKeysToArray(recipe.tags);
@@ -624,4 +625,90 @@ if (pageType === "mp-detail") {
       mplanTitle.textContent = "Error loading meal plan.";
       mplanDetails.innerHTML = "";
     });
+}
+
+
+
+
+
+
+
+
+// ==== GROCERIES PAGE LOGIC ====
+if (pageType == "groceries") {
+  const mealPlansRef = ref(database, "mealPlans");
+
+  const mealPlanSelector = document.getElementById("mealPlanSelector");
+  const ingredientsList = document.getElementById("ingredientsList");
+
+  const mealPlanData = mealPlanSnap.val();
+  const allRecipesData = recipesSnap.val();
+  const mealPlanObj = mealPlanData.mplan || {};
+
+  let allIngredients = [];
+
+
+
+get(mealPlansRef).then(snapshot => {
+  if (!snapshot.exists()) {
+    mealPlanSelector.innerHTML = '<option value="">No meal plans found</option>';
+    return;
+  }
+  const mealPlans = snapshot.val();
+  for (const [id, data] of Object.entries(mealPlans)) {
+    const option = document.createElement("option");
+    option.value = id;
+    option.textContent = data.date || `Meal Plan ${id}`;
+    mealPlanSelector.appendChild(option);
+  }
+}).catch(console.error);
+
+
+
+// When user selects a meal plan, fetch it + all recipes and show ingredients
+mealPlanSelector.addEventListener("change", () => {
+  const selectedPlanId = mealPlanSelector.value;
+  ingredientsList.innerHTML = "";
+
+  if (!selectedPlanId) {
+    ingredientsList.innerHTML = "No meal plan selected.";
+    return;
+  }
+
+  // Fetch meal plan + recipes in parallel
+  Promise.all([
+    get(ref(database, `mealPlans/${selectedPlanId}`)),
+    get(recipesRef)
+  ])
+  .then(([mealPlanSnap, recipesSnap]) => {
+    if (!mealPlanSnap.exists() || !recipesSnap.exists()) {
+      ingredientsList.innerHTML = "<li>No data found for this meal plan or recipes.</li>";
+      return;
+    }
+
+    let ingredientsSet = new Set();
+
+    // Loop through days & meals in the meal plan
+    for (const dayMeals of Object.values(mealPlanObj)) {
+      for (const recipeId of Object.values(dayMeals)) {
+        const recipe = allRecipesData[recipeId];
+        if (recipe && recipe.ingredients) {
+          recipe.ingredients.forEach(ingredient => ingredientsSet.add(ingredient));
+        }
+      }
+    }
+
+    const ingredientsArray = [...ingredientsSet];
+    if (ingredientsArray.length === 0) {
+      ingredientsList.innerHTML = "<li>No ingredients found for this meal plan.</li>";
+      return;
+    }
+
+    ingredientsList.innerHTML = ingredientsArray.map(i => `<li>${i}</li>`).join("");
+  })
+  .catch(error => {
+    ingredientsList.innerHTML = `<li>Error loading ingredients: ${error.message}</li>`;
+  });
+})
+
 }
