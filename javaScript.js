@@ -398,6 +398,7 @@ if (pageType === "r-detail") {
       }).catch(error => {
           alert("Error deleting recipe: " + error.message);
       });
+
   });
 
 }
@@ -582,49 +583,51 @@ if (pageType === "mp-detail") {
 
 
   get(recipesRef)
-    .then(recipeSnapshot => {
-      if (!recipeSnapshot.exists()) {
-        mplanTitle.textContent = "No recipes found in database.";
-        mplanDetails.innerHTML = "";
-      }
-      const allRecipesList = Object.entries(recipeSnapshot.val());
-
-
-      const mplanRef = ref(database, "mealPlans/" + mplanId);
-      return get(mplanRef).then(snapshot => {
-        if (!snapshot.exists()) {
-          mplanTitle.textContent = "Sorry, that meal plan could not be found.";
-          mplanDetails.innerHTML = "";
-          return;
-        }
-        const data = snapshot.val();
-        mplanTitle.textContent = `Meal Plan for: ${data.date || "Unknown date"}`;
-
-
-        const mealPlanObj = data.mplan || {};
-
-
-        const html = Object.entries(mealPlanObj).map(([day, meals]) => {
-          return `
-            <h3>${day}</h3>
-            <ul>
-              ${Object.entries(meals).map(([mealName, recipeId]) => {
-                const recipe = allRecipesList.find(([rid]) => rid === recipeId)?.[1];
-                const title = recipe ? recipe.title : "Recipe not found";
-                return `<li><strong>${mealName}:</strong> <a href="recipe.html?id=${recipeId}" target="_blank">${title}</a></li>`;
-              }).join("")}
-            </ul>
-          `;
-        }).join("");
-
-
-        mplanDetails.innerHTML = html;
-      });
-    })
-    .catch(error => {
-      mplanTitle.textContent = "Error loading meal plan.";
+  .then(recipeSnapshot => {
+    if (!recipeSnapshot.exists()) {
+      mplanTitle.textContent = "No recipes found in database.";
       mplanDetails.innerHTML = "";
+    }
+    const allRecipesList = Object.entries(recipeSnapshot.val());
+
+
+    const mplanRef = ref(database, "mealPlans/" + mplanId);
+    return get(mplanRef).then(snapshot => {
+      if (!snapshot.exists()) {
+        mplanTitle.textContent = "Sorry, that meal plan could not be found.";
+        mplanDetails.innerHTML = "";
+        return;
+      }
+      const data = snapshot.val();
+      mplanTitle.textContent = `Meal Plan for: ${data.date || "Unknown date"}`;
+
+
+      const mealPlanObj = data.mplan || {};
+
+
+      const html = Object.entries(mealPlanObj).map(([day, meals]) => {
+        return `
+          <h3>${day}</h3>
+          <ul>
+            ${Object.entries(meals).map(([mealName, recipeId]) => {
+              const recipe = allRecipesList.find(([rid]) => rid === recipeId)?.[1];
+              const title = recipe ? recipe.title : "Recipe not found";
+              return `<li><strong>${mealName}:</strong> <a href="recipe.html?id=${recipeId}" target="_blank">${title}</a></li>`;
+            }).join("")}
+          </ul>
+        `;
+      }).join("");
+
+
+      mplanDetails.innerHTML = html;
     });
+  })
+  .catch(error => {
+    mplanTitle.textContent = "Error loading meal plan.";
+    mplanDetails.innerHTML = "";
+  }
+    
+  );
 }
 
 
