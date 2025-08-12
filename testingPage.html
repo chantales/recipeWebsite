@@ -128,8 +128,6 @@ from "https://www.gstatic.com/firebasejs/11.10.0/firebase-database.js";
 
 
 
-
-
 console.log("code updated 34")
 
 
@@ -142,6 +140,7 @@ let allRecipesList = [];
 function objKeysToArray(obj) {
   return obj ? Object.keys(obj) : [];
 }
+
 
 
 const pullAllRecipes = document.getElementById("pullAllRecipes");
@@ -203,20 +202,11 @@ const recipeRef = ref(database, "recipes/" + ID);
 remove(recipeRef)
       .then(() => {
       alert("Recipe deleted successfully!");
-      window.location.href = "recipeList.html"; // Redirect after deletion
       })
-      .catch(error => {
-      alert("Error deleting recipe: " + error.message);
-      });
 });
-
 
       return recipeDiv;
 }
-
-
-
-      
 </script>
 
 </body>
