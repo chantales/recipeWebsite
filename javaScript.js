@@ -651,10 +651,10 @@ get(mealPlansRef).then(snapshot => {
     return;
   }
   const mealPlans = snapshot.val();
-  for (const [id, data] of Object.entries(mealPlans)) {
+  for (const [id, recipe] of Object.entries(mealPlans)) {
     const option = document.createElement("option");
     option.value = id;
-    option.textContent = data.date || `Meal Plan ${id}`;
+    option.textContent = recipe.date || `Meal Plan ${id}`;
     mealPlanSelector.appendChild(option);
   }
 }).catch(console.error);
