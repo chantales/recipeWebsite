@@ -59,13 +59,14 @@ if (pageType === "r-list") {
   let dietarySpef = [];
   let stepCount = 0;
 
-
+  // search bar picking up the recipes based in whats being searched in real time
   searchInputBar.addEventListener("input", (e) => {
     const query = e.target.value.trim();
     showFilteredRecipes(query);
   });
   
 
+  // filters the recipes
   function showFilteredRecipes(query) {
     pullAllRecipes.innerHTML = "";
     const filtered = allRecipesList.filter(([id, recipe]) => {
@@ -90,6 +91,7 @@ if (pageType === "r-list") {
         ? filterDisplay.join(", ")
         : "None";
   }
+
 
 
 document.getElementById("mealFilterBtn").addEventListener("click", () => {
