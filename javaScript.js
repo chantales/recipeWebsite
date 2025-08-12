@@ -332,7 +332,8 @@ if (pageType === "r-detail") {
     const recipeDetails = document.getElementById("recipeDetails");
 
     if (recipeId) {
-        get(ref(database, "recipes/" + recipeId)).then(snapshot => {
+        get(ref(database, "recipes/" + recipeId))
+        .then(snapshot => {
             if (snapshot.exists()) {
                 const recipe = snapshot.val();
                 const tagsArr = objKeysToArray(recipe.tags);
