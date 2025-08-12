@@ -33,7 +33,7 @@ function objKeysToArray(obj) {
   return obj ? Object.keys(obj) : [];
 }
 
-console.log("code doesnt wanna update why")
+console.log("code pls")
 
 
 
@@ -279,7 +279,7 @@ e.preventDefault();
     instructCont.innerHTML = "";
     stepCount = 0;
     addStep();
-    btn.classList.toggle("selected");
+    btn.classList.remove("selected");
   })
 });
 
