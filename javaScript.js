@@ -638,7 +638,7 @@ if (pageType === "mp-detail") {
 if (pageType == "groceries") {
   const mealPlansRef = ref(database, "mealPlans");
 
-  const mealPlanSelector = document.getElementById("mealPlanSelector");
+  const mealPlanSelect = document.getElementById("mealPlanSelector");
   const ingredientsList = document.getElementById("ingredientsList");
 
   let allIngredients = [];
@@ -647,7 +647,7 @@ if (pageType == "groceries") {
 
 get(mealPlansRef).then(snapshot => {
   if (!snapshot.exists()) {
-    mealPlanSelector.innerHTML = '<option value="">No meal plans found</option>';
+    mealPlanSelect.innerHTML = '<option value="">No meal plans found</option>';
     return;
   }
   const mealPlans = snapshot.val();
@@ -655,15 +655,15 @@ get(mealPlansRef).then(snapshot => {
     const option = document.createElement("option");
     option.value = id;
     option.textContent = recipe.date || `Meal Plan ${id}`;
-    mealPlanSelector.appendChild(option);
+    mealPlanSelect.appendChild(option);
   }
 }).catch(console.error);
 
 
 
 // When user selects a meal plan, fetch it + all recipes and show ingredients
-mealPlanSelector.addEventListener("change", () => {
-  const selectedPlanId = mealPlanSelector.value;
+mealPlanSelect.addEventListener("change", () => {
+  const selectedPlanId = mealPlanSelect.value;
   ingredientsList.innerHTML = "";
 
   if (!selectedPlanId) {
