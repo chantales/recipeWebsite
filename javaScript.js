@@ -273,7 +273,7 @@ e.preventDefault();
 
   const newRecipeRef = push(recipesRef);
   set(newRecipeRef, recipe)
-  .then(() => {
+  .then((btn) => {
       alert("Recipe saved successfully!!");
     form.reset();
     instructCont.innerHTML = "";
