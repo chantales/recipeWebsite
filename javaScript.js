@@ -33,7 +33,7 @@ function objKeysToArray(obj) {
   return obj ? Object.keys(obj) : [];
 }
 
-console.log("CHANGE PLEASE")
+console.log("CHANGE PLEASE CODE")
 
 
 // ==== INDEX ====
@@ -596,7 +596,7 @@ document.getElementById("saveMealPlan").addEventListener("click", () => {
       alert("A meal plan for this date already exists!");
       return;
   }
-  set(newRef, mealPlanSave)
+  set(mealPlanRef, mealPlanSave)
   .then(() => alert("Saved meal plan!"))
   .catch(error => {
     if (error.code === 'PERMISSION_DENIED') {
