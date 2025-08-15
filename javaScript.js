@@ -643,7 +643,8 @@ if (pageType == "groceries") {
   const mealPlanSelect = document.getElementById("mealPlanSelector");
   const ingredientsList = document.getElementById("ingredientsList");
 
-  get(mealPlansRef).then(snapshot => {
+  get(mealPlansRef)
+  .then(snapshot => {
     if (!snapshot.exists()) {
       mealPlanSelect.innerHTML = '<option value="">No meal plans found</option>';
       return;
