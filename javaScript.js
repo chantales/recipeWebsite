@@ -39,7 +39,7 @@ console.log("CHANGE")
 // ==== INDEX ====
 if (pageType === "index") {
 
-  
+
 }
 
 
@@ -254,10 +254,12 @@ e.preventDefault();
 
     let ingredients;
     if (ingredientsString) {
-      ingredients = ingredientsString
-        .split("\n")
-        .map(line => line.trim())
-        .filter(line => line !== "");
+      ingredients = [...new Set(
+        ingredientsString
+          .split("\n")
+          .map(line => line.trim())
+          .filter(line => line !== "")
+      )];
     } else {
       ingredients = [];
     };
