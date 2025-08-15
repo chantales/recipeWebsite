@@ -639,7 +639,7 @@ if (pageType === "mp-detail") {
 
 // ==== GROCERIES PAGE LOGIC ====
 if (pageType == "groceries") {
-  const mealPlanSelector = document.getElementById("mealPlanSelector");
+  const mealPlanSelect = document.getElementById("mealPlanSelect");
   const ingredientsList = document.getElementById("ingredientsList");
 
   get(ref(database, "mealPlans"))
@@ -647,7 +647,7 @@ if (pageType == "groceries") {
     if (!snap.exists()) return;
     Object.entries(snap.val())
     .forEach(([id, plan]) => {
-      mealPlanSelector.innerHTML += `<option value="${id}">${plan.date || id}</option>`;
+      mealPlanSelect.innerHTML += `<option value="${id}">${plan.date || id}</option>`;
     });
   });
 
