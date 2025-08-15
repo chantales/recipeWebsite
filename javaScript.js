@@ -33,7 +33,7 @@ function objKeysToArray(obj) {
   return obj ? Object.keys(obj) : [];
 }
 
-console.log("code!?")
+console.log("code?")
 
 
 
@@ -256,10 +256,47 @@ e.preventDefault();
       ingredients = [];
     };
 
-    if (!title || !prepTime || !cookingTime || tags.length === 0 || dietarySpef.length === 0 || !ingredientsString || instructions.length === 0) {
-          alert("You have not completed the recipe! Complete it!");
-        return;
-    };
+
+    // section for not alloweds
+
+    function hasNumbers(str) {
+      return /\d/.test(str);
+    }
+    
+    function isNumber(value) {
+      return !isNaN(value) && value !== "";
+    }
+
+    const errors = [];
+    // Text fields shouldn't have numbers
+    if (!title) errors.push("Title is empty");
+    else if (hasNumbers(title)) errors.push("Title cannot contain numbers");
+
+    // Numeric fields shouldn't have letters
+    if (!prepTime) errors.push("Prep time is incorrect");
+    else if (!isNumber(prepTime) || prepTime < 1 || prepTime > 300) errors.push("Prep time must be a number between 1 and 300");
+
+    if (!cookingTime) errors.push("Cooking time is incorrect");
+    else if (!isNumber(cookingTime) || cookingTime < 1 || cookingTime > 300) errors.push("Cooking time must be a number between 1 and 300");
+
+
+    // Ingredients
+    if (!ingredientsString) errors.push("Ingredients are missing. With what will you make your food?");
+    else if (ingredients.some(i => !i || hasNumbers(i))) errors.push("Ingredients cannot contain numbers");
+
+    // Instructions
+    if (!instructions.length) errors.push("Instructions are missing. How do we make this again?");
+    else if (instructions.some(s => !s || hasNumbers(s))) errors.push("Instructions cannot contain numbers");
+
+    // Tags and dietary specs
+    if (!tags.length) errors.push("Please select at least one tag");
+    if (!dietarySpef.length) errors.push("Please select at least one dietary specification");
+
+    // Stop save if there are errors
+    if (errors.length) {
+    alert("Please fix the following errors:\n" + errors.join("\n"));
+    return;
+    }
 
 
     const recipe = { 
