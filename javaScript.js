@@ -640,78 +640,23 @@ if (pageType === "mp-detail") {
 // ==== GROCERIES PAGE LOGIC ====
 if (pageType == "groceries") {
   const mealPlansRef = ref(database, "mealPlans");
-
   const mealPlanSelect = document.getElementById("mealPlanSelector");
   const ingredientsList = document.getElementById("ingredientsList");
 
-  let allIngredients = [];
-
-
-
-get(mealPlansRef).then(snapshot => {
-  if (!snapshot.exists()) {
-    mealPlanSelect.innerHTML = '<option value="">No meal plans found</option>';
-    return;
-  }
-  const mealPlans = snapshot.val();
-  for (const [id, recipe] of Object.entries(mealPlans)) {
-    const option = document.createElement("option");
-    option.value = id;
-    option.textContent = recipe.date || `Meal Plan ${id}`;
-    mealPlanSelect.appendChild(option);
-  }
-}).catch(console.error);
-
-
-
-// When user selects a meal plan, fetch it + all recipes and show ingredients
-mealPlanSelect.addEventListener("change", () => {
-  const selectedPlanId = mealPlanSelect.value;
-  ingredientsList.innerHTML = "";
-
-  if (!selectedPlanId) {
-    ingredientsList.innerHTML = "No meal plan selected.";
-    return;
-  }
-
-  // Fetch meal plan + recipes in parallel
-  Promise.all([
-    get(ref(database, `mealPlans/${selectedPlanId}`)),
-    get(recipesRef)
-  ])
-  .then(([mealPlanSnap, recipesSnap]) => {
-    if (!mealPlanSnap.exists() || !recipesSnap.exists()) {
-      ingredientsList.innerHTML = "<li>No data found for this meal plan or recipes.</li>";
+  get(mealPlansRef).then(snapshot => {
+    if (!snapshot.exists()) {
+      mealPlanSelect.innerHTML = '<option value="">No meal plans found</option>';
       return;
     }
-
-    const mealPlanData = mealPlanSnap.val();
-    const allRecipesData = recipesSnap.val();
-    const mealPlanObj = mealPlanData.mplan || {};
-
-    let ingredientsSet = new Set();
-
-    // Loop through days & meals in the meal plan
-    for (const dayMeals of Object.values(mealPlanObj)) {
-      for (const recipeId of Object.values(dayMeals)) {
-        const recipe = allRecipesData[recipeId];
-        if (recipe && recipe.ingredients) {
-          recipe.ingredients.forEach(ingredient => ingredientsSet.add(ingredient));
-        }
-      }
+    for (const [id, plan] of Object.entries(snapshot.val())) {
+      const option = document.createElement("option");
+      option.value = id;
+      option.textContent = plan.date || `Meal Plan ${id}`;
+      mealPlanSelect.appendChild(option);
     }
-
-    const ingredientsArray = [...ingredientsSet];
-    if (ingredientsArray.length === 0) {
-      ingredientsList.innerHTML = "<li>No ingredients found for this meal plan.</li>";
-      return;
-    }
-
-    ingredientsList.innerHTML = ingredientsArray.map(i => `<li>${i}</li>`).join("");
-  })
-  .catch(error => {
-    ingredientsList.innerHTML = `<li>Error loading ingredients: ${error.message}</li>`;
   });
-})
+
+
+
 
 }
