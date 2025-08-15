@@ -690,8 +690,9 @@ if (pageType == "groceries") {
           }
         });
 
-        if (allIngredients.length > 0) {
-          ingredientsList.innerHTML = allIngredients
+        const uniqueIngredients = [...new Set(allIngredients)];
+        if (uniqueIngredients.length > 0) {
+          ingredientsList.innerHTML = uniqueIngredients
             .map(ing => `<li>${ing}</li>`)
             .join("");
         } else {
