@@ -643,18 +643,12 @@ if (pageType == "groceries") {
   const mealPlanSelect = document.getElementById("mealPlanSelector");
   const ingredientsList = document.getElementById("ingredientsList");
 
-  get(mealPlansRef)
-  .then(snapshot => {
-    if (!snapshot.exists()) {
-      mealPlanSelect.innerHTML = '<option value="">No meal plans found</option>';
-      return;
-    }
-    for (const [id, plan] of Object.entries(snapshot.val())) {
-      const option = document.createElement("option");
-      option.value = id;
-      option.textContent = plan.date || `Meal Plan ${id}`;
-      mealPlanSelect.appendChild(option);
-    }
+  get(ref(database, "mealPlans"))
+  .then(snap => {
+    if (!snap.exists()) return;
+    Object.entries(snap.val()).forEach(([id, plan]) => {
+      mealPlanSelect.innerHTML += `<option value="${id}">${plan.date || id}</option>`;
+    });
   });
 
 
