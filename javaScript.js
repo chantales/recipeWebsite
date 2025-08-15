@@ -647,37 +647,38 @@ if (pageType === "mp-detail") {
             ${Object.entries(meals).map(([mealName, recipeId]) => {
               const recipe = allRecipesList.find(([rid]) => rid === recipeId)?.[1];
               const title = recipe ? recipe.title : "Recipe not found";
-              return `<li><h3>${mealName}:</h3> 
-              <a href="recipe.html?id=${recipeId}" target="_blank">${title}</a></li>`;
+              return `<li><strong>${mealName}:</strong> 
+                      <a href="recipe.html?id=${recipeId}" target="_blank">${title}</a>
+                      </li>`;
             }).join("")}
           </ul>
-          <button class="deleteMPBtn" data-id="${meals}">Delete meal plan</button>
+          <button class="deleteMPBtn" data-day="${day}">Delete meal plan</button>
         `;
       }).join("");
-
-      document.getElementById("mplanDetails").innerHTML = html;
-      document.getElementById("deleteMPBtn").addEventListener("click", () => {
-        if (!day) {
+      
+      mplanDetails.innerHTML = html;
+      
+      // Attach click listeners to all delete buttons
+      document.querySelectorAll(".deleteMPBtn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const day = btn.dataset.day;
+          if (!day) {
             alert("No meal plan selected.");
             return;
-        }
-        const recipeRef = ref(database, "melPlans/" + day);
-        remove(recipeRef).then(() => {
-            alert("meal plan deleted successfully!!");
-            window.location.href = "mealPlans.html"; 
-        }).catch(error => {
-            alert("Error deleting recipe: " + error.message);
+          }
+          const mealPlanRef = ref(database, `mealPlans/${mplanId}/mplan/${day}`);
+          remove(mealPlanRef)
+            .then(() => {
+              alert("Meal plan deleted successfully!");
+              // remove the day's section from DOM
+              btn.previousElementSibling.remove(); // removes <ul>
+              btn.remove(); // removes button
+            })
+            .catch(error => {
+              alert("Error deleting meal plan: " + error.message);
+            });
         });
-      })
-
-
-      mplanDetails.innerHTML = html;
-    });
-  })
-  .catch(error => {
-    mplanTitle.textContent = "Error loading meal plan.";
-    mplanDetails.innerHTML = "";
-  });
+      });
     
 }
 
