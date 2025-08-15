@@ -650,36 +650,53 @@ if (pageType == "groceries") {
       mealPlanSelect.innerHTML += `<option value="${id}">${plan.date || id}</option>`;
     });
   });
+
+
   mealPlanSelect.addEventListener("change", () => {
     const selectedId = mealPlanSelect.value;
-    if (!selectedId) {
-      ingredientsList.innerHTML = "<p>Select a meal plan to see ingredients.</p>";
-      return;
-    }
+    if (!selectedId) return;
 
-    get(ref(database, `mealPlans/${selectedId}/mplan`))
-    .then(snap => {
-      if (!snap.exists()) {
-        ingredientsList.innerHTML = "<p>No meal plan found.</p>";
+    get(ref(database, `mealPlans/${selectedId}`))
+    .then(planSnap => {
+      if (!planSnap.exists()) {
+        ingredientsList.innerHTML = "<li>No data found for that meal plan.</li>";
         return;
       }
-      const mealPlan = snap.val();
-      const ingredientsSet = new Set();
+      
+      const mealPlanData = planSnap.val().mplan || {};
 
-      Object.values(mealPlan).forEach(day => {
-        Object.values(day).forEach(recipeId => {
-          const recipe = allRecipesList.find(([id]) => id === recipeId)?.[1];
-          if (recipe && Array.isArray(recipe.ingredients)) {
-            recipe.ingredients.forEach(ingredient => ingredientsSet.add(ingredient));
-          }
+      // Get all recipe IDs from the plan
+      const recipeIds = [];
+      Object.values(mealPlanData).forEach(meals => {
+        Object.values(meals).forEach(recipeId => {
+          recipeIds.push(recipeId);
         });
       });
 
-      ingredientsList.innerHTML = Array.from(ingredientsSet)
-        .map(ing => `<li>${ing}</li>`)
-        .join("");
+      // Fetch all recipes, then filter down to the ones in the plan
+      return get(ref(database, "recipes"))
+      .then(recipeSnap => {
+        if (!recipeSnap.exists()) {
+          ingredientsList.innerHTML = "<li>No recipes found.</li>";
+          return;
+        }
+        const recipes = recipeSnap.val();
+        const allIngredients = [];
+
+        recipeIds.forEach(rid => {
+          const recipe = recipes[rid];
+          if (recipe && Array.isArray(recipe.ingredients)) {
+            allIngredients.push(...recipe.ingredients);
+          }
+        });
+
+        
+        });
+    })
+    .catch(err => {
+      console.error(err);
+      ingredientsList.innerHTML = "<li>Error loading ingredients.</li>";
     });
   });
-
 
 }
