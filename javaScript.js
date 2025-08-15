@@ -36,6 +36,12 @@ function objKeysToArray(obj) {
 console.log("CHANGE")
 
 
+// ==== INDEX ====
+if (pageType === "index") {
+
+  
+}
+
 
 
 
@@ -658,7 +664,6 @@ if (pageType === "mp-detail") {
       
       mplanDetails.innerHTML = html;
       
-      // Attach click listeners to all delete buttons
       document.querySelectorAll(".deleteMPBtn").forEach(btn => {
         btn.addEventListener("click", () => {
           const day = btn.dataset.day;
