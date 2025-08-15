@@ -282,11 +282,9 @@ e.preventDefault();
 
     // Ingredients
     if (!ingredientsString) errors.push("Ingredients are missing. With what will you make your food?");
-    else if (ingredients.some(i => !i || hasNumbers(i))) errors.push("Ingredients cannot contain numbers");
 
     // Instructions
     if (!instructions.length) errors.push("Instructions are missing. How do we make this again?");
-    else if (instructions.some(s => !s || hasNumbers(s))) errors.push("Instructions cannot contain numbers");
 
     // Tags and dietary specs
     if (!tags.length) errors.push("Please select at least one tag");
