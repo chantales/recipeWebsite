@@ -650,8 +650,36 @@ if (pageType == "groceries") {
       mealPlanSelect.innerHTML += `<option value="${id}">${plan.date || id}</option>`;
     });
   });
+  mealPlanSelect.addEventListener("change", () => {
+    const selectedId = mealPlanSelect.value;
+    if (!selectedId) {
+      ingredientsList.innerHTML = "<p>Select a meal plan to see ingredients.</p>";
+      return;
+    }
 
+    get(ref(database, `mealPlans/${selectedId}/mplan`))
+    .then(snap => {
+      if (!snap.exists()) {
+        ingredientsList.innerHTML = "<p>No meal plan found.</p>";
+        return;
+      }
+      const mealPlan = snap.val();
+      const ingredientsSet = new Set();
 
+      Object.values(mealPlan).forEach(day => {
+        Object.values(day).forEach(recipeId => {
+          const recipe = allRecipesList.find(([id]) => id === recipeId)?.[1];
+          if (recipe && Array.isArray(recipe.ingredients)) {
+            recipe.ingredients.forEach(ingredient => ingredientsSet.add(ingredient));
+          }
+        });
+      });
+
+      ingredientsList.innerHTML = Array.from(ingredientsSet)
+        .map(ing => `<li>${ing}</li>`)
+        .join("");
+    });
+  });
 
 
 }
