@@ -647,11 +647,27 @@ if (pageType === "mp-detail") {
             ${Object.entries(meals).map(([mealName, recipeId]) => {
               const recipe = allRecipesList.find(([rid]) => rid === recipeId)?.[1];
               const title = recipe ? recipe.title : "Recipe not found";
-              return `<li><strong>${mealName}:</strong> <a href="recipe.html?id=${recipeId}" target="_blank">${title}</a></li>`;
+              return `<li><h3>${mealName}:</h3> 
+              <a href="recipe.html?id=${recipeId}" target="_blank">${title}</a></li>`;
             }).join("")}
           </ul>
+          <button class="deleteMPBtn" data-id="${meals}">Delete meal plan</button>
         `;
       }).join("");
+
+      document.getElementById("mplanDetails").innerHTML = html;
+      document.getElementById("deleteMPBtn").addEventListener("click", () => {
+        if (!day) {
+            alert("No meal plan selected.");
+            return;
+        }
+        const recipeRef = ref(database, "melPlans/" + day);
+        remove(recipeRef).then(() => {
+            alert("meal plan deleted successfully!!");
+            window.location.href = "mealPlans.html"; 
+        }).catch(error => {
+            alert("Error deleting recipe: " + error.message);
+        });
 
 
       mplanDetails.innerHTML = html;
