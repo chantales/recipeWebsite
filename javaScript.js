@@ -639,8 +639,7 @@ if (pageType === "mp-detail") {
 
 // ==== GROCERIES PAGE LOGIC ====
 if (pageType == "groceries") {
-  const mealPlansRef = ref(database, "mealPlans");
-  const mealPlanSelect = document.getElementById("mealPlanSelector");
+  const mealPlanSelect = document.getElementById("mealPlanSelect");
   const ingredientsList = document.getElementById("ingredientsList");
 
   get(ref(database, "mealPlans"))
