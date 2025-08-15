@@ -709,18 +709,19 @@ if (pageType == "groceries") {
   get(ref(database, "mealPlans"))
   .then(snap => {
     if (!snap.exists()) return;
+
     Object.entries(snap.val())
-    .forEach(([id, plan]) => {
-      mealPlanSelect.innerHTML += `<option value="${id}">${plan.date || id}</option>`;
+    .forEach(([dateKey]) => {
+      mealPlanSelect.innerHTML += `<option value="${dateKey}">${dateKey}</option>`;
     });
   });
 
 
   mealPlanSelect.addEventListener("change", () => {
-    const selectedId = mealPlanSelect.value;
-    if (!selectedId) return;
+    const selectedDate = mealPlanSelect.value;
+    if (!selectedDate) return;
 
-    get(ref(database, `mealPlans/${selectedId}`))
+    get(ref(database, `mealPlans/${selectedDate}`))
     .then(planSnap => {
       if (!planSnap.exists()) {
         ingredientsList.innerHTML = "<li>No data found for that meal plan.</li>";
@@ -754,6 +755,7 @@ if (pageType == "groceries") {
           }
         });
 
+        
         const uniqueIngredients = [...new Set(allIngredients)];
         if (uniqueIngredients.length > 0) {
           ingredientsList.innerHTML = uniqueIngredients
@@ -765,8 +767,8 @@ if (pageType == "groceries") {
 
         });
     })
-    .catch(err => {
-      console.error(err);
+    .catch(error => {
+      console.error(error);
       ingredientsList.innerHTML = "<li>Error loading ingredients.</li>";
     });
   });
