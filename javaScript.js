@@ -668,6 +668,7 @@ if (pageType === "mp-detail") {
         }).catch(error => {
             alert("Error deleting recipe: " + error.message);
         });
+      })
 
 
       mplanDetails.innerHTML = html;
@@ -676,9 +677,8 @@ if (pageType === "mp-detail") {
   .catch(error => {
     mplanTitle.textContent = "Error loading meal plan.";
     mplanDetails.innerHTML = "";
-  }
+  });
     
-  );
 }
 
 
