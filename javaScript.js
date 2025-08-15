@@ -667,16 +667,14 @@ if (pageType === "mp-detail") {
             return;
           }
           const mealPlanRef = ref(database, `mealPlans/${mplanId}/mplan/${day}`);
-          remove(mealPlanRef)
-            .then(() => {
-              alert("Meal plan deleted successfully!");
-              // remove the day's section from DOM
-              btn.previousElementSibling.remove(); // removes <ul>
-              btn.remove(); // removes button
-            })
-            .catch(error => {
-              alert("Error deleting meal plan: " + error.message);
-            });
+        remove(mealPlanRef)
+        .then(() => {
+          alert("Meal plan deleted successfully!");
+          window.location.href = "mealPlans.html";           
+        })
+        .catch(error => {
+          alert("Error deleting meal plan: " + error.message);
+        });
         });
       });
     });
