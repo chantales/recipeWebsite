@@ -666,7 +666,7 @@ if (pageType === "mp-detail") {
             alert("No meal plan selected.");
             return;
           }
-          const mealPlanRef = ref(database, `mealPlans/${mplanId}/mplan/${day}`);
+          const mealPlanRef = ref(database, `mealPlans/${mplanId}`);
         remove(mealPlanRef)
         .then(() => {
           alert("Meal plan deleted successfully!");
