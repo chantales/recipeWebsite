@@ -690,7 +690,14 @@ if (pageType == "groceries") {
           }
         });
 
-        
+        if (allIngredients.length > 0) {
+          ingredientsList.innerHTML = allIngredients
+            .map(ing => `<li>${ing}</li>`)
+            .join("");
+        } else {
+          ingredientsList.innerHTML = "<li>No ingredients found.</li>";
+        }
+
         });
     })
     .catch(err => {
