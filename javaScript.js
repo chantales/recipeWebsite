@@ -576,19 +576,26 @@ function updateMP() {
 
 
 document.getElementById("saveMealPlan").addEventListener("click", () => {
-  const mealPlansRef = ref(database, "mealPlans");
-  const newRef = push(mealPlansRef);
   const date = document.getElementById("dateMealPlan").value;
   if (!date) {
     alert("Please enter a date for your meal plan.");
     return;
   }
+  const dayName = new Date(date).toLocaleDateString(undefined, { weekday: 'long' });
+
   const mealPlanSave = {
     date, // save the date set
     dayName,     
     mplan: mealPlan, // the meal plan object
   };
 
+  const mealPlanRef = ref(database, `mealPlans/${date}`);
+  get(mealPlanRef)
+  .then(snapshot => {
+    if (snapshot.exists()) {
+      alert("A meal plan for this date already exists!");
+      return;
+  }
   set(newRef, mealPlanSave)
   .then(() => alert("Saved meal plan!"))
   .catch(error => {
@@ -599,9 +606,8 @@ document.getElementById("saveMealPlan").addEventListener("click", () => {
     }
   });
 
+  });
 });
-
-
 }
 
 
