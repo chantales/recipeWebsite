@@ -639,14 +639,15 @@ if (pageType === "mp-detail") {
 
 // ==== GROCERIES PAGE LOGIC ====
 if (pageType == "groceries") {
-  const mealPlanSelect = document.getElementById("mealPlanSelect");
+  const mealPlanSelector = document.getElementById("mealPlanSelector");
   const ingredientsList = document.getElementById("ingredientsList");
 
   get(ref(database, "mealPlans"))
   .then(snap => {
     if (!snap.exists()) return;
-    Object.entries(snap.val()).forEach(([id, plan]) => {
-      mealPlanSelect.innerHTML += `<option value="${id}">${plan.date || id}</option>`;
+    Object.entries(snap.val())
+    .forEach(([id, plan]) => {
+      mealPlanSelector.innerHTML += `<option value="${id}">${plan.date || id}</option>`;
     });
   });
 
