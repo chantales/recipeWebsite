@@ -7,7 +7,40 @@ body {
 }
 
 /* Index */
+.homeCont {
+  max-width: 600px;
+  margin: 50px auto;
+  background-color: #fff;
+  border: 1.5px solid #89d5d8;
+  border-radius: 12px;
+  padding: 30px;
+  text-align: center;
+}
 
+.homeCont h1 {
+  color: #2980b9;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.homeCont a {
+  display: block;
+  margin: 12px 0;
+  padding: 12px 18px;
+  background-color: #3498db;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+}
+
+.homeCont a:hover,
+.homeCont a:focus {
+  background-color: #2980b9;
+  outline: none;
+}
 
 
 
