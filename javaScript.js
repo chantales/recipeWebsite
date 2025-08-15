@@ -33,7 +33,7 @@ function objKeysToArray(obj) {
   return obj ? Object.keys(obj) : [];
 }
 
-console.log("CHANGE")
+console.log("CHANGE PLEASE")
 
 
 // ==== INDEX ====
@@ -755,7 +755,7 @@ if (pageType == "groceries") {
           }
         });
 
-        
+
         const uniqueIngredients = [...new Set(allIngredients)];
         if (uniqueIngredients.length > 0) {
           ingredientsList.innerHTML = uniqueIngredients
