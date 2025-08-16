@@ -349,6 +349,12 @@ document.getElementById("addRecpBtn").addEventListener("click", () => {
 saveRecipeBtn.addEventListener("click", (e) => {
 e.preventDefault();
 
+  const user = auth.currentUser;
+  if (!user) {
+  alert("You must be signed in to add a recipe!");
+  return; // stop execution if no user is signed in
+  }
+
   const instructInputs = instructCont.querySelectorAll("input");
   
   const instructions = Array
@@ -421,7 +427,8 @@ e.preventDefault();
       prepTime, 
       cookingTime, 
       ingredients, 
-      instructions };
+      instructions,
+      author: user.uid };
 
   const newRecipeRef = push(recipesRef);
   set(newRecipeRef, recipe)
@@ -535,21 +542,24 @@ if (pageType === "r-detail") {
         recipeTitle.textContent = "No recipe ID provided. Your recipe may have commited identitify theft.";
     }
 
-
-
-  // deleting the recipe
   document.getElementById("deleteRecipeBtn").addEventListener("click", () => {
-      if (!recipeId) {
-          alert("No recipe ID provided.");
-          return;
-      }
-      const recipeRef = ref(database, "recipes/" + recipeId);
-      remove(recipeRef).then(() => {
-          alert("Recipe deleted successfully!");
-          window.location.href = "recipeList.html"; 
-      }).catch(error => {
-          alert("Error deleting recipe: " + error.message);
-      });
+    const user = auth.currentUser;
+    if (!user) {
+    alert("You must be signed in to delete a recipe!");
+    return; // stop execution if no user is signed in
+    } 
+
+    if (!recipeId) {
+        alert("No recipe ID provided.");
+        return;
+    }
+    const recipeRef = ref(database, "recipes/" + recipeId);
+    remove(recipeRef).then(() => {
+        alert("Recipe deleted successfully!");
+        window.location.href = "recipeList.html"; 
+    }).catch(error => {
+        alert("Error deleting recipe: " + error.message);
+    });
 
   });
 
