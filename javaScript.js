@@ -57,7 +57,6 @@ if (pageType === "auth") {
   const logOut = document.getElementById("logOut");
   logOut.style.display = "none"; // hide the logout button by default
 
-  checkAuthState();
   checkAuthState = async() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -69,6 +68,8 @@ if (pageType === "auth") {
       }
     });
   };
+
+  checkAuthState();
 
   // Sign up the user
   const userSignUp = async() => {
