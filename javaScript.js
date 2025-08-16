@@ -54,6 +54,10 @@ if (pageType === "auth") {
   
 
   logOut.style.display = "none"; // hide the logout button by default
+  signUpBtn.addEventListener("click", userSignUp);
+  signInBtn.addEventListener("click", userSignIn);
+
+  
 
   const userSignUp = async() => {
     const signUpEmail = userEmail.value;
@@ -73,7 +77,6 @@ if (pageType === "auth") {
     })
 
   }
-  signUpBtn.addEventListener("click", userSignUp);
 
 
 
@@ -95,7 +98,6 @@ if (pageType === "auth") {
     })
 
   }
-signInBtn.addEventListener("click", userSignIn);
 
 
 
