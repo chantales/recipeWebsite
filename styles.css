@@ -190,8 +190,6 @@ body {
 .dropDBtn.selected {
   background-color: #27ae60;
   font-weight: bold;
-  border: 2px solid #1e8449;
-  box-shadow: 0 0 6px #27ae60;
   color: white;
 }
 
@@ -271,8 +269,6 @@ label {
 
 .tagBtn.selected, .dietSpefBtn.selected {
   background-color: #27ae60;
-  font-weight: bold;
-  border: solid #1e8449;
   color: white;
 }
 
