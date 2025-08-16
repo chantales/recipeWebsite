@@ -1,5 +1,11 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
-// TODO: Add SDKs for Firebase products that you want to use
+
+import {getDatabase, set, ref, push, get, remove}
+from "https://www.gstatic.com/firebasejs/11.10.0/firebase-database.js";
+
+import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut}
+from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
@@ -12,10 +18,9 @@ const firebaseConfig = {
     messagingSenderId: "147673777707",
     appId: "1:147673777707:web:9c9a187722377fec470c6e"
 };
-
 const app = initializeApp(firebaseConfig);
-import {getDatabase, set, ref, push, get, remove} 
-from "https://www.gstatic.com/firebasejs/11.10.0/firebase-database.js";
+const auth = getAuth(app);
+
 
 const database = getDatabase(app);
 
@@ -37,9 +42,22 @@ console.log("CHANGE PLEASE CODE")
 
 // ==== AUTHRORIZATION PAGE LOGIC ====
 if (pageType === "auth") {
+  const userEmail = document.getElementById("userEmail");
+  const userPassword = document.getElementById("userPassword");
+  const authForm = document.getElementById("authForm");
+  const logOut = document.getElementById("logOut");
 
-
+  const authBtn = document.getElementById("authBtn");
+  const signUpBtn = document.getElementById("signUpBtn");
+  const signInBtn = document.getElementById("signInBtn");
+  const signOutBtn = document.getElementById("signOutBtn");
   
+
+  logOut.style.display = "none"; // hide the logout button by default
+
+
+
+
 }
 
 
