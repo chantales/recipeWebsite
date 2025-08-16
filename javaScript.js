@@ -39,24 +39,6 @@ function objKeysToArray(obj) {
 }
 
 
-
-// to check if the user is logged in or not so show certain things / allow actions in the website
-const authForm = document.getElementById("authForm");
-const logOut = document.getElementById("logOut");
-
-checkAuthState();
-checkAuthState = async() => {
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      authForm.style.display = "none"; // hide the sign in area
-      logOut.style.display = "block"; // show the logout button
-    } else {
-      authForm.style.display = "block"; // show the sign in area
-      logOut.style.display = "none"; // hide the logout button
-    }
-  });
-};
-
 console.log("auth testing 4")
 
 // ==== AUTHRORIZATION PAGE LOGIC ====
@@ -73,9 +55,26 @@ if (pageType === "auth") {
   logOut.style.display = "none"; // hide the logout button by default
   signUpBtn.addEventListener("click", userSignUp);
   signInBtn.addEventListener("click", userSignIn);
+  signInBtn.addEventListener("click", userSignOut);
 
+  // to check if the user is logged in or not so show certain things / allow actions in the website
+  const authForm = document.getElementById("authForm");
+  const logOut = document.getElementById("logOut");
 
+  checkAuthState();
+  checkAuthState = async() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        authForm.style.display = "none"; // hide the sign in area
+        logOut.style.display = "block"; // show the logout button
+      } else {
+        authForm.style.display = "block"; // show the sign in area
+        logOut.style.display = "none"; // hide the logout button
+      }
+    });
+  };
 
+  // Sign up the user
   const userSignUp = async() => {
     const signUpEmail = userEmail.value;
     const signUpPassword = userPassword.value;
@@ -92,12 +91,9 @@ if (pageType === "auth") {
       const errorMessage = error.message;
       console.error(errorCode + errorMessage);
     })
-
   }
 
-
-
-
+  // Sign in the user
   const userSignIn = async() => {
     const signInEmail = userEmail.value;
     const signInPassword = userPassword.value;
@@ -113,10 +109,12 @@ if (pageType === "auth") {
       const errorMessage = error.message;
       console.error(errorCode + errorMessage);
     })
-
   }
 
-   
+  // Sign out the user
+   const userSignOut = async() => {
+    await signOut(auth);
+   }
 
 
 }
