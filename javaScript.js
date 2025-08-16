@@ -65,7 +65,12 @@ if (pageType === "auth") {
       console.log("User created:", user);
       alert("Your account has been created successfully!");
 
-    });
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.error(errorCode + errorMessage);
+    })
 
   }
 
