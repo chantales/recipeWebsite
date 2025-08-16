@@ -35,8 +35,16 @@ function objKeysToArray(obj) {
 
 console.log("CHANGE PLEASE CODE")
 
+// ==== AUTHRORIZATION PAGE LOGIC ====
+if (pageType === "auth") {
 
-// ==== INDEX ====
+
+  
+}
+
+
+
+// ==== INDEX PAGE LOGIC====
 if (pageType === "index") {
 
 
