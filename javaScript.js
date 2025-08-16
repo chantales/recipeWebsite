@@ -53,9 +53,6 @@ if (pageType === "auth") {
   
 
   logOut.style.display = "none"; // hide the logout button by default
-  signUpBtn.addEventListener("click", userSignUp);
-  signInBtn.addEventListener("click", userSignIn);
-  signInBtn.addEventListener("click", userSignOut);
 
   // to check if the user is logged in or not so show certain things / allow actions in the website
   const authForm = document.getElementById("authForm");
@@ -114,8 +111,12 @@ if (pageType === "auth") {
   // Sign out the user
    const userSignOut = async() => {
     await signOut(auth);
-   }
+  }
 
+  // buttons for each action 
+   signUpBtn.addEventListener("click", userSignUp);
+   signInBtn.addEventListener("click", userSignIn);
+   signInBtn.addEventListener("click", userSignOut);
 }
 
 
