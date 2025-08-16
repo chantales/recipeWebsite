@@ -828,8 +828,8 @@ if (pageType === "mp-detail") {
       alert("meal plan not found.");
       return;
     }
-    const mplanData = snapshot.val();
-    if (mplanData.author && mplanData.author !== user.uid) {
+    const mpData = snapshot.val();
+    if (mpData.author && mpData.author !== user.uid) {
       alert("You can only delete your own meal plans!");
       return;
     }
