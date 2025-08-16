@@ -46,7 +46,6 @@ if (pageType === "auth") {
   const userEmail = document.getElementById("userEmail");
   const userPassword = document.getElementById("userPassword");
 
-  const authBtn = document.getElementById("authBtn");
   const signUpBtn = document.getElementById("signUpBtn");
   const signInBtn = document.getElementById("signInBtn");
   const signOutBtn = document.getElementById("signOutBtn");
@@ -116,7 +115,7 @@ if (pageType === "auth") {
   // buttons for each action 
    signUpBtn.addEventListener("click", userSignUp);
    signInBtn.addEventListener("click", userSignIn);
-   signInBtn.addEventListener("click", userSignOut);
+   signOutBtn.addEventListener("click", userSignOut);
 }
 
 
