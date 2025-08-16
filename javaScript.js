@@ -55,6 +55,19 @@ if (pageType === "auth") {
 
   logOut.style.display = "none"; // hide the logout button by default
 
+  const userSignUp = async() => {
+    const signUpEmail = userEmail.value;
+    const signUpPassword = userPassword.value;
+
+    createUserWithEmailAndPassword(auth, signUpEmail, signUpPassword)
+    .then((userCredential) => {
+      const user = userCredential.user;
+      console.log("User created:", user);
+      alert("Your account has been created successfully!");
+
+    });
+
+  }
 
 
 
