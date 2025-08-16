@@ -81,7 +81,7 @@ if (pageType === "auth") {
       const user = userCredential.user;
       console.log("User created:", user);
       alert("Your account has been created successfully!");
-
+      window.open('https://chantales.github.io/recipeWebsite/index.html', '_blank'); 
     })
     .catch((error) => {
       const errorCode = error.code;
@@ -99,7 +99,7 @@ if (pageType === "auth") {
     .then((userCredential) => {
       const user = userCredential.user;
       alert("Your have signed in sucessfully.");
-
+      window.open('https://chantales.github.io/recipeWebsite/index.html', '_blank'); 
     })
     .catch((error) => {
       const errorCode = error.code;
