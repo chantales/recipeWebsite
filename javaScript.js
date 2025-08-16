@@ -39,7 +39,7 @@ function objKeysToArray(obj) {
 }
 
 
-console.log("auth testing 01")
+console.log("auth testing 04")
 
 // ==== AUTHRORIZATION PAGE LOGIC ====
 if (pageType === "auth") {
@@ -118,6 +118,9 @@ if (pageType === "auth") {
    signInBtn.addEventListener("click", userSignIn);
    signOutBtn.addEventListener("click", userSignOut);
 }
+
+
+
 
 
 
