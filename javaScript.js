@@ -149,12 +149,19 @@ document.getElementById("addRecpBtn").addEventListener("click", () => {
   tagAddBtn.forEach(btn => {
     btn.addEventListener("click", () => {
       const tag = btn.dataset.tag;
-      btn.classList.toggle("selected");
-      if (tags.includes(tag)) {
-        tags = tags.filter(t => t !== tag);
-      } else {
+      const isSelected = tags.includes(tag);
+
+    if (isSelected) {
+      tags = tags.filter(t => t !== tag);
+      btn.classList.remove("selected");
+    } else {
+      if (tags.length < 3) { // only allows up to 3 tags per recipe
         tags.push(tag);
+        btn.classList.add("selected");
+      } else {
+        alert("You can only select up to 3 tags.");
       }
+    }
       console.log("tags:", tags);
     });
   });
@@ -162,12 +169,19 @@ document.getElementById("addRecpBtn").addEventListener("click", () => {
   dietAddBtn.forEach(btn => {
     btn.addEventListener("click", () => {
       const diet = btn.dataset.tag;
-      btn.classList.toggle("selected");
-      if (dietarySpef.includes(diet)) {
-        dietarySpef = dietarySpef.filter(d => d !== diet);
-      } else {
+      const isSelected = dietarySpef.includes(diet);
+
+    if (isSelected) {
+      dietarySpef = dietarySpef.filter(d => d !== diet);
+      btn.classList.remove("selected");
+    } else {
+      if (dietarySpef.length < 3) { // only allowd up to 3 dietary spefs per recipe
         dietarySpef.push(diet);
+        btn.classList.add("selected");
+      } else {
+        alert("You can only select up to 3 dietary specifications.");
       }
+    }
       console.log("dietary spefs:", dietarySpef);
     });
   });
