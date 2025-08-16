@@ -272,7 +272,7 @@ label {
 .tagBtn.selected, .dietSpefBtn.selected {
   background-color: #27ae60;
   font-weight: bold;
-  border: 2px solid #1e8449;
+  border: solid #1e8449;
   color: white;
 }
 
