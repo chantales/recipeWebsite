@@ -5,8 +5,10 @@ body {
   padding: 20px;
   line-height: 1.5;
 }
+
+
 /* Authorization */
-#authForm {
+.authCont {
   max-width: 400px;
   margin: 50px auto;
   background-color: #fff;
@@ -16,13 +18,13 @@ body {
   text-align: center;
 }
 
-#authForm h2 {
+.authCont h2 {
   color: #2980b9;
   font-size: 1.8rem;
   margin-bottom: 25px;
 }
 
-#authForm label {
+.authCont label {
   display: block;
   text-align: left;
   margin-bottom: 5px;
@@ -30,7 +32,7 @@ body {
   color: #555;
 }
 
-#authForm input {
+.authCont input {
   width: 100%;
   padding: 10px 12px;
   margin-bottom: 20px;
@@ -39,12 +41,12 @@ body {
   font-size: 1rem;
 }
 
-#authForm input:focus {
+.authCont input:focus {
   border-color: #2980b9;
   outline: none;
 }
 
-#authForm button {
+.authCont button {
   width: 100%;
   padding: 12px 0;
   margin-bottom: 15px;
