@@ -175,11 +175,21 @@ document.getElementById("addRecpBtn").addEventListener("click", () => {
       dietarySpef = dietarySpef.filter(d => d !== diet);
       btn.classList.remove("selected");
     } else {
-      if (dietarySpef.length < 3) { // only allowd up to 3 dietary spefs per recipe
-        dietarySpef.push(diet);
+      if (diet === "none") {
+        dietarySpef = ["none"];
+        dietAddBtn.forEach(b => b.classList.remove("selected")); // deselect all buttons
         btn.classList.add("selected");
       } else {
-        alert("You can only select up to 3 dietary specifications.");
+        if (dietarySpef.includes("none")) {
+          alert('You cannot select other dietary specs while "none" is selected.');
+          return;
+        }
+        if (dietarySpef.length >= 3) {
+          alert("You can only select up to 3 dietary specifications.");
+          return;
+        }
+        dietarySpef.push(diet);
+        btn.classList.add("selected");
       }
     }
       console.log("dietary spefs:", dietarySpef);
