@@ -39,7 +39,7 @@ function objKeysToArray(obj) {
 }
 
 
-console.log("auth testing 4")
+console.log("auth testing 34")
 
 // ==== AUTHRORIZATION PAGE LOGIC ====
 if (pageType === "auth") {
@@ -115,7 +115,6 @@ if (pageType === "auth") {
    const userSignOut = async() => {
     await signOut(auth);
    }
-
 
 }
 
