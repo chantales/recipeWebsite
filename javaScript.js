@@ -38,14 +38,31 @@ function objKeysToArray(obj) {
   return obj ? Object.keys(obj) : [];
 }
 
-console.log("auth testing 1")
+
+
+// to check if the user is logged in or not so show certain things / allow actions in the website
+const authForm = document.getElementById("authForm");
+const logOut = document.getElementById("logOut");
+
+checkAuthState();
+checkAuthState = async() => {
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      authForm.style.display = "none"; // hide the sign in area
+      logOut.style.display = "block"; // show the logout button
+    } else {
+      authForm.style.display = "block"; // show the sign in area
+      logOut.style.display = "none"; // hide the logout button
+    }
+  });
+};
+
+console.log("auth testing 4")
 
 // ==== AUTHRORIZATION PAGE LOGIC ====
 if (pageType === "auth") {
   const userEmail = document.getElementById("userEmail");
   const userPassword = document.getElementById("userPassword");
-  const authForm = document.getElementById("authForm");
-  const logOut = document.getElementById("logOut");
 
   const authBtn = document.getElementById("authBtn");
   const signUpBtn = document.getElementById("signUpBtn");
@@ -57,7 +74,7 @@ if (pageType === "auth") {
   signUpBtn.addEventListener("click", userSignUp);
   signInBtn.addEventListener("click", userSignIn);
 
-  
+
 
   const userSignUp = async() => {
     const signUpEmail = userEmail.value;
@@ -99,6 +116,7 @@ if (pageType === "auth") {
 
   }
 
+   
 
 
 }
