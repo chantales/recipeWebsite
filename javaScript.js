@@ -77,6 +77,28 @@ if (pageType === "auth") {
 
 
 
+
+  const userSignIn = async() => {
+    const signInEmail = userEmail.value;
+    const signInPassword = userPassword.value;
+
+    signInWithEmailAndPassword(auth, signInEmail, signInPassword)
+    .then((userCredential) => {
+      const user = userCredential.user;
+      alert("Your have signed in sucessfully.");
+
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.error(errorCode + errorMessage);
+    })
+
+  }
+signInBtn.addEventListener("click", userSignIn);
+
+
+
 }
 
 
