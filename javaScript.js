@@ -39,7 +39,7 @@ function objKeysToArray(obj) {
 }
 
 
-console.log("auth testing 10")
+console.log("auth testing 11")
 
 // ==== AUTHRORIZATION PAGE LOGIC ====
 if (pageType === "auth") {
@@ -57,7 +57,7 @@ if (pageType === "auth") {
   const logOut = document.getElementById("logOut");
   logOut.style.display = "none"; // hide the logout button by default
 
-  checkAuthState = async() => {
+  const checkAuthState = async() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         authForm.style.display = "none"; // hide the sign in area
