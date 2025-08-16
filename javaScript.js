@@ -39,7 +39,7 @@ function objKeysToArray(obj) {
 }
 
 
-console.log("auth testing 34")
+console.log("auth testing 3")
 
 // ==== AUTHRORIZATION PAGE LOGIC ====
 if (pageType === "auth") {
@@ -52,11 +52,11 @@ if (pageType === "auth") {
   const signOutBtn = document.getElementById("signOutBtn");
   
 
-  logOut.style.display = "none"; // hide the logout button by default
 
   // to check if the user is logged in or not so show certain things / allow actions in the website
   const authForm = document.getElementById("authForm");
   const logOut = document.getElementById("logOut");
+  logOut.style.display = "none"; // hide the logout button by default
 
   checkAuthState();
   checkAuthState = async() => {
