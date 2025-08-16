@@ -39,7 +39,7 @@ function objKeysToArray(obj) {
 }
 
 
-console.log("auth testing 11")
+console.log("auth testing 21")
 
 // ==== AUTHRORIZATION PAGE LOGIC ====
 if (pageType === "auth") {
@@ -553,7 +553,22 @@ if (pageType === "r-detail") {
         alert("No recipe ID provided.");
         return;
     }
+
+
     const recipeRef = ref(database, "recipes/" + recipeId);
+
+    // Check if current user is the author of the recipe
+    get(recipeRef).then(snapshot => {
+    if (!snapshot.exists()) {
+      alert("Recipe not found.");
+      return;
+    }
+    const recipeData = snapshot.val();
+    if (recipeData.author && recipeData.author !== user.uid) {
+      alert("You can only delete your own recipes!");
+      return;
+    }
+
     remove(recipeRef).then(() => {
         alert("Recipe deleted successfully!");
         window.location.href = "recipeList.html"; 
@@ -562,7 +577,7 @@ if (pageType === "r-detail") {
     });
 
   });
-
+  });
 }
 
 
