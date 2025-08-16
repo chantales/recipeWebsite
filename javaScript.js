@@ -39,7 +39,7 @@ function objKeysToArray(obj) {
 }
 
 
-console.log("auth testing 21")
+console.log("auth testing 12")
 
 // ==== AUTHRORIZATION PAGE LOGIC ====
 if (pageType === "auth") {
@@ -197,6 +197,11 @@ document.getElementById("dietFilterBtn").addEventListener("click", () => {
 
 
 document.getElementById("addRecpBtn").addEventListener("click", () => {
+  const user = auth.currentUser;
+  if (!user) {
+  alert("You must be signed in to add a recipe!");
+  return; // stop execution if no user is signed in
+  }
     document.getElementById("addRecpDropD").classList.toggle("show");
 });
 
@@ -349,11 +354,6 @@ document.getElementById("addRecpBtn").addEventListener("click", () => {
 saveRecipeBtn.addEventListener("click", (e) => {
 e.preventDefault();
 
-  const user = auth.currentUser;
-  if (!user) {
-  alert("You must be signed in to add a recipe!");
-  return; // stop execution if no user is signed in
-  }
 
   const instructInputs = instructCont.querySelectorAll("input");
   
