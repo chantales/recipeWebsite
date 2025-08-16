@@ -73,6 +73,7 @@ if (pageType === "auth") {
     })
 
   }
+  signUpBtn.addEventListener("click", userSignUp);
 
 
 
