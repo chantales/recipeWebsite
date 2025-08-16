@@ -808,24 +808,45 @@ if (pageType === "mp-detail") {
       
       mplanDetails.innerHTML = html;
       
-      document.querySelectorAll(".deleteMPBtn").forEach(btn => {
-        btn.addEventListener("click", () => {
-          const day = btn.dataset.day;
-          if (!day) {
-            alert("No meal plan selected.");
-            return;
-          }
-          const mealPlanRef = ref(database, `mealPlans/${mplanId}`);
-        remove(mealPlanRef)
-        .then(() => {
-          alert("Meal plan deleted successfully!");
-          window.location.href = "mealPlans.html";           
-        })
-        .catch(error => {
-          alert("Error deleting meal plan: " + error.message);
-        });
-        });
-      });
+
+  document.querySelector(".deleteMPBtn").addEventListener("click", () => {
+    const user = auth.currentUser;
+    if (!user) {
+    alert("You must be signed in to delete a meal plan!");
+    return; // stop execution if no user is signed in
+    } 
+
+    if (!mplanId) {
+        alert("No meal plan ID provided.");
+        return;
+    }
+
+    // Check if current user is the author of the meal plan
+    get(mplanRef)
+    .then(snapshot => {
+    if (!snapshot.exists()) {
+      alert("meal plan not found.");
+      return;
+    }
+    const mplanData = snapshot.val();
+    if (mplanData.author && mplanData.author !== user.uid) {
+      alert("You can only delete your own meal plans!");
+      return;
+    }
+
+    remove(mplanRef)
+    .then(() => {
+        alert("Recipe deleted successfully!");
+        window.location.href = "mealPlans.html"; 
+    }).catch(error => {
+        alert("Error deleting recipe: " + error.message);
+    });
+
+  });
+  });
+
+
+
     });
    })
 }
