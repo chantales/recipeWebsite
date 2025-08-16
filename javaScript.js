@@ -38,7 +38,7 @@ function objKeysToArray(obj) {
   return obj ? Object.keys(obj) : [];
 }
 
-console.log("CHANGE PLEASE CODE")
+console.log("auth testing 1")
 
 // ==== AUTHRORIZATION PAGE LOGIC ====
 if (pageType === "auth") {
