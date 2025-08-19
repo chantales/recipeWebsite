@@ -723,9 +723,10 @@ document.getElementById("saveMealPlan").addEventListener("click", () => {
     date, // save the date set
     dayName,     
     mplan: mealPlan, // the meal plan object
+    author: auth.currentUser ? auth.currentUser.uid : null // save the user ID if signed in
   };
 
-  const mealPlanRef = ref(database, `mealPlans/${date}`);
+  const mealPlanRef = ref(database, `mealPlans/${auth.currentUser.uid}/${date}`);
   get(mealPlanRef)
   .then(snapshot => {
     if (snapshot.exists()) {
@@ -790,11 +791,15 @@ if (pageType === "mp-detail") {
       const mealPlanObj = data.mplan || {};
 
 
+      const mealOrder = ["breakfast", "lunch", "dinner"];
+
       const html = Object.entries(mealPlanObj).map(([day, meals]) => {
         return `
           <h3>${day}</h3>
           <ul>
-            ${Object.entries(meals).map(([mealName, recipeId]) => {
+            ${mealOrder.map(mealName => {
+              if (!meals[mealName]) return ""; // skip if meal not planned
+              const recipeId = meals[mealName];
               const recipe = allRecipesList.find(([rid]) => rid === recipeId)?.[1];
               const title = recipe ? recipe.title : "Recipe not found";
               return `<li><strong>${mealName}:</strong> 
@@ -802,7 +807,6 @@ if (pageType === "mp-detail") {
                       </li>`;
             }).join("")}
           </ul>
-          <button class="deleteMPBtn" data-day="${day}">Delete meal plan</button>
         `;
       }).join("");
       
