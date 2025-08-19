@@ -39,7 +39,7 @@ function objKeysToArray(obj) {
 }
 
 
-console.log("tttttgmi")
+console.log("awsf?")
 
 // ==== AUTHRORIZATION PAGE LOGIC ====
 if (pageType === "auth") {
@@ -602,17 +602,20 @@ get(mealPlansRef).then(snapshot => {
     container.textContent = "No meal plans saved.";
     return;
   }
-  const plans = Object.entries(snapshot.val());
-  plans.forEach(([id, data]) => {
-    const div = document.createElement("div");
-    div.innerHTML = `
-        <a href="mealPlan.html?id=${id}" target="_blank">
-          Meal Plan for: ${data.date || "OOO scary the date is Unknown."}
+
+  const usersPlans = snapshot.val();
+  for (const [uid, userPlans] of Object.entries(usersPlans)) {
+    for (const [date, planData] of Object.entries(userPlans)) {
+      const div = document.createElement("div");
+      div.innerHTML = `
+        <a href="mealPlan.html?id=${date}&uid=${uid}" target="_blank">
+          Meal Plan for: ${planData.date || "Unknown date"}
         </a>
-    `;
-    container.appendChild(div);
-  });
-}).catch(console.error);
+      `;
+      container.appendChild(div);
+    }
+  }
+})
 
 
 
@@ -624,8 +627,7 @@ get(ref(database, "recipes")).then(snapshot => {
   } else {
     document.getElementById("recipeList").innerHTML = "No recipes found!";
   }
-}).catch(console.error);
-
+})
 
 
 
