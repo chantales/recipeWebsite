@@ -74,14 +74,14 @@ body {
   background-color: #2980b9;
 }
 
-#signOutBtn, #logOut {
+#signOutBtn{
   background-color: #e74c3c;
   width: 200px;
   margin: 30px auto 0;
   display: block;
 }
 
-#signOutBtn:hover, #logOut:hover {
+#signOutBtn:hover{
   background-color: #c0392b;
 }
 
