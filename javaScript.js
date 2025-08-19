@@ -39,7 +39,7 @@ function objKeysToArray(obj) {
 }
 
 
-console.log("wowee!!!!!!")
+console.log("!!!!!")
 
 // ==== AUTHRORIZATION PAGE LOGIC ====
 if (pageType === "auth") {
@@ -779,7 +779,7 @@ if (pageType === "mp-detail") {
     const allRecipesList = Object.entries(recipeSnapshot.val());
 
 
-    const mplanRef = ref(database, `mealPlans/${userId}" + mplanId`);
+    const mplanRef = ref(database, `mealPlans/${userId} + mplanId`);
     return get(mplanRef).then(snapshot => {
       if (!snapshot.exists()) {
         mplanTitle.textContent = "Sorry, that meal plan could not be found.";
