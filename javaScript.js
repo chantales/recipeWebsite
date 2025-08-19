@@ -39,7 +39,7 @@ function objKeysToArray(obj) {
 }
 
 
-console.log("auth testing 10 billion")
+console.log("wwowowowww")
 
 // ==== AUTHRORIZATION PAGE LOGIC ====
 if (pageType === "auth") {
@@ -726,7 +726,7 @@ document.getElementById("saveMealPlan").addEventListener("click", () => {
     author: auth.currentUser ? auth.currentUser.uid : null // save the user ID if signed in
   };
 
-  const mealPlanRef = ref(database, `mealPlans/${auth.currentUser.uid}/${date}`);
+  const mealPlanRef = ref(database, "mealPlans/${userId}" + mplanId); // AAAAAAAA
   get(mealPlanRef)
   .then(snapshot => {
     if (snapshot.exists()) {
