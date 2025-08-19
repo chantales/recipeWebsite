@@ -39,7 +39,7 @@ function objKeysToArray(obj) {
 }
 
 
-console.log("awsf?")
+console.log("wanf!")
 
 // ==== AUTHRORIZATION PAGE LOGIC ====
 if (pageType === "auth") {
@@ -811,6 +811,7 @@ if (pageType === "mp-detail") {
                       </li>`;
             }).join("")}
           </ul>
+          <button class="deleteMPBtn" data-day="${day}">Delete meal plan</button>
         `;
       }).join("");
       
