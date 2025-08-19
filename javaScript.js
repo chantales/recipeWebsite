@@ -39,7 +39,7 @@ function objKeysToArray(obj) {
 }
 
 
-console.log("wowee!")
+console.log("wowee!!!!!!")
 
 // ==== AUTHRORIZATION PAGE LOGIC ====
 if (pageType === "auth") {
@@ -759,6 +759,7 @@ document.getElementById("saveMealPlan").addEventListener("click", () => {
 // ==== MEAL PLAN DETAIL PAGE LOGIC ====
 if (pageType === "mp-detail") {
   const mplanId = params.get("id");
+  const userId = params.get("uid");
 
   const mplanTitle = document.getElementById("mplanTitle");
   const mplanDetails = document.getElementById("mplanDetails");
@@ -778,7 +779,7 @@ if (pageType === "mp-detail") {
     const allRecipesList = Object.entries(recipeSnapshot.val());
 
 
-    const mplanRef = ref(database, "mealPlans/${userId}" + mplanId);
+    const mplanRef = ref(database, `mealPlans/${userId}" + mplanId`);
     return get(mplanRef).then(snapshot => {
       if (!snapshot.exists()) {
         mplanTitle.textContent = "Sorry, that meal plan could not be found.";
