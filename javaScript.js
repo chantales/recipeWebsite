@@ -777,7 +777,7 @@ if (pageType === "mp-detail") {
     const allRecipesList = Object.entries(recipeSnapshot.val());
 
 
-    const mplanRef = ref(database, "mealPlans/" + mplanId);
+    const mplanRef = ref(database, "mealPlans/${userId}" + mplanId);
     return get(mplanRef).then(snapshot => {
       if (!snapshot.exists()) {
         mplanTitle.textContent = "Sorry, that meal plan could not be found.";
@@ -803,7 +803,7 @@ if (pageType === "mp-detail") {
               const recipe = allRecipesList.find(([rid]) => rid === recipeId)?.[1];
               const title = recipe ? recipe.title : "Recipe not found";
               return `<li><strong>${mealName}:</strong> 
-                      <a href="recipe.html?id=${recipeId}" target="_blank">${title}</a>
+                      <a href="recipe.html?uid=${data.author}&id=${data.date}" target="_blank">${title}</a>
                       </li>`;
             }).join("")}
           </ul>
