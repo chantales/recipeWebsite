@@ -39,7 +39,7 @@ function objKeysToArray(obj) {
 }
 
 
-console.log("!!!!!")
+console.log("tttttgmi")
 
 // ==== AUTHRORIZATION PAGE LOGIC ====
 if (pageType === "auth") {
