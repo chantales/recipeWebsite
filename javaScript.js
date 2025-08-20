@@ -39,7 +39,7 @@ function objKeysToArray(obj) {
 }
 
 
-console.log("help 2")
+console.log("help 3")
 // ==== AUTHRORIZATION PAGE LOGIC ====
 if (pageType === "auth") {
   const userEmail = document.getElementById("userEmail");
@@ -721,9 +721,14 @@ document.getElementById("saveMealPlan").addEventListener("click", () => {
     return;
   }
 
-
   const dayName = new Date(date).toLocaleDateString(undefined, { weekday: 'long' });
   const dayMeals = mealPlan[dayName] || {};
+  const hasMeals = ["Breakfast", "Lunch", "Dinner"].some(meal => dayMeals[meal]);
+
+  if (!hasMeals) {
+    alert("You must add at least one recipe before saving!");
+    return;
+  }
 
   const mealPlanSave = {
     date, // save the date set
