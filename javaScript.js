@@ -724,16 +724,20 @@ document.getElementById("saveMealPlan").addEventListener("click", () => {
   const dayName = new Date(date).toLocaleDateString(undefined, { weekday: 'long' });
 
   const mealPlanSave = {
-    date, // save the date set
-    dayName,     
-    mplan: mealPlan, // the meal plan object
-    author: auth.currentUser ? auth.currentUser.uid : null // save the user ID if signed in
+    date: date, // string in YYYY-MM-DD format
+    dayName: dayName,
+    author: auth.currentUser.uid,
+    mplan: {
+      Breakfast: mealPlan.Wednesday?.Breakfast || "Not planned",
+      Lunch: mealPlan.Wednesday?.Lunch || "Not planned",
+      Dinner: mealPlan.Wednesday?.Dinner || "Not planned"
+    }
   };
 
   const userId = auth.currentUser.uid;
   const userMealPlansRef = ref(database, `mealPlans/${userId}`);
 
-  // 🔑 Generate unique ID under mealPlans/userId/
+  // Generate unique ID under mealPlans/userId/
   const newPlanRef = push(userMealPlansRef);
 
   set(newPlanRef, mealPlanSave)
