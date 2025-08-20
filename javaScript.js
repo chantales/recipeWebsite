@@ -39,7 +39,7 @@ function objKeysToArray(obj) {
 }
 
 
-console.log("help 4")
+console.log("help 2")
 // ==== AUTHRORIZATION PAGE LOGIC ====
 if (pageType === "auth") {
   const userEmail = document.getElementById("userEmail");
@@ -878,15 +878,18 @@ if (pageType == "groceries") {
   const ingredientsList = document.getElementById("ingredientsList");
 
   // Pull all meal plans
-  get(ref(database, "mealPlans")).then(snap => {
+  get(ref(database, "mealPlans"))
+  .then(snap => {
     if (!snap.exists()) return;
 
     const allPlans = snap.val();
     const plansByDate = {}; // map date -> {userId, planId}
 
     // Flatten mealPlans so we can look up by date
-    Object.entries(allPlans).forEach(([userId, userPlans]) => {
-      Object.entries(userPlans).forEach(([planId, planData]) => {
+    Object.entries(allPlans)
+    .forEach(([userId, userPlans]) => {
+      Object.entries(userPlans)
+      .forEach(([planId, planData]) => {
         plansByDate[planData.date] = { userId, planId };
         mealPlanSelect.innerHTML += `<option value="${planData.date}">${planData.date}</option>`;
       });
@@ -925,9 +928,10 @@ if (pageType == "groceries") {
 
           const recipes = recipeSnap.val();
           const allIngredients = [];
-
+          const recipeEntries = Object.entries(recipes);
+          
           recipeIds.forEach(rid => {
-            const recipe = recipes[rid];
+            const recipe = recipeEntries.find(([id, r]) => id === rid)?.[1];
             if (recipe && Array.isArray(recipe.ingredients)) {
               allIngredients.push(...recipe.ingredients);
             }
