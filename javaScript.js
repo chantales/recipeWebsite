@@ -597,7 +597,8 @@ const container = document.getElementById("mealPlansList");
 
 
 // Pull any saved mealplans onto the page for the user to be enamoured by my cool code
-get(mealPlansRef).then(snapshot => {
+get(mealPlansRef)
+.then(snapshot => {
   if (!snapshot.exists()) {
     container.textContent = "No meal plans saved.";
     return;
@@ -649,7 +650,8 @@ document.getElementById("dateMealPlan").addEventListener("change", e => {
 
 
 function setupMP() {
-  document.querySelectorAll(".addRecipeBtn").forEach(button => {
+  document.querySelectorAll(".addRecipeBtn")
+  .forEach(button => {
     button.addEventListener("click", () => {
       const mealSlot = button.closest(".mealSlot");
       const dayDiv = button.closest(".day");
@@ -729,24 +731,23 @@ document.getElementById("saveMealPlan").addEventListener("click", () => {
   };
 
   const userId = auth.currentUser.uid;
-  const mealPlanRef = ref(database, `mealPlans/${userId}/${date}`);
-  get(mealPlanRef)
-  .then(snapshot => {
-    if (snapshot.exists()) {
-      alert("A meal plan for this date already exists!");
-      return;
-  }
-  set(mealPlanRef, mealPlanSave)
-  .then(() => alert("Saved meal plan!"))
-  .catch(error => {
-    if (error.code === 'PERMISSION_DENIED') {
-      alert("Save failed: Date must be between 2025 and 2026.");
-    } else {
-      alert("Save failed: " + error.message);
-    }
-  });
+  const userMealPlansRef = ref(database, `mealPlans/${userId}`);
 
-  });
+  // 🔑 Generate unique ID under mealPlans/userId/
+  const newPlanRef = push(userMealPlansRef);
+
+  set(newPlanRef, mealPlanSave)
+    .then(() => {
+      alert("Saved meal plan!");
+    })
+    .catch(error => {
+      if (error.code === 'PERMISSION_DENIED') {
+        alert("Save failed: Date must be between 2025 and 2026.");
+      } else {
+        alert("Save failed: " + error.message);
+      }
+    });
+
 });
 }
 
