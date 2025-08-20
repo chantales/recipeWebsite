@@ -721,16 +721,19 @@ document.getElementById("saveMealPlan").addEventListener("click", () => {
     alert("Please enter a date for your meal plan.");
     return;
   }
+
+
   const dayName = new Date(date).toLocaleDateString(undefined, { weekday: 'long' });
+  const dayMeals = mealPlan[dayName] || {};
 
   const mealPlanSave = {
-    date: date, // string in YYYY-MM-DD format
-    dayName: dayName,
-    author: auth.currentUser.uid,
+    date, // save the date set
+    dayName,     
+    author: auth.currentUser ? auth.currentUser.uid : null, // save the user ID if signed in
     mplan: {
-      Breakfast: mealPlan.Wednesday?.Breakfast || "Not planned",
-      Lunch: mealPlan.Wednesday?.Lunch || "Not planned",
-      Dinner: mealPlan.Wednesday?.Dinner || "Not planned"
+      Breakfast: dayMeals.Breakfast || "Not planned",
+      Lunch: dayMeals.Lunch || "Not planned",
+      Dinner: dayMeals.Dinner || "Not planned"
     }
   };
 
@@ -739,7 +742,6 @@ document.getElementById("saveMealPlan").addEventListener("click", () => {
 
   // Generate unique ID under mealPlans/userId/
   const newPlanRef = push(userMealPlansRef);
-
   set(newPlanRef, mealPlanSave)
     .then(() => {
       alert("Saved meal plan!");
