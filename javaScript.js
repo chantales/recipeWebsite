@@ -39,8 +39,7 @@ function objKeysToArray(obj) {
 }
 
 
-console.log("ww!")
-
+console.log("help")
 // ==== AUTHRORIZATION PAGE LOGIC ====
 if (pageType === "auth") {
   const userEmail = document.getElementById("userEmail");
@@ -799,29 +798,27 @@ if (pageType === "mp-detail") {
       mplanTitle.textContent = `Meal Plan for: ${data?.date || "Unknown Date"}`;
 
 
+
       const mealPlanObj = data.mplan || {};
+      const meals = mealPlanObj; // mplan for that day only
 
-
-      const mealOrder = ["Breakfast", "Lunch", "Dinner"];
-
-      const html = Object.entries(mealPlanObj).map(([day, meals]) => {
-        return `
-          <h3>${day}</h3>
-          <ul>
-            ${mealOrder.map(mealName => {
-              if (!meals[mealName]) return ""; // skip if meal not planned
-              const recipeId = meals[mealName];
-              const recipe = allRecipesList.find(([rid]) => rid === recipeId)?.[1];
-              const title = recipe ? recipe.title : "Recipe not found";
-              return `<li><strong>${mealName}:</strong> 
-                      <a href="recipe.html?uid=${data.author}&id=${data.date}" target="_blank">${title}</a>
-                      </li>`;
-            }).join("")}
-          </ul>
-          <button class="deleteMPBtn" data-day="${day}">Delete meal plan</button>
-        `;
-      }).join("");
-      
+      const html = `
+        <h3>${data.dayName}</h3>
+        <ul>
+          ${["Breakfast", "Lunch", "Dinner"]
+            .map(mealName => {
+            const recipeId = meals[mealName];
+            if (!recipeId) return ""; 
+            const recipe = allRecipesList
+            .find(([rid]) => rid === recipeId)?.[1];
+            const title = recipe ? recipe.title : "Recipe not found";
+            return `<li><strong>${mealName}:</strong> 
+                      <a href="recipe.html?uid=${data.author}&id=${recipeId}" target="_blank">${title}</a>
+                    </li>`;
+          }).join("")}
+        </ul>
+        <button class="deleteMPBtn">Delete meal plan</button>
+      `;
       mplanDetails.innerHTML = html;
       
 
