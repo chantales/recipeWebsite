@@ -789,13 +789,13 @@ if (pageType === "mp-detail") {
         return;
       }
       const data = snapshot.val();
-      mplanTitle.textContent = `Meal Plan for: ${data.date || "Unknown date"}`;
+      mplanTitle.textContent = `Meal Plan for: ${data?.date || "Unknown Date"}`;
 
 
       const mealPlanObj = data.mplan || {};
 
 
-      const mealOrder = ["breakfast", "lunch", "dinner"];
+      const mealOrder = ["Breakfast", "Lunch", "Dinner"];
 
       const html = Object.entries(mealPlanObj).map(([day, meals]) => {
         return `
