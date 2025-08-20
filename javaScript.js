@@ -39,7 +39,7 @@ function objKeysToArray(obj) {
 }
 
 
-console.log("help 2")
+console.log("help 1!")
 // ==== AUTHRORIZATION PAGE LOGIC ====
 if (pageType === "auth") {
   const userEmail = document.getElementById("userEmail");
@@ -915,28 +915,25 @@ if (pageType == "groceries") {
         const mealPlanData = planSnap.val().mplan || {};
         const recipeIds = [];
         Object.values(mealPlanData).forEach(meals => {
-          Object.values(meals).forEach(recipeId => {
-            recipeIds.push(recipeId);
+          Object.values(meals || {}).forEach(recipeId => {
+            if (recipeId) recipeIds.push(recipeId);
           });
         });
-
+        
         get(ref(database, "recipes")).then(recipeSnap => {
           if (!recipeSnap.exists()) {
             ingredientsList.innerHTML = "<li>No recipes found.</li>";
             return;
           }
-
+        
           const recipes = recipeSnap.val();
           const allIngredients = [];
-          const recipeEntries = Object.entries(recipes);
-          
-          recipeIds.forEach(rid => {
-            const recipe = recipeEntries.find(([id, r]) => id === rid)?.[1];
-            if (recipe && Array.isArray(recipe.ingredients)) {
+          Object.entries(recipes).forEach(([id, recipe]) => {
+            if (recipeIds.includes(id) && Array.isArray(recipe.ingredients)) {
               allIngredients.push(...recipe.ingredients);
             }
           });
-
+        
           const uniqueIngredients = [...new Set(allIngredients)];
           ingredientsList.innerHTML = uniqueIngredients.length
             ? uniqueIngredients.map(i => `<li>${i}</li>`).join("")
