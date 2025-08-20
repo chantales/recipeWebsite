@@ -39,7 +39,7 @@ function objKeysToArray(obj) {
 }
 
 
-console.log("help 1!")
+console.log("help !!!")
 // ==== AUTHRORIZATION PAGE LOGIC ====
 if (pageType === "auth") {
   const userEmail = document.getElementById("userEmail");
@@ -873,76 +873,82 @@ if (pageType === "mp-detail") {
 
 
 // ==== GROCERIES PAGE LOGIC ====
-if (pageType == "groceries") {
+if (pageType === "groceries") {
   const mealPlanSelect = document.getElementById("mealPlanSelect");
   const ingredientsList = document.getElementById("ingredientsList");
 
   // Pull all meal plans
   get(ref(database, "mealPlans"))
-  .then(snap => {
-    if (!snap.exists()) return;
+    .then(snap => {
+      if (!snap.exists()) return;
 
-    const allPlans = snap.val();
-    const plansByDate = {}; // map date -> {userId, planId}
+      const allPlans = snap.val();
+      const plansByDate = {}; // map date -> {userId, planId}
 
-    // Flatten mealPlans so we can look up by date
-    Object.entries(allPlans)
-    .forEach(([userId, userPlans]) => {
-      Object.entries(userPlans)
-      .forEach(([planId, planData]) => {
-        plansByDate[planData.date] = { userId, planId };
-        mealPlanSelect.innerHTML += `<option value="${planData.date}">${planData.date}</option>`;
+      // Flatten mealPlans so we can look up by date
+      Object.entries(allPlans).forEach(([userId, userPlans]) => {
+        Object.entries(userPlans).forEach(([planId, planData]) => {
+          if (planData.date) {
+            plansByDate[planData.date] = { userId, planId };
+            mealPlanSelect.innerHTML += `<option value="${planData.date}">${planData.date}</option>`;
+          }
+        });
       });
-    });
 
-    mealPlanSelect.addEventListener("change", () => {
-      const selectedDate = mealPlanSelect.value;
-      if (!selectedDate) return;
+      mealPlanSelect.addEventListener("change", () => {
+        const selectedDate = mealPlanSelect.value;
+        if (!selectedDate) return;
 
-      const planInfo = plansByDate[selectedDate];
-      if (!planInfo) {
-        ingredientsList.innerHTML = "<li>No meal plan found for this date.</li>";
-        return;
-      }
-
-      const { userId, planId } = planInfo;
-      get(ref(database, `mealPlans/${userId}/${planId}`)).then(planSnap => {
-        if (!planSnap.exists()) {
-          ingredientsList.innerHTML = "<li>No data found for that meal plan.</li>";
+        const planInfo = plansByDate[selectedDate];
+        if (!planInfo) {
+          ingredientsList.innerHTML = "<li>No meal plan found for this date.</li>";
           return;
         }
 
-        const mealPlanData = planSnap.val().mplan || {};
-        const recipeIds = [];
-        Object.values(mealPlanData).forEach(meals => {
-          Object.values(meals || {}).forEach(recipeId => {
-            if (recipeId) recipeIds.push(recipeId);
-          });
-        });
-        
-        get(ref(database, "recipes")).then(recipeSnap => {
-          if (!recipeSnap.exists()) {
-            ingredientsList.innerHTML = "<li>No recipes found.</li>";
+        const { userId, planId } = planInfo;
+
+        // Get the meal plan for this date
+        get(ref(database, `mealPlans/${userId}/${planId}`)).then(planSnap => {
+          if (!planSnap.exists()) {
+            ingredientsList.innerHTML = "<li>No data found for that meal plan.</li>";
             return;
           }
-        
-          const recipes = recipeSnap.val();
-          const allIngredients = [];
-          Object.entries(recipes).forEach(([id, recipe]) => {
-            if (recipeIds.includes(id) && Array.isArray(recipe.ingredients)) {
-              allIngredients.push(...recipe.ingredients);
+
+          const mealPlanData = planSnap.val().mplan || {};
+          const recipeIds = Object.values(mealPlanData).filter(Boolean); // just get all recipe IDs
+
+          if (recipeIds.length === 0) {
+            ingredientsList.innerHTML = "<li>No recipes in this meal plan.</li>";
+            return;
+          }
+
+          // Get all recipes
+          get(ref(database, "recipes")).then(recipeSnap => {
+            if (!recipeSnap.exists()) {
+              ingredientsList.innerHTML = "<li>No recipes found.</li>";
+              return;
             }
+
+            const recipes = recipeSnap.val();
+            const allIngredients = [];
+
+            recipeIds.forEach(rid => {
+              const recipe = recipes[rid];
+              if (recipe && Array.isArray(recipe.ingredients)) {
+                allIngredients.push(...recipe.ingredients);
+              }
+            });
+
+            const uniqueIngredients = [...new Set(allIngredients)];
+            ingredientsList.innerHTML = uniqueIngredients.length
+              ? uniqueIngredients.map(i => `<li>${i}</li>`).join("")
+              : "<li>No ingredients found.</li>";
           });
-        
-          const uniqueIngredients = [...new Set(allIngredients)];
-          ingredientsList.innerHTML = uniqueIngredients.length
-            ? uniqueIngredients.map(i => `<li>${i}</li>`).join("")
-            : "<li>No ingredients found.</li>";
         });
       });
+    })
+    .catch(error => {
+      console.error(error);
+      ingredientsList.innerHTML = "<li>Error loading ingredients.</li>";
     });
-  }).catch(error => {
-    console.error(error);
-    ingredientsList.innerHTML = "<li>Error loading ingredients.</li>";
-  });
 }
