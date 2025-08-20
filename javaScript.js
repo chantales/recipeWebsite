@@ -39,7 +39,7 @@ function objKeysToArray(obj) {
 }
 
 
-console.log("help")
+console.log("help 2")
 // ==== AUTHRORIZATION PAGE LOGIC ====
 if (pageType === "auth") {
   const userEmail = document.getElementById("userEmail");
@@ -729,11 +729,7 @@ document.getElementById("saveMealPlan").addEventListener("click", () => {
     date, // save the date set
     dayName,     
     author: auth.currentUser ? auth.currentUser.uid : null, // save the user ID if signed in
-    mplan: {
-      Breakfast: dayMeals.Breakfast || "Not planned",
-      Lunch: dayMeals.Lunch || "Not planned",
-      Dinner: dayMeals.Dinner || "Not planned"
-    }
+    mplan: dayMeals
   };
 
   const userId = auth.currentUser.uid;
